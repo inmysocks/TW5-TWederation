@@ -1,0 +1,59 @@
+caption: Unbundle Tiddlers
+tags: 
+title: $:/plugins/inmysocks/TiddlerBundles/Unbundle Tiddlers
+
+!!!Un-bundle tiddlers
+Select Bundle: <$select tiddler='$:/state/Tiddler Bundles' field='selected_import'>
+<option value=''>--</option>
+<$list filter='[tag[Tiddler Bundle]]'>
+<option><$view field='title'/></option>
+</$list>
+</$select>
+
+<$reveal type='nomatch' state='$:/state/Export Bundle!!show_import_tiddler_list' text='show'>
+<$button set='$:/state/Export Bundle!!show_import_tiddler_list' setTo='show'>Show Tiddler Import List</$button>
+</$reveal>
+
+<$reveal type='match' state='$:/state/Export Bundle!!show_import_tiddler_list' text='show'>
+<$button set='$:/state/Export Bundle!!show_import_tiddler_list' setTo='hide'>Hide Tiddler Import List</$button>
+
+<$list filter='[list{$:/state/Tiddler Bundles!!selected_import}]'>
+
+</$list>
+
+</$reveal>
+
+<$checkbox tiddler='$:/state/Tiddler Bundles' field='overwrite' checked=true unchecked=false>Overwrite Existing Tiddlers</$checkbox>
+
+<$reveal type='nomatch' state='$:/state/Tiddler Bundles!!selected_import' text=''>
+<$button>Import <$view tiddler='$:/state/Tiddler Bundles' field='selected_import'/>
+<$list filter='[{$:/state/Tiddler Bundles!!selected_import}get[separator]]' variable=SEPARATOR>
+<$action-tiddlerbundle $bundle={{$:/state/Tiddler Bundles!!selected_import}} $overwrite={{$:/state/Tiddler Bundles!!overwrite}} $action=unpack $separator=<<SEPARATOR>>/>
+</$list>
+</$button>
+</$reveal>
+<$reveal type='match' state='$:/state/Tiddler Bundles!!selected_import' text=''>
+Select a bundle to import
+</$reveal>
+
+<style>
+.bundleFilter {display:block; 
+          width:100%;padding-left:5px; margin-bottom:10px;
+          border:1px solid lightgray; 
+          resize:both; overflow-y:auto;
+          min-height:150px; 
+}
+.bundleFilter:hover {border:1px solid blue;}
+.bundleName {display:block; 
+          width:100%;padding-left:5px; margin-bottom:10px;
+          border:1px solid lightgray; 
+          resize:both; overflow-y:auto;
+ }
+.no-border,
+.no-border th,
+.no-border tr,
+.no-border td{
+border:0;
+}
+.img svg {fill: gray; height: 16px; width:16px; margin-top:-1.3em;float:right;}
+</style>

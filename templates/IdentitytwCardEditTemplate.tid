@@ -1,0 +1,19 @@
+tags: Templates
+title: $:/plugins/inmysocks/FetchTiddlers/IdentitytwCardEditTemplate
+
+<div>
+
+@@width:100%;
+
+|!Userame |<$edit-text field='username' class='tc-edit-texteditor'/>|
+|!Given Name |<$edit-text field='given_name' class='tc-edit-texteditor'/>|
+|!Family Name |<$edit-text field='family_name' class='tc-edit-texteditor'/>|
+|!Wiki |<$edit-text field='wiki' class='tc-edit-texteditor'/>|
+|!Homepage |<$edit-text field='homepage' class='tc-edit-texteditor'/>|
+|!Email |<$edit-text field='email' class='tc-edit-texteditor'/>|
+|!Facebook |<$edit-text field='facebook' class='tc-edit-texteditor'/>|
+|!Twitter |<$edit-text field='twitter' class='tc-edit-texteditor'/>|
+
+@@
+
+</div>

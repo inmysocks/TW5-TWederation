@@ -1,0 +1,86 @@
+tags: Communication
+title: Short Messages
+
+\define OPEN() [[
+
+\define CLOSE() ]]
+
+!!!From: <$select tiddler='$:/state/View Short Messages' field='sender'>
+	<option value=''>
+		All
+	</option>
+	<$list filter='[type[Identity twCard]]'>
+		<option value=<<currentTiddler>>>
+			<$view field='username'/>
+		</option>
+	</$list>
+</$select>
+
+!!!To: <$select tiddler='$:/state/View Short Messages' field='receiver'>
+	<option value='[type[Identity twCard]]'>
+		All
+	</option>
+	<$list filter='[type[Identity twCard]]'>
+		<$list filter='[is[current]has[username]addprefix<OPEN>addsuffix<CLOSE>]' variable=ThisFilter>
+			<option value=<<ThisFilter>>>
+				<$view field='username'/>
+			</option>
+		</$list>
+	</$list>
+</$select>
+
+<$reveal type=nomatch state='$:/state/View Short Messages!!sender' text=''>
+
+<$list filter={{$:/state/View Short Messages!!receiver}} variable=Identity>
+
+<hr>
+
+@@width:100%;
+|!To: <$view tiddler=<<Identity>> field='username'/>|<|
+|!From: <$view tiddler={{$:/state/View Short Messages!!sender}} field='username'/>|
+@@
+
+	<$list filter='[[$:/Messages/]addsuffix{$:/state/View Short Messages!!sender}indexes[]suffix<Identity>splitbefore[ ]]' variable=SendDate emptyMessage="No Sort Messages on Record">
+		@@color:forestgreen;__Date: <<SendDate>>__@@
+		<$list filter='[[$:/Messages/]addsuffix{$:/state/View Short Messages!!sender}indexes[]suffix<Identity>]' variable=ReceiverString emptyMessage="No Sort Messages on Record">
+			<$list filter='[[$:/Messages/]addsuffix{$:/state/View Short Messages!!sender}getindex<ReceiverString>]' variable=Message>
+				<$list filter='[<ReceiverString>removeprefix<SendDate>splitbefore[ ]]' variable=SendTime>
+					<br>
+					''<<SendTime>> ---'' <<Message>>
+				</$list>
+			</$list>
+			<br>
+		</$list>
+	</$list>
+</$list>
+
+</$reveal>
+
+<$reveal type=match state='$:/state/View Short Messages!!sender' text=''>
+
+	<$list filter={{$:/state/View Short Messages!!receiver}} variable=Identity>
+
+		<$list filter='[all[]removeprefix[$:/Messages/$:/twCard/identity/]]' variable=Sender>
+
+<hr>
+
+@@width:100%;
+|!To: <$view tiddler=<<Identity>> field='username'/>|<|
+|!From: <<Sender>>|
+@@
+
+		<$list filter='[[$:/Messages/$:/twCard/identity/]addsuffix<Sender>indexes[]suffix<Identity>splitbefore[ ]]' variable=SendDate emptyMessage="No Sort Messages on Record">
+			@@color:forestgreen;__Date: <<SendDate>>__@@
+			<$list filter='[[$:/Messages/$:/twCard/identity/]addsuffix<Sender>indexes[]suffix<Identity>]' variable=ReceiverString emptyMessage="No Sort Messages on Record">
+					<$list filter='[all[]prefix[$:/Messages/$:/twCard/identity/]getindex<ReceiverString>]' variable=Message>
+						<$list filter='[<ReceiverString>removeprefix<SendDate>splitbefore[ ]]' variable=SendTime>
+							<br>
+							''<<SendTime>> ---'' <<Message>>
+						</$list>
+					</$list>
+				</$list>
+				<br>
+			</$list>
+		</$list>
+	</$list>
+</$reveal>

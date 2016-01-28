@@ -1,0 +1,16 @@
+tags: 
+title: $:/plugins/inmysocks/FetchTiddlers/ReadMe
+
+This is a demo of a plugin that combines two things:
+
+1) Bundling tiddlers for easy movement between wikis
+
+2) Remotely fetching bundles of tiddlers from another wiki
+
+Part 2 may be more important here.
+
+Go to the `Fetch Tiddler Bundle` tab under the `Tiddler Bundles` tab in the [[$:/ControlPanel]]
+
+If you set the Wiki URL to point to a wiki that has the plugin installed than you can enter a filter and a bundle name then click `Request Bundle` and under the button you should get a link to open up the imported bundle tiddler. You can then go to the `Unbundle Tiddlers` tab to unpack the imported tiddlers.
+
+All of this is contained in the plugin [[$:/plugins/inmysocks/FetchTiddlers]]

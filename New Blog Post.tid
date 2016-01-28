@@ -1,0 +1,57 @@
+list-before: Bookmarks
+tags: Communication
+title: New Blog Post
+
+\define thisMakePostButton(TIME)
+<$button>Make Post
+	<$action-setfield 
+		$tiddler="""$(PostTitle)$ - $(AuthorName)$ ($TIME$)""" 
+		author={{$:/temp/NewBlogPost!!author_card}}
+		wiki_url={{$:/temp/NewBlogPost!!wiki_url}}
+		post_title={{$:/temp/NewBlogPost!!new_post_title}}
+		type='Blog Post'
+		text={{$:/temp/NewBlogPost!!text}}
+	/>
+	<$action-setfield 
+		$tiddler="$:/temp/NewBlogPost" 
+		new_post_title='' 
+		text=''
+	/>
+</$button>
+\end
+
+Author: 
+<$select tiddler='$:/temp/NewBlogPost' field='author_card'>
+	<option value=''>
+		--
+	</option>
+	<$list filter='[type[Identity twCard]]'>
+		<option value=<<currentTiddler>>>
+			<$view field='username'/>
+		</option>
+	</$list>
+</$select>
+
+Wiki: 
+<$select tiddler='$:/temp/NewBlogPost' field='wiki_url'>
+	<option value=''>
+		--
+	</option>
+	<$list filter='[type[Wiki twCard]]'>
+		<option value={{!!url}}>
+			<$view field='name'/>
+		</option>
+	</$list>
+</$select>
+
+Post Title: <$edit-text class='tc-edit-texteditor' tiddler='$:/temp/NewBlogPost' field='new_post_title' placeholder='Post Title'/>
+
+Post:
+
+<$edit-text tiddler='$:/temp/NewBlogPost' class='tc-edit-texteditor'/>
+
+<$list filter='[[$:/temp/NewBlogPost]get[author_card]get[username]]' variable='AuthorName' emptyMessage="""<$vars PostTitle={{$:/temp/NewBlogPost!!new_post_title}}><<thisMakePostButton>></$vars>""">
+<$vars PostTitle={{$:/temp/NewBlogPost!!new_post_title}}>
+<$macrocall $name=thisMakePostButton TIME=<<now 0hhh0mm-0DD/MM/YYYY>>/>
+</$vars>
+</$list>

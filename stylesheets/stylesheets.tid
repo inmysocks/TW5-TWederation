@@ -1,0 +1,12 @@
+tags: $:/tags/Stylesheet
+title: $:/plugins/inmysocks/FetchTiddlers/stylesheets
+
+.tc-post-comment-card {
+background-color: #eee;
+border: solid 1px;
+}
+
+.tc-post-comment-input {
+width: 100%;
+border: solid 1px;
+}

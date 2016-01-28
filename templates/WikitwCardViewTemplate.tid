@@ -1,0 +1,12 @@
+tags: Templates $:/tags/ViewTemplate
+title: $:/plugins/inmysocks/FetchTiddlers/templates/WikitwCardViewTemplate
+
+<$list filter='[is[current]type[Wiki twCard]]'>
+
+|!Name |<$view field='name' class='tc-edit-texteditor'/>|
+|!Author |<$view field='author' class='tc-edit-texteditor'/>|
+|!Topic |<$view field='topic' class='tc-edit-texteditor'/>|
+|!URL |<$view field='url' class='tc-edit-texteditor'/>|
+|!Description |<$view field='description' class='tc-edit-texteditor'/>|
+
+</$list>

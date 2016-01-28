@@ -1,0 +1,40 @@
+tags: Templates $:/tags/ViewTemplate
+title: $:/plugins/inmysocks/FetchTiddlers/BlogPostCommentTemplate
+
+<$list filter='[is[current]type[Blog Post]]'>
+
+
+!!''Comments:''
+
+<$list filter='[type[Post Comment]post<currentTiddler>]'>
+<div class='tc-post-comment-card'>
+
+__''<$view field='author'/>'' says__:
+
+__<$view field='comment_title'/>__
+
+<$transclude mode=block/>
+</div>
+
+</$list>
+
+<div class='tc-post-comment-card'>
+
+<$tiddler tiddler=<<currentTiddler>>>
+
+Username: <$edit-text tiddler='$:/state/Post Comment' field=author class='tc-post-comment-input'/>
+Comment Title: <$edit-text tiddler='$:/state/Post Comment' field=comment_title class='tc-post-comment-input'/>
+Comment Text:
+<$edit-text tiddler='$:/state/Post Comment' class='tc-edit-texteditor'/>
+<$button>Save Comment
+<$list filter='[is[current]addprefix[Comment - ]addsuffix[ - ]addsuffix{$:/state/Post Comment!!author}addsuffix[ - ]addsuffix{$:/state/Post Comment!!comment_title}]' variable=CommentTitle>
+<$action-setfield $tiddler=<<CommentTitle>> text={{$:/state/Post Comment}} comment_title={{$:/state/Post Comment!!comment_title}} author={{$:/state/Post Comment!!author}} post={{!!title}} type='Post Comment'/>
+<$action-setfield $tiddler='$:/state/Post Comment' comment_title='' text=''/>
+</$list>
+</$button>
+</$tiddler>
+
+</div>
+
+</$list>
+

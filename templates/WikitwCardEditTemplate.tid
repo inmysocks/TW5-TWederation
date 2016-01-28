@@ -1,0 +1,10 @@
+tags: Templates
+title: $:/plugins/inmysocks/FetchTiddlers/WikitwCardEditTemplate
+
+<table style='width:100%'>
+<tr><th>Name</th><td><$edit-text field='name' class='tc-edit-texteditor'/></td></tr>
+<tr><th>Author</th><td><$edit-text field='author' class='tc-edit-texteditor'/></td></tr>
+<tr><th>Topic</th><td><$edit-text field='topic' class='tc-edit-texteditor'/></td></tr>
+<tr><th>URL</th><td><$edit-text field='url' class='tc-edit-texteditor'/></td></tr>
+<tr><th>Description</th><td><$edit-text field='description' class='tc-edit-texteditor'/></td></tr>
+</table>

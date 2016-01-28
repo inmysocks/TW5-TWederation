@@ -1,0 +1,6 @@
+caption: Tiddler Bundles
+tags: $:/tags/ControlPanel
+tiddler: TestSchool
+title: $:/plugins/inmysocks/TiddlerBundles/Tiddler Bundles
+
+<<tabs "[[$:/plugins/inmysocks/TiddlerBundles/Create Local Bundle]][[$:/plugins/inmysocks/TiddlerBundles/Fetch Tiddler Bundle]][[$:/plugins/inmysocks/TiddlerBundles/Unbundle Tiddlers]]" default:"$:/plugins/inmysocks/TiddlerBundles/Create Local Bundle">>

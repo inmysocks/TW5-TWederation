@@ -1,0 +1,26 @@
+tags: Contents
+title: What is this?
+
+Important tiddlers:
+
+Set the site author tiddler [[$:/SiteAuthor]]
+
+Tools:
+
+<$list filter='[tag[Tools]]'>
+
+</$list>
+
+Templates:
+
+<$list filter='[prefix[$:/template]]'>
+
+</$list>
+
+This is the initial stages of a distributed social network-ish use for tiddlywiki. I am going to call it the TWederation. Why TWederation? Because I like the name. See Mats post on [[Twaddle|http://twaddle.tiddlyspot.com/#The%20Federation]], I think he was the first to use the name.
+
+Short description:
+
+Each person will have their own wiki hosted online somewhere, either tiddlyspot.com, some other web hosting service or on their own servers. Each person posts on their own wiki and when they wish to they can fetch posts from other peoples wikis. To comment on another persons post you create a comment tiddler on your own wiki for that post and leave your comment there. When the person  with the wiki you comment on checks for new comments than your comment will be fetched from your wiki and they can put it on theirs. If someone wants to post on your wiki than they will create the comment tiddler on their wiki and when you open your wiki you will pull new posts and comments from other wikis and you will be able to see the comment then.
+
+There are many details that aren't listed here, the use won't be complex but if you want to see all the details you can look [[here|The details]].

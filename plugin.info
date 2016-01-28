@@ -1,0 +1,9 @@
+{
+	"title": "$:/plugins/inmysocks/FetchTiddlers",
+	"description": "A plugin that lets you create and unpack tiddler bundles as well as fetch tiddlers from other wikis",
+	"author": "inmysocks",
+	"version": "0.0.10",
+	"core-version": ">=5.1.10",
+	"source": "",
+	"plugin-type": "plugin"
+}
