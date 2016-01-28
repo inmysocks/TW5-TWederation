@@ -1,6 +1,6 @@
 list-after: $:/core/ui/ViewTemplate/title
 tags: Templates $:/tags/ViewTemplate
-title: $:/plugins/inmysocks/FetchTiddlers/BlogPostTiddlerHeaderTemplate
+title: $:/plugins/inmysocks/TWederation/Templates/BlogPostTiddlerHeaderTemplate
 
 <$list filter='[is[current]type[Blog Post]author{$:/SiteAuthor}]'>
 <$list filter='[is[current]author{$:/SiteAuthor}]'>__Local Post__</$list> <$link to={{$:/SiteAuthor}}> Author: <$view tiddler={{!!author}} field=username/></$link>

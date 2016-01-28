@@ -1,5 +1,5 @@
 tags: Templates $:/tags/ViewTemplate
-title: $:/plugins/inmysocks/FetchTiddlers/templates/WikitwCardViewTemplate
+title: $:/plugins/inmysocks/TWederation/Templates/WikitwCardViewTemplate
 
 <$list filter='[is[current]type[Wiki twCard]]'>
 

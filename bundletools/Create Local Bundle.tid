@@ -1,6 +1,6 @@
 caption: Create Local Bundle
 tags: 
-title: $:/plugins/inmysocks/TiddlerBundles/Create Local Bundle
+title: $:/plugins/inmysocks/TWederation/Create Local Bundle
 
 \define defaultName()
 <$list filter="[[$:/state/Export Bundle]!has[bundle_name]]">

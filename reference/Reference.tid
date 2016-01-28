@@ -1,8 +1,9 @@
+caption: Reference
 tags: Contents
-title: Reference
+title: $:/plugins/inmysocks/TWederation/Reference
 
 Explainations!
 
-<$list filter='[tag[Reference]]'>
-
+<$list filter='[all[tiddlers+shadows]tag[Reference]]'>
+<$link to=<<currentTiddler>>><$view field='caption'><$view field='title'/></$view></$link><br>
 </$list>

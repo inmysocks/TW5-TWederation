@@ -1,7 +1,5 @@
 tags: Templates
-title: $:/plugins/inmysocks/FetchTiddlers/IdentitytwCardEditTemplate
-
-<div>
+title: $:/plugins/inmysocks/TWederation/Templates/IdentitytwCardEditTemplate
 
 @@width:100%;
 
@@ -15,5 +13,3 @@ title: $:/plugins/inmysocks/FetchTiddlers/IdentitytwCardEditTemplate
 |!Twitter |<$edit-text field='twitter' class='tc-edit-texteditor'/>|
 
 @@
-
-</div>

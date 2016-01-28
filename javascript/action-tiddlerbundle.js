@@ -1,5 +1,5 @@
 /*\
-title: $:/plugins/inmysocks/TiddlerBundles/action-tiddlerbundle.js
+title: $:/plugins/inmysocks/TWederation/action-tiddlerbundle.js
 type: application/javascript
 module-type: widget
 

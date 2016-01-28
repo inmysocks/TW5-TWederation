@@ -1,5 +1,5 @@
 tags: $:/tags/Stylesheet
-title: $:/plugins/inmysocks/FetchTiddlers/stylesheets
+title: $:/plugins/inmysocks/TWederation/stylesheets
 
 .tc-post-comment-card {
 background-color: #eee;

@@ -1,5 +1,5 @@
 tags: Templates $:/tags/ViewTemplate
-title: $:/plugins/inmysocks/FetchTiddlers/IdentitytwCardViewTemplate
+title: $:/plugins/inmysocks/TWederation/Templates/IdentitytwCardViewTemplate
 
 <$list filter='[is[current]type[Identity twCard]]'>
 

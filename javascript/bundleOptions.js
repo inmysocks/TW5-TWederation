@@ -1,5 +1,5 @@
 /*\
-title: $:/plugins/inmysocks/FetchTiddlers/bundleOptions.js
+title: $:/plugins/inmysocks/TWederation/bundleOptions.js
 type: application/javascript
 module-type: utils
 
@@ -77,9 +77,10 @@ $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
 		var currentBundleTiddler = $tw.wiki.getTiddler(decodeURI(bundleTiddlers[i]));
 	    if (currentBundleTiddler) {
 			bundleText += 'title:' + currentBundleTiddler.fields.title + '\n';
+			bundleText += 'tags:' + currentBundleTiddler.fields.tags + '\n';
 			var fieldTitle;
 			for (fieldTitle in currentBundleTiddler.fields) {
-				if (fieldTitle !== 'title' && fieldTitle !== 'text') {
+				if (fieldTitle !== 'title' && fieldTitle !== 'text' && fieldTitle !== 'tags') {
 					bundleText += fieldTitle + ':' + currentBundleTiddler.fields[fieldTitle] + '\n';
 				}
 			}
@@ -104,9 +105,10 @@ $tw.wiki.bundleFunction.tiddlerSummary = function(event, status_message) {
 		var currentBundleTiddler = $tw.wiki.getTiddler(decodeURI(bundleTiddlers[i]));
 	    if (currentBundleTiddler) {
 			bundleText += 'title:' + currentBundleTiddler.fields.title + '\n';
+			bundleText += 'tags:' + currentBundleTiddler.fields.tags + '\n';
 			var fieldTitle;
 			for (fieldTitle in currentBundleTiddler.fields) {
-				if (fieldTitle !== 'title' && fieldTitle !== 'text') {
+				if (fieldTitle !== 'title' && fieldTitle !== 'text' && fieldTitle !== 'tags') {
 					bundleText += fieldTitle + ':' + currentBundleTiddler.fields[fieldTitle] + '\n';
 				}
 			}

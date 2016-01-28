@@ -1,6 +1,6 @@
 caption: Manage twCards
 tags: twCards
-title: $:/plugins/inmysocks/FetchTiddlers/Manage twCards
+title: $:/plugins/inmysocks/TWederation/Manage twCards
 
 <div style='width:100%;background-color:lightgrey;border:1px solid;'>Wiki twCards: <$select tiddler='$:/settings/Manage twCards' field='selected_wiki_card'>
 <option value=''>--</option>
@@ -10,7 +10,7 @@ title: $:/plugins/inmysocks/FetchTiddlers/Manage twCards
 </$select>  <$reveal type='nomatch' state='$:/settings/Manage twCards!!selected_wiki_card' text=''>(<$link to={{$:/settings/Manage twCards!!selected_wiki_card}}>import link</$link>)</$reveal>
 </div>
 
-<$list filter='[{$:/settings/Manage twCards!!selected_wiki_card}has[title]]' template='$:/templates/WikitwCardEditTemplate'>
+<$list filter='[{$:/settings/Manage twCards!!selected_wiki_card}has[title]]' template='$:/plugins/inmysocks/TWederation/Templates/WikitwCardEditTemplate'>
 
 </$list>
 
@@ -23,7 +23,7 @@ title: $:/plugins/inmysocks/FetchTiddlers/Manage twCards
 </div>
 
 
-<$list filter='[{$:/settings/Manage twCards!!selected_identity_card}has[title]]' template='$:/templates/IdentitytwCardEditTemplate'>
+<$list filter='[{$:/settings/Manage twCards!!selected_identity_card}has[title]]' template='$:/plugins/inmysocks/TWederation/Templates/IdentitytwCardEditTemplate'>
 
 </$list>
 
@@ -36,6 +36,6 @@ title: $:/plugins/inmysocks/FetchTiddlers/Manage twCards
 </div>
 
 
-<$list filter='[{$:/settings/Manage twCards!!selected_topic_card}has[title]]' template='$:/templates/TopictwCardTemplate'>
+<$list filter='[{$:/settings/Manage twCards!!selected_topic_card}has[title]]' template='$:/plugins/inmysocks/TWederation/Templates/TopictwCardTemplate'>
 
 </$list>

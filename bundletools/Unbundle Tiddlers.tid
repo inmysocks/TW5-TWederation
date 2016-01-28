@@ -1,6 +1,6 @@
 caption: Unbundle Tiddlers
 tags: 
-title: $:/plugins/inmysocks/TiddlerBundles/Unbundle Tiddlers
+title: $:/plugins/inmysocks/TWederation/Unbundle Tiddlers
 
 !!!Un-bundle tiddlers
 Select Bundle: <$select tiddler='$:/state/Tiddler Bundles' field='selected_import'>

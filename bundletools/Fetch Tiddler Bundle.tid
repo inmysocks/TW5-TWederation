@@ -1,5 +1,5 @@
 caption: Fetch Tiddler Bundle
-title: $:/plugins/inmysocks/TiddlerBundles/Fetch Tiddler Bundle
+title: $:/plugins/inmysocks/TWederation/Fetch Tiddler Bundle
 
 \define thisMakeChoiceSelect()
 What to fetch: <$select tiddler='$:/state/Fetch Tiddler Bundle' field='what_to_fetch'>
