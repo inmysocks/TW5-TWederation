@@ -1,6 +1,6 @@
 created: 20160128163510455
 creator: inmysocks
-modified: 20160128163516917
+modified: 20160130111038875
 modifier: inmysocks
 title: How to set up your own federated tiddlywiki
 type: 
@@ -10,7 +10,7 @@ Remember that this is all new and may change significantly. This isn't a bad thi
 !What you will need:
 
 *A TiddlyWiki hosted online. You can use your own hosting or http://tiddlyspot.com/ (some instructions for tiddlywiki 5 on tiddlyspot are [[here|http://tiddlywiki.com/#Saving%20on%20TiddlySpot]])
-*The plugin [[$:/plugins/inmysocks/FetchTiddlers]]
+*The plugin [[$:/plugins/inmysocks/TWederation]]
 *Blogging tiddlers:
 **[[New Blog Post]] - for making posts
 **[[Posts]] - this just lists posts.

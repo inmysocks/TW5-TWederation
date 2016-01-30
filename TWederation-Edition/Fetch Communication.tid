@@ -1,0 +1,133 @@
+created: 20160130110220877
+modified: 20160130130532111
+tags: Communication
+title: Fetch Communication
+
+What to fetch:
+<$select tiddler='$:/state/Fetch Tiddler Bundle' field='what_to_fetch'>
+	<option value=''>
+		--
+	</option>
+	<option>
+		Enter Filter
+	</option>
+	<option value='[type[Blog Post]]'>
+		All Blog Posts
+	</option>
+	<option value='[type[Wiki twCard]]'>
+		All Wiki twCards
+	</option>
+	<option value='[type[Identity twCard]]'>
+		All Identity twCards
+	</option>
+	<option value='[[$:/SitetwCard]get[text]]'>
+		The wikis twCard
+	</option>
+	<option value='[[$:/SiteAuthor]get[text]]'>
+		The Site Authors twCard
+	</option>
+	<option>
+		Messages
+	</option>
+</$select>
+
+Select Wiki: 
+<$select tiddler='$:/state/Fetch Tiddler Bundle' field='wiki_url'>
+	<option value=''>
+		--
+	</option>
+	<option>
+		All
+	</option>
+	<$list filter='[type[Wiki twCard]]'>
+		<option value={{!!url}}>
+			<$view field='name'/>
+		</option>
+	</$list>
+</$select>
+
+or enter wiki url: <$edit-text tiddler='$:/state/Fetch Tiddler Bundle' field='wiki_url' class='tc-edit-texteditor'/>
+
+<$reveal type='match' state='$:/state/Fetch Tiddler Bundle!!what_to_fetch' text='Enter Filter'>
+
+Filter: <$edit-text tiddler='$:/state/Fetch Tiddler Bundle' field='filter' class='tc-edit-texteditor'/>
+
+</$reveal>
+
+Bundle Name: <$edit-text tiddler='$:/state/Fetch Tiddler Bundle' field='bundle_name' class='tc-edit-texteditor'/>
+
+Fetch Type:
+<$select tiddler='$:/state/Fetch Tiddler Bundle' field='bundle_function'>
+	<option value=''>--</option>
+	<option value='bundleTiddlers'>
+		Bundle Tiddlers
+	</option>
+	<option value='tiddlerSummary'>
+		Tiddler Summaries
+	</option>
+	<option value='fetchShortMessages'>
+		Short Messages
+	</option>
+</$select> (optional, defaults to Bundle Tiddlers)
+
+<$reveal type='match' state='$:/state/Fetch Tiddler Bundle!!wiki_url' text=All>
+	<$button>Request Bundle
+		<$list filter='[type[Wiki twCard]]'>
+			<$list 
+				filter='[[$:/state/Fetch Tiddler Bundle]!what_to_fetch[Enter Filter]get[what_to_fetch]]' 
+				variable='BundleFilter' 
+				emptyMessage="""<$action-sendmessage 
+							$message='tm-request-bundle' 
+							url={{!!url}} 
+							filter={{$:/state/Fetch Tiddler Bundle!!filter}} 
+							undleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}} 
+							separator='SOMESTRINGIDONOTKNOWWHAT' 
+							packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
+						/>"""
+			>
+				<$action-sendmessage 
+					$message='tm-request-bundle' 
+					url={{!!url}} 
+					filter=<<BundleFilter>> 
+					bundleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}} 
+					separator='SOMESTRINGIDONOTKNOWWHAT' 
+					packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
+				/>
+			</$list>
+		</$list>
+	</$button>
+</$reveal>
+<$reveal type='nomatch' state='$:/state/Fetch Tiddler Bundle!!wiki_url' text=All>
+	<$list 
+		filter='[[$:/state/Fetch Tiddler Bundle]!what_to_fetch[Enter Filter]get[what_to_fetch]]' 
+		variable='BundleFilter' 
+		emptyMessage="""
+			<$button>Request Bundle
+				<$action-sendmessage 
+					$message='tm-request-bundle' 
+					url={{$:/state/Fetch Tiddler Bundle!!wiki_url}} 
+					filter={{$:/state/Fetch Tiddler Bundle!!filter}} 
+					undleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}} 
+					separator='SOMESTRINGIDONOTKNOWWHAT' 
+					packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
+				/>
+			</$button>"""
+	>
+		<$button>Request Bundle
+		<$action-sendmessage 
+			$message='tm-request-bundle' 
+			url={{$:/state/Fetch Tiddler Bundle!!wiki_url}} 
+			filter=<<BundleFilter>> 
+			bundleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}} 
+			separator='SOMESTRINGIDONOTKNOWWHAT' 
+			packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
+		/>
+		</$button>
+	</$list>
+</$reveal>
+
+Bundle Link:
+
+<$list filter='[tag[Tidder Bundle]prefix{$:/state/Fetch Tiddler Bundle!!bundle_name}]' emptyMessage='Fetch bundle first'>
+<$link to=<<currentTiddler>>><$view field='title'/></$link>
+</$list>
