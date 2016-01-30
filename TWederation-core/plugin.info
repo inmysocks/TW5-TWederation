@@ -1,5 +1,5 @@
 {
-	"title": "$:/plugins/inmysocks/TWederation",
+	"title": "$:/plugins/inmysocks/TWederation-core",
 	"description": "A plugin that lets you create and unpack tiddler bundles as well as fetch tiddlers from other wikis",
 	"author": "inmysocks",
 	"version": "0.0.15",
