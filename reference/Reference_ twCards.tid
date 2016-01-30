@@ -1,9 +1,11 @@
 caption: Reference: twCards
+created: 20160129090554341
+modified: 20160129090557261
 tags: Reference
 title: $:/plugins/inmysocks/TWederation/Reference: twCards
 
 twCards are the objects used to transfer and save the metadata that is used to hold the TWederation together.
 
-<$list filter='[tag[Reference: twCards]]'>
+<$list filter='[tag[$:/plugins/inmysocks/TWederation/Reference: twCards]]'>
 <$link to=<<currentTiddler>>><$view field='caption'><$view field='title'/></$view></$link><br>
 </$list>

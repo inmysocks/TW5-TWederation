@@ -1,0 +1,20 @@
+caption: Table of Contents
+created: 20140907171933267
+creator: inmysocks
+list: Dashboard [[What to do]] [[Wiki Examples]] [[Things to import to make everything work]] Contacts
+modified: 20150218015558483
+modifier: inmysocks
+no_edit: true
+tags: $:/tags/SideBar
+title: Contents
+
+<$reveal type='nomatch' state='$:/settings/toc' text='folder'>
+<div class='tc-table-of-contents'>
+<<toc-selective-expandable 'Contents' 'sort[list]'>>
+</div>
+</$reveal>
+<$reveal type='match' state='$:/settings/toc' text='folder'>
+<div class='tc-table-of-contents'>
+<<my-toc-selective-expandable 'Contents' 'sort[list]'>>
+</div>
+</$reveal>

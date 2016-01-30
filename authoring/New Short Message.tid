@@ -1,0 +1,28 @@
+created: 20160126210843364
+creator: inmysocks
+modified: 20160127182329655
+modifier: inmysocks
+tags: Communication
+title: New Short Message
+
+\define thisSaveMessage(TIME)
+<$list filter='[[$:/Messages/]addsuffix{$:/SiteAuthor}]' variable=TiddlerName>
+<$list filter='[{$:/state/Short Messages!!selected_recipient}addprefix[ - ]addprefix[$TIME$]]' variable=IndexName>
+<$button>Save Message
+<$action-setfield $tiddler=<<TiddlerName>> $index=<<IndexName>> $value={{$:/state/Short Messages!!message}}/>
+<$action-setfield $tiddler='$:/state/Short Messages' message=''/>
+</$button>
+</$list>
+</$list>
+\end
+
+To: <$select tiddler='$:/state/Short Messages' field='selected_recipient'>
+<option value=''>--</option>
+<$list filter='[type[Identity twCard]]'>
+<option value=<<currentTiddler>>><$view field='username'/></option>
+</$list>
+</$select>
+
+Message: <$edit-text tiddler='$:/state/Short Messages' field='message' class='tc-edit-texteditor'/>
+
+<$macrocall $name=thisSaveMessage TIME=<<now "0DD/0MM/YYYY 0hhh0mm:0ss">>/>

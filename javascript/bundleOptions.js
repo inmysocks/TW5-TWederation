@@ -77,7 +77,7 @@ $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
 		var currentBundleTiddler = $tw.wiki.getTiddler(decodeURI(bundleTiddlers[i]));
 	    if (currentBundleTiddler) {
 			bundleText += 'title:' + currentBundleTiddler.fields.title + '\n';
-			bundleText += 'tags:' + currentBundleTiddler.fields.tags + '\n';
+			bundleText += 'tags:' + $tw.utils.parseStringArray(currentBundleTiddler.fields.tags) + '\n';
 			var fieldTitle;
 			for (fieldTitle in currentBundleTiddler.fields) {
 				if (fieldTitle !== 'title' && fieldTitle !== 'text' && fieldTitle !== 'tags') {
@@ -105,7 +105,7 @@ $tw.wiki.bundleFunction.tiddlerSummary = function(event, status_message) {
 		var currentBundleTiddler = $tw.wiki.getTiddler(decodeURI(bundleTiddlers[i]));
 	    if (currentBundleTiddler) {
 			bundleText += 'title:' + currentBundleTiddler.fields.title + '\n';
-			bundleText += 'tags:' + currentBundleTiddler.fields.tags + '\n';
+			bundleText += 'tags:' + $tw.utils.parseStringArray(currentBundleTiddler.fields.tags) + '\n';
 			var fieldTitle;
 			for (fieldTitle in currentBundleTiddler.fields) {
 				if (fieldTitle !== 'title' && fieldTitle !== 'text' && fieldTitle !== 'tags') {

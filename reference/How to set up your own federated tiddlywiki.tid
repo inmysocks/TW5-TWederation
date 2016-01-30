@@ -1,0 +1,41 @@
+created: 20160128163510455
+creator: inmysocks
+modified: 20160128163516917
+modifier: inmysocks
+title: How to set up your own federated tiddlywiki
+type: 
+
+Remember that this is all new and may change significantly. This isn't a bad thing, we need to try things out to figure out what works.
+
+!What you will need:
+
+*A TiddlyWiki hosted online. You can use your own hosting or http://tiddlyspot.com/ (some instructions for tiddlywiki 5 on tiddlyspot are [[here|http://tiddlywiki.com/#Saving%20on%20TiddlySpot]])
+*The plugin [[$:/plugins/inmysocks/FetchTiddlers]]
+*Blogging tiddlers:
+**[[New Blog Post]] - for making posts
+**[[Posts]] - this just lists posts.
+*Some other templates and tools, this list is subject to change:
+<$list filter='[tag[Tools]][tag[Templates]]'>
+
+</$list>
+
+!What to do:
+
+Note: twCards can contain a lot of information that isn't required. This can be a wiki topic to make it easier for people to find what you have done, or your real name to make it easier for people to know who you are. If you don't want to fill in a field than just leave it blank, I will try to list which fields are necessary as we go along. If you want to add a field that isn't listed feel free to do that too. If you want you let us know about what you add so we can improve the system.
+
+*Make yourself an [[identity twCard|Create Identity twCard]]. This is what you use to let the world know that a post or comment is yours and how people find things you have done. A username is all you really need, but including at least your wiki url will help you find responses people have left for you.
+*Make your wiki a [[wiki twCard|Create Wiki twCard]]. The url is all that is strictly required, but to be very useful a name and author would also be helpful.
+*Use [[this tiddler|Wiki Configuration for TWederation]] to select your name and the your wiki as the author and current wiki respectively. This is so other people can easily get information about the wiki and you. Or at least the information you have decided to share.
+
+''Now you are set up!''
+
+To start you can try sending your first message. To do this you need someone to send a message to, for the moment try 
+
+*Get wiki twCards from wikis you wish to follow or comment on. A sites twCard should be listed in the tiddler [[$:/SitetwCard]]. If you have the url than you can fetch the card using the fetch tiddler tab in the $:/ControlPanel
+**I will try to set up a central listing of Wiki twCards (and maybe Identity twCards) for people to use if they wish to find other wikis/users (or to make it easy to be found). I assume that if this catches on other people will also set up similar listings.
+*Here we run into our first big bootstrapping problem. For someone to receive a message from you they need to know to listen, and for them to know to listen you need to contact them. We are working on it, I imagine that we will end up with some central communication sites like the tiddlywiki community search that use non-tiddlywiki things to let people register their wikis, then these sites can take messages from the different wikis to help people connect. So if I see a wiki and I want to contact the author I could find a central listing where the wiki is registered and make a message addressed to both the central listing and the other site, then when the author of the other site checks their messages they can receive the message from the central listing and decide to add me or not. There is no way to force someone to listen to you, this is a feature.
+**For now you can go leave a comment over on my site [[here|http://ooktech.com/jed/externalbrain/#Dashboard]], or use one of the ways listed there to contact me, you could put a link to your wiki in the [[tiddlywiki google group|https://groups.google.com/forum/#!forum/tiddlywiki]], you could ask in the #tiddlywiki irc channel on freenode, the [[tiddlywiki community on google+|https://plus.google.com/u/0/communities/117285869700890736959]] and probably other places.
+*Now you should make a post or leave some comments.
+*You can use [[New Blog Post]] to go make a post so people can leave you comments
+*If you go to $:/ControlPanel you can go to the `Tiddler Bundles` tab and the `Fetch Tiddler Bundle` tab under that. You can enter wiki urls and in the second drop down select `All Identity twCards` and `All Wiki twCards` as what to fetch, put in a bundle name (`twCards` works) and click on `Request Bundle`. Then switch to the `Unbundle Tiddlers` tab and select the bundle from the drop-down menu and click on the Import button. Now you have identity cards and wiki cards so you can use [[New Message]] to write some messages.
+**Remember that you have to have some way to notify people of the initial messages so they know to check.
