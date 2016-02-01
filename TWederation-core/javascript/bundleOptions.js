@@ -32,12 +32,14 @@ $tw.wiki.bundleHandler = $tw.wiki.bundleHandler || {};
 $tw.wiki.bundleFunction = $tw.wiki.bundleFunction || {};
 
 $tw.wiki.bundleHandler.full = function(event) {
-	$tw.wiki.addTiddler(new $tw.Tiddler(event.data.bundle));
+	var creationFields = $tw.wiki.getCreationFields();
+	$tw.wiki.addTiddler(new $tw.Tiddler(creationFields, event.data.bundle));
 };
 
 $tw.wiki.bundleHandler.shortMessages = function(event) {
-  var messagesObject;
-  var i;
+	var creationFields = $tw.wiki.getCreationFields();
+	var messagesObject;
+	var i;
 	var name = '$:/Messages/' + event.data.sender;
 	var messagesTiddler = $tw.wiki.getTiddler(name);
 	if (messagesTiddler) {
@@ -50,7 +52,7 @@ $tw.wiki.bundleHandler.shortMessages = function(event) {
 		messagesObject[i] = messageThing[i];
 	}
 	event.data.bundle.text = JSON.stringify(messagesObject);
-	$tw.wiki.addTiddler(new $tw.Tiddler(event.data.bundle));
+	$tw.wiki.addTiddler(new $tw.Tiddler(creationFields, event.data.bundle));
 };
 
 $tw.wiki.bundleFunction.fetchShortMessages = function(event, status_message) {
@@ -59,7 +61,7 @@ $tw.wiki.bundleFunction.fetchShortMessages = function(event, status_message) {
 	var messageTiddlerTitle = '$:/Messages/' + event.data.sender;
 	var messageTiddler = $tw.wiki.getTiddler(messageTiddlerTitle);
 	var currentTimeStamp = new Date();
-	var messageSuffix = ' - (' + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds() + currentTimeStamp.getDate() + '/' + (currentTimeStamp.getMonth()+1) + '/' + + currentdate.getFullYear() + ')';
+	var messageSuffix = ' - (' + currentTimeStamp.getHours() + ":" + currentTimeStamp.getMinutes() + ":" + currentTimeStamp.getSeconds() + currentTimeStamp.getDate() + '/' + (currentTimeStamp.getMonth()+1) + '/' + + currentTimeStamp.getFullYear() + ')';
 	var bundleTitle = 'MessageBundle';
 	bundleTitle += messageSuffix;
 	var Bundle = {title: bundleTitle, text: messageTiddler.fields.text, list: '', tags: '[[Tiddler Bundle]]', separator: separator, type: 'application/json', status: status};
@@ -71,7 +73,7 @@ $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
 	var separator = event.data.separator ? event.data.separator:'thisisthetiddlerdivisionstringwhywouldyouevenhavethisinyourtiddlerseriouslywhythisisjustridiculuous';
 	var bundleFilter = event.data.filter ? event.data.filter : '[is[system]!is[system]]';
 	var currentTimeStamp = new Date();
-	var messageSuffix = ' - (' + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds() + currentTimeStamp.getDate() + '/' + (currentTimeStamp.getMonth()+1) + '/' + + currentdate.getFullYear() + ')';
+	var messageSuffix = ' - (' + currentTimeStamp.getHours() + ":" + currentTimeStamp.getMinutes() + ":" + currentTimeStamp.getSeconds() + currentTimeStamp.getDate() + '/' + (currentTimeStamp.getMonth()+1) + '/' + + currentTimeStamp.getFullYear() + ')';
 	var bundleTitle = event.data.bundlename ? event.data.bundlename:"Default Bundle";
 	bundleTitle += messageSuffix;
 	var bundleTiddlers = $tw.wiki.filterTiddlers(bundleFilter);
@@ -84,9 +86,15 @@ $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
 	    if (currentBundleTiddler) {
 			bundleText += 'title:' + currentBundleTiddler.fields.title + '\n';
 			bundleText += 'tags:' + $tw.utils.parseStringArray(currentBundleTiddler.fields.tags) + '\n';
+			if (currentBundleTiddler.fields.created) {
+				bundleText += 'created:' + $tw.utils.stringifyDate(currentBundleTiddler.fields.created);
+			}
+			if (currentBundleTiddler.fields.modified) {
+				bundleText += 'modified:' + $tw.utils.stringifyDate(currentBundleTiddler.fields.modified);
+			}
 			var fieldTitle;
 			for (fieldTitle in currentBundleTiddler.fields) {
-				if (fieldTitle !== 'title' && fieldTitle !== 'text' && fieldTitle !== 'tags') {
+				if (fieldTitle !== 'title' && fieldTitle !== 'text' && fieldTitle !== 'tags' && fieldTitle !== 'created' && fieldTitle !== 'modified') {
 					bundleText += fieldTitle + ':' + currentBundleTiddler.fields[fieldTitle] + '\n';
 				}
 			}
@@ -102,7 +110,7 @@ $tw.wiki.bundleFunction.tiddlerSummary = function(event, status_message) {
 	var separator = event.data.separator ? event.data.separator:'thisisthetiddlerdivisionstringwhywouldyouevenhavethisinyourtiddlerseriouslywhythisisjustridiculuous';
 	var bundleFilter = event.data.filter ? event.data.filter : '[is[system]!is[system]]';
 	var currentTimeStamp = new Date();
-	var messageSuffix = ' - (' + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds() + currentTimeStamp.getDate() + '/' + (currentTimeStamp.getMonth()+1) + '/' + + currentdate.getFullYear() + ')';
+	var messageSuffix = ' - (' + currentTimeStamp.getHours() + ":" + currentTimeStamp.getMinutes() + ":" + currentTimeStamp.getSeconds() + currentTimeStamp.getDate() + '/' + (currentTimeStamp.getMonth()+1) + '/' + + currentTimeStamp.getFullYear() + ')';
 	var bundleTitle = event.data.bundlename ? event.data.bundlename:"Summary Bundle";
 	bundleTitle += messageSuffix;
 	var bundleTiddlers = $tw.wiki.filterTiddlers(bundleFilter);
@@ -115,9 +123,15 @@ $tw.wiki.bundleFunction.tiddlerSummary = function(event, status_message) {
 	    if (currentBundleTiddler) {
 			bundleText += 'title:' + currentBundleTiddler.fields.title + '\n';
 			bundleText += 'tags:' + $tw.utils.parseStringArray(currentBundleTiddler.fields.tags) + '\n';
+			if (currentBundleTiddler.fields.created) {
+				bundleText += 'created:' + $tw.utils.stringifyDate(currentBundleTiddler.fields.created);
+			}
+			if (currentBundleTiddler.fields.modified) {
+				bundleText += 'modified:' + $tw.utils.stringifyDate(currentBundleTiddler.fields.modified);
+			}
 			var fieldTitle;
 			for (fieldTitle in currentBundleTiddler.fields) {
-				if (fieldTitle !== 'title' && fieldTitle !== 'text' && fieldTitle !== 'tags') {
+				if (fieldTitle !== 'title' && fieldTitle !== 'text' && fieldTitle !== 'tags' && fieldTitle !== 'created' && fieldTitle !== 'modified') {
 					bundleText += fieldTitle + ':' + currentBundleTiddler.fields[fieldTitle] + '\n';
 				}
 			}

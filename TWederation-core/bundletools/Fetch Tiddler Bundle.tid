@@ -16,7 +16,7 @@ What to fetch: <$select tiddler='$:/state/Fetch Tiddler Bundle' field='what_to_f
 
 Select Wiki: <$select tiddler='$:/state/Fetch Tiddler Bundle' field='wiki_url'>
 <option value=''>--</option>
-<$list filter='[type[Wiki twCard]]'>
+<$list filter='[all[tiddlers+shadows]type[Wiki twCard]]'>
 <option value={{!!url}}><$view field='name'/></option>
 </$list>
 </$select>
@@ -51,4 +51,6 @@ Fetch Type: <$select tiddler='$:/state/Fetch Tiddler Bundle' field='bundle_funct
 
 Bundle Link:
 
-<$link to={{$:/state/Fetch Tiddler Bundle!!bundle_name}}>{{$:/state/Fetch Tiddler Bundle!!bundle_name}}</$link>
+<$list filter='[tag[Tiddler Bundle]prefix{$:/state/Fetch Tiddler Bundle!!bundle_name}]'>
+
+</$list>

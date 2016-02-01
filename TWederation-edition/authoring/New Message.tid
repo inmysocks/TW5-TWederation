@@ -1,7 +1,3 @@
-created: 20160125192720041
-creator: inmysocks
-modified: 20160129215935554
-modifier: inmysocks
 tags: Communication
 title: New Message
 type: 
@@ -23,14 +19,14 @@ Remember: For the moment everything here is public. Anyone can see it.
 
 To: <$select tiddler='$:/state/New Message' field='to_field'>
 <option value=''>--</option>
-<$list filter='[type[Identity twCard]]'>
+<$list filter='[all[tiddlers+shadows]type[Identity twCard]]'>
 <option value=<<currentTiddler>>><$view field='username'/></option>
 </$list>
 </$select>
 
 From: <$select tiddler='$:/state/New Message' field='from_field'>
 <option value=''>--</option>
-<$list filter='[type[Identity twCard]]'>
+<$list filter='[all[tiddlers+shadows]type[Identity twCard]]'>
 <option value=<<currentTiddler>>><$view field='username'/></option>
 </$list>
 </$select>

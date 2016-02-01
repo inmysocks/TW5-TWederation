@@ -1,7 +1,3 @@
-created: 20160126210843364
-creator: inmysocks
-modified: 20160127182329655
-modifier: inmysocks
 tags: Communication
 title: New Short Message
 
@@ -18,7 +14,7 @@ title: New Short Message
 
 To: <$select tiddler='$:/state/Short Messages' field='selected_recipient'>
 <option value=''>--</option>
-<$list filter='[type[Identity twCard]]'>
+<$list filter='[all[tiddlers+shadows]type[Identity twCard]]'>
 <option value=<<currentTiddler>>><$view field='username'/></option>
 </$list>
 </$select>

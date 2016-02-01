@@ -1,7 +1,3 @@
-created: 20160126202510455
-creator: inmysocks
-modified: 20160127192745956
-modifier: inmysocks
 tags: Communication
 title: Short Messages
 
@@ -13,7 +9,7 @@ title: Short Messages
 	<option value=''>
 		All
 	</option>
-	<$list filter='[type[Identity twCard]]'>
+	<$list filter='[all[tiddlers+shadows]type[Identity twCard]]'>
 		<option value=<<currentTiddler>>>
 			<$view field='username'/>
 		</option>
@@ -21,10 +17,10 @@ title: Short Messages
 </$select>
 
 !!!To: <$select tiddler='$:/state/View Short Messages' field='receiver'>
-	<option value='[type[Identity twCard]]'>
+	<option value='[all[tiddlers+shadows]type[Identity twCard]]'>
 		All
 	</option>
-	<$list filter='[type[Identity twCard]]'>
+	<$list filter='[all[tiddlers+shadows]type[Identity twCard]]'>
 		<$list filter='[is[current]has[username]addprefix<OPEN>addsuffix<CLOSE>]' variable=ThisFilter>
 			<option value=<<ThisFilter>>>
 				<$view field='username'/>

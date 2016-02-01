@@ -1,5 +1,3 @@
-created: 20160130110220877
-modified: 20160130130532111
 tags: Communication
 title: Fetch Communication
 
@@ -39,7 +37,7 @@ Select Wiki:
 	<option>
 		All
 	</option>
-	<$list filter='[type[Wiki twCard]]'>
+	<$list filter='[all[tiddlers+shadows]type[Wiki twCard]]'>
 		<option value={{!!url}}>
 			<$view field='name'/>
 		</option>
@@ -72,7 +70,7 @@ Fetch Type:
 
 <$reveal type='match' state='$:/state/Fetch Tiddler Bundle!!wiki_url' text=All>
 	<$button>Request Bundle
-		<$list filter='[type[Wiki twCard]]'>
+		<$list filter='[all[tiddlers+shadows]type[Wiki twCard]]'>
 			<$list 
 				filter='[[$:/state/Fetch Tiddler Bundle]!what_to_fetch[Enter Filter]get[what_to_fetch]]' 
 				variable='BundleFilter' 

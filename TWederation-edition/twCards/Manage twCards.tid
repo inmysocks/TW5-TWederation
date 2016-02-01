@@ -16,7 +16,7 @@ title: $:/plugins/inmysocks/TWederation/Manage twCards
 
 <div style='width:100%;background-color:lightgrey;border:1px solid;'>Identity twCards: <$select tiddler='$:/settings/Manage twCards' field='selected_identity_card'>
 <option value=''>--</option>
-<$list filter='[type[Identity twCard]]'>
+<$list filter='[all[tiddlers+shadows]type[Identity twCard]]'>
 <option value=<<currentTiddler>>><$view field='username'/></option>
 </$list>
 </$select> <$reveal type='nomatch' state='$:/settings/Manage twCards!!selected_identity_card' text=''>(<$link to={{$:/settings/Manage twCards!!selected_identity_card}}>import link</$link>)</$reveal>
@@ -29,7 +29,7 @@ title: $:/plugins/inmysocks/TWederation/Manage twCards
 
 <div style='width:100%;background-color:lightgrey;border:1px solid;'>Topic twCards: <$select tiddler='$:/settings/Manage twCards' field='selected_topic_card'>
 <option value=''>--</option>
-<$list filter='[type[Topic twCard]]'>
+<$list filter='[all[tiddlers+shadows]type[Topic twCard]]'>
 <option value=<<currentTiddler>>><$view field='topic_name'/></option>
 </$list>
 </$select>  <$reveal type='nomatch' state='$:/settings/Manage twCards!!selected_topic_card' text=''>(<$link to={{$:/settings/Manage twCards!!selected_topic_card}}>import link</$link>)</$reveal>

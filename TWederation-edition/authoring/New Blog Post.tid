@@ -1,8 +1,4 @@
-created: 20150203215359083
-creator: inmysocks
 list-before: Bookmarks
-modified: 20160126201313628
-modifier: inmysocks
 tags: Communication
 title: New Blog Post
 
@@ -29,7 +25,7 @@ Author:
 	<option value=''>
 		--
 	</option>
-	<$list filter='[type[Identity twCard]]'>
+	<$list filter='[all[tiddlers+shadows]type[Identity twCard]]'>
 		<option value=<<currentTiddler>>>
 			<$view field='username'/>
 		</option>
@@ -41,7 +37,7 @@ Wiki:
 	<option value=''>
 		--
 	</option>
-	<$list filter='[type[Wiki twCard]]'>
+	<$list filter='[all[tiddlers+shadows]type[Wiki twCard]]'>
 		<option value={{!!url}}>
 			<$view field='name'/>
 		</option>

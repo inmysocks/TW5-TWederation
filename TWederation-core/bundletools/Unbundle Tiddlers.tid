@@ -26,14 +26,19 @@ Select Bundle: <$select tiddler='$:/state/Tiddler Bundles' field='selected_impor
 <$checkbox tiddler='$:/state/Tiddler Bundles' field='overwrite' checked=true unchecked=false>Overwrite Existing Tiddlers</$checkbox>
 
 <$reveal type='nomatch' state='$:/state/Tiddler Bundles!!selected_import' text=''>
-<$button>Import <$view tiddler='$:/state/Tiddler Bundles' field='selected_import'/>
-<$list filter='[{$:/state/Tiddler Bundles!!selected_import}get[separator]]' variable=SEPARATOR>
-<$action-tiddlerbundle $bundle={{$:/state/Tiddler Bundles!!selected_import}} $overwrite={{$:/state/Tiddler Bundles!!overwrite}} $action=unpack $separator=<<SEPARATOR>>/>
-</$list>
-</$button>
-</$reveal>
-<$reveal type='match' state='$:/state/Tiddler Bundles!!selected_import' text=''>
-Select a bundle to import
+	<$button>Import <$view tiddler='$:/state/Tiddler Bundles' field='selected_import'/>
+		<$list filter='[{$:/state/Tiddler Bundles!!selected_import}get[separator]]' variable='SEPARATOR'>
+			<$action-tiddlerbundle 
+				$bundle={{$:/state/Tiddler Bundles!!selected_import}} 
+				$overwrite={{$:/state/Tiddler Bundles!!overwrite}} 
+				$action='unpack' 
+				$separator=<<SEPARATOR>>
+			/>
+		</$list>
+	</$button>
+	</$reveal>
+	<$reveal type='match' state='$:/state/Tiddler Bundles!!selected_import' text=''>
+	Select a bundle to import
 </$reveal>
 
 <style>

@@ -3,7 +3,7 @@ title: Posts
 
 Author: <$select tiddler='$:/state/Post' field='selected_author'>
 <option value=''>--</option>
-<$list filter='[type[Identity twCard]]'>
+<$list filter='[all[tiddlers+shadows]type[Identity twCard]]'>
 <option value=<<currentTiddler>>><$view field='username'/></option>
 </$list>
 </$select>
