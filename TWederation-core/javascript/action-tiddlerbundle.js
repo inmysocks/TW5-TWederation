@@ -41,6 +41,7 @@ ActionTiddlerBundle.prototype.execute = function() {
 	this.actionOverwrite = this.getAttribute("$overwrite", false);
 	this.actionSeparator = this.getAttribute("$separator");
 	this.actionAction = this.getAttribute("$action");
+	this.unpackFilter = this.getAttribute("$unpackFilter");
 };
 
 /*
@@ -101,6 +102,10 @@ ActionTiddlerBundle.prototype.invokeAction = function(triggeringWidget,event) {
 
 
 	if (this.actionAction === 'unpack') {
+		var filterOutput = this.unpackFilter ? true:false;
+		if (filterOutput) {
+			var unpackList = this.wiki.filterTiddlers(this.unpackFilter);
+		}
 		var tiddler = $tw.wiki.getTiddler(this.actionBundle);
 		if (tiddler) {
 			//Get the raw text for the bundle.
@@ -123,8 +128,10 @@ ActionTiddlerBundle.prototype.invokeAction = function(triggeringWidget,event) {
 						}
 					}
 					fields['text'] = textField;
-					if (this.actionOverwrite || !this.wiki.getTiddler(fields.title)) {
-						this.wiki.addTiddler(fields);
+					if (filterOutput === false || (unpackList.indexOf(fields.title) !== -1)) {
+						if (this.actionOverwrite || !this.wiki.getTiddler(fields.title)) {
+							this.wiki.addTiddler(fields);
+						}
 					}
 				}
 			}

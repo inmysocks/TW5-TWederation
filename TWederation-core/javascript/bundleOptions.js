@@ -71,7 +71,7 @@ $tw.wiki.bundleFunction.fetchShortMessages = function(event, status_message) {
 	var messageTiddlerTitle = '$:/Messages/' + event.data.sender;
 	var messageTiddler = $tw.wiki.getTiddler(messageTiddlerTitle);
 	var currentTimeStamp = new Date();
-	var messageSuffix = ' - (' + currentTimeStamp.getHours() + ":" + currentTimeStamp.getMinutes() + ":" + currentTimeStamp.getSeconds() + currentTimeStamp.getDate() + '/' + (currentTimeStamp.getMonth()+1) + '/' + + currentTimeStamp.getFullYear() + ')';
+	var messageSuffix = ' - (' + $tw.utils.pad(currentTimeStamp.getHours()) + ":" + $tw.utils.pad(currentTimeStamp.getMinutes()) + ":" + $tw.utils.pad(currentTimeStamp.getSeconds()) + $tw.utils.pad(currentTimeStamp.getDate()) + '/' + $tw.utils.pad(currentTimeStamp.getMonth()+1) + '/' + + currentTimeStamp.getFullYear() + ')';
 	var bundleTitle = 'MessageBundle';
 	bundleTitle += messageSuffix;
 	var Bundle = {title: bundleTitle, text: messageTiddler.fields.text, list: '', tags: '[[Tiddler Bundle]]', separator: separator, type: 'application/json', status: status};
@@ -95,7 +95,7 @@ $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
 	for (i = 0; i < bundleTiddlers.length; i++) {
 		var currentBundleTiddler = $tw.wiki.getTiddler(decodeURI(bundleTiddlers[i]));
 	    if (currentBundleTiddler) {
-	    	var isNewTiddler = currentBundleTiddler.fields.created > previousTime;
+	    	var isNewTiddler = currentBundleTiddler.fields.created > previousTime || previousTime.trim() === '';
 	    	if (isNewTiddler) {
 				bundleText += 'title:' + currentBundleTiddler.fields.title + '\n';
 				if (currentBundleTiddler.fields.tags) {
@@ -117,7 +117,7 @@ $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
 			}
 	    }
 	}
-	var Bundle = {title: bundleTitle, text: bundleText, list: $tw.utils.stringifyList(bundleTiddlers), tags: '[[Tiddler Bundle]]', separator: separator, type: 'text/plain', status: status};
+	var Bundle = {title: bundleTitle, text: bundleText, list: $tw.utils.stringifyList(bundleTiddlers), tags: '[[Tiddler Bundle]]', separator: separator, type: 'text/plain', status: status, origin: event.data.destination, bundle_function: event.data.bundleFunction, unbundle_function: 'full', filter: bundleFilter};
 	event.source.postMessage({verb:"DELIVER_BUNDLE", bundle: Bundle, origin: event.data.destination, type: 'full', filter: bundleFilter},"*");
 };
 
