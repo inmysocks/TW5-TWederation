@@ -1,6 +1,14 @@
 caption: Fetch Tiddler Bundle
 title: $:/plugins/inmysocks/TWederation/Fetch Tiddler Bundle
 
+\define thisMakeCheckboxThing()
+<$macrocall $name=thisInnerMakeCheckboxThing PreviousTime={{$:/FetchHistory/$(URL)$##$(FILTER)$}}/>
+\end
+
+\define thisInnerMakeCheckboxThing(PreviousTime)
+<$checkbox tiddler='$:/state/Fetch Tiddler Bundle' field='only_new' checked="""$PreviousTime$""" unchecked='0'>Only fetch new tiddlers created after last import</$checkbox>
+\end
+
 \define thisMakeChoiceSelect()
 What to fetch: <$select tiddler='$:/state/Fetch Tiddler Bundle' field='what_to_fetch'>
 <option value=''>--</option>
@@ -44,9 +52,31 @@ Fetch Type: <$select tiddler='$:/state/Fetch Tiddler Bundle' field='bundle_funct
 <option value='fetchShortMessages'>Short Messages</option>
 </$select> (optional, defaults to Bundle Tiddlers)
 
-<$list filter='[[$:/state/Fetch Tiddler Bundle]!what_to_fetch[Enter Filter]get[what_to_fetch]]' variable=BundleFilter emptyMessage="""<$button><$action-sendmessage $message='tm-request-bundle' url={{$:/state/Fetch Tiddler Bundle!!wiki_url}} filter={{$:/state/Fetch Tiddler Bundle!!filter}} bundleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}} separator='SOMESTRINGIDONOTKNOWWHAT' packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}/>Request Bundle</$button>""">
-<$button>
-<$action-sendmessage $message='tm-request-bundle' url={{$:/state/Fetch Tiddler Bundle!!wiki_url}} filter=<<BundleFilter>> bundleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}} separator='SOMESTRINGIDONOTKNOWWHAT' packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}/>Request Bundle</$button>
+<$vars URL={{$:/state/Fetch Tiddler Bundle!!wiki_url}} FILTER={{$:/state/Fetch Tiddler Bundle!!what_to_fetch}}>
+<<thisMakeCheckboxThing>>
+</$vars>
+
+<$list filter='[[$:/state/Fetch Tiddler Bundle]!what_to_fetch[Enter Filter]get[what_to_fetch]]' variable=BundleFilter emptyMessage="""<$button>
+<$action-sendmessage 
+$message='tm-request-bundle' 
+url={{$:/state/Fetch Tiddler Bundle!!wiki_url}} 
+filter={{$:/state/Fetch Tiddler Bundle!!filter}} 
+bundleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}} 
+separator='SOMESTRINGIDONOTKNOWWHAT' 
+packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}} 
+previousTime={{$:/state/Fetch Tiddler Bundle!!only_new}}
+/>Request Bundle</$button>""">
+	<$button>Request Bundle
+		<$action-sendmessage 
+			$message='tm-request-bundle' 
+			url={{$:/state/Fetch Tiddler Bundle!!wiki_url}} 
+			filter=<<BundleFilter>> 
+			bundleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}} 
+			separator='SOMESTRINGIDONOTKNOWWHAT' 
+			packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}} 
+			previousTime={{$:/state/Fetch Tiddler Bundle!!only_new}}
+		/>
+	</$button>
 </$list>
 
 Bundle Link:

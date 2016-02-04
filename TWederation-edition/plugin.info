@@ -2,7 +2,7 @@
 	"title": "$:/plugins/inmysocks/TWederation-edition",
 	"description": "A plugin with the tiddlers required for the TWederation edition",
 	"author": "inmysocks",
-	"version": "0.0.17",
+	"version": "0.0.20",
 	"core-version": ">=5.1.10",
 	"source": "",
 	"plugin-type": "plugin"

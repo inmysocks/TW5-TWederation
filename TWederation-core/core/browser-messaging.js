@@ -125,6 +125,7 @@ exports.startup = function() {
 				if(err) {
 					alert("Error loading tiddler bundle: " + url);
 				} else {
+					console.log(event.paramObject);
     				iframeInfo.domNode.contentWindow.postMessage({
     					verb: "BUNDLE_REQUEST",
     					filter: event.paramObject.filter,
@@ -133,7 +134,8 @@ exports.startup = function() {
     					destination: url,
     					bundleFunction: event.paramObject.packingFunction,
     					sender: event.paramObject.sender,
-    					recipient: event.paramObject.recipient
+    					recipient: event.paramObject.recipient,
+    					previousTime: event.paramObject.previousTime
     				}, "*");
     			}
     		});
@@ -209,13 +211,6 @@ exports.startup = function() {
 				}
 				break;
 			case "DELIVER_BUNDLE":
-				//By default the bundles are given the type 'text/plain' so nothing in the bundle affects the rest of the wiki. This is to prevent imported bundles from breaking things,
-				//either by accident or via malicious wikitext or javascript.
-				//I thould add a trusted sources list that the user can maintain. Only things from the trusted sources should be allowed to be added directly to the wiki as tiddlers.
-				//How do I let a user add items to the trusted sources list from within the wiki?
-				//I need to also find some way to let the user of receiving wiki set how a bundle is handled. My wiki should be able to request a normal bundle from another wiki and then
-				//when the bundle is received decide what function to use when handling it.
-
 				//Check if the bundle was sent from a recognized source
 				if ($tw.wiki.recognizedSources[event.origin]) {
 					//Check the type of bundle that was sent and pick the appropriate handler based on the type
@@ -224,6 +219,7 @@ exports.startup = function() {
 					} else {
 						//If no recognized type is given make the bundle plain text to be safe.
 						event.data.bundle.type = 'text/plain';
+						console.log('unrecognized source')
 						$tw.wiki.addTiddler(new $tw.Tiddler(event.data.bundle));
 					}
 				} else {

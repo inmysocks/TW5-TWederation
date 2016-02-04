@@ -19,6 +19,6 @@ exports.synchronous = true;
 
 $tw.wiki.recognizedSources = $tw.wiki.recognizedSources || {};
 
-$tw.wiki.recognizedSources['http://tiddlerbundletest.tiddlyspot.com'] = 'TRUE';
+$tw.wiki.recognizedSources['http://twederation.tiddlyspot.com'] = 'TRUE';
 
 })();

@@ -1,6 +1,14 @@
 tags: Communication
 title: Fetch Communication
 
+\define thisMakeCheckboxThing()
+<$macrocall $name=thisInnerMakeCheckboxThing PreviousTime={{$:/FetchHistory/$(URL)$##$(FILTER)$}}/>
+\end
+
+\define thisInnerMakeCheckboxThing(PreviousTime)
+<$checkbox tiddler='$:/state/Fetch Tiddler Bundle' field='only_new' checked="""$PreviousTime$""" unchecked='0'>Only fetch new tiddlers created after last import</$checkbox>
+\end
+
 What to fetch:
 <$select tiddler='$:/state/Fetch Tiddler Bundle' field='what_to_fetch'>
 	<option value=''>
@@ -68,6 +76,10 @@ Fetch Type:
 	</option>
 </$select> (optional, defaults to Bundle Tiddlers)
 
+<$vars URL={{$:/state/Fetch Tiddler Bundle!!wiki_url}} FILTER={{$:/state/Fetch Tiddler Bundle!!what_to_fetch}}>
+<<thisMakeCheckboxThing>>
+</$vars>
+
 <$reveal type='match' state='$:/state/Fetch Tiddler Bundle!!wiki_url' text=All>
 	<$button>Request Bundle
 		<$list filter='[all[tiddlers+shadows]type[Wiki twCard]]'>
@@ -81,6 +93,7 @@ Fetch Type:
 							undleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}} 
 							separator='SOMESTRINGIDONOTKNOWWHAT' 
 							packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
+							previousTime={{$:/state/Fetch Tiddler Bundle!!only_new}}
 						/>"""
 			>
 				<$action-sendmessage 
@@ -90,6 +103,7 @@ Fetch Type:
 					bundleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}} 
 					separator='SOMESTRINGIDONOTKNOWWHAT' 
 					packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
+					previousTime={{$:/state/Fetch Tiddler Bundle!!only_new}}
 				/>
 			</$list>
 		</$list>
@@ -108,6 +122,7 @@ Fetch Type:
 					undleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}} 
 					separator='SOMESTRINGIDONOTKNOWWHAT' 
 					packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
+					previousTime={{$:/state/Fetch Tiddler Bundle!!only_new}}
 				/>
 			</$button>"""
 	>
@@ -119,6 +134,7 @@ Fetch Type:
 			bundleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}} 
 			separator='SOMESTRINGIDONOTKNOWWHAT' 
 			packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
+			previousTime={{$:/state/Fetch Tiddler Bundle!!only_new}}
 		/>
 		</$button>
 	</$list>
@@ -126,6 +142,6 @@ Fetch Type:
 
 Bundle Link:
 
-<$list filter='[tag[Tidder Bundle]prefix{$:/state/Fetch Tiddler Bundle!!bundle_name}]' emptyMessage='Fetch bundle first'>
-<$link to=<<currentTiddler>>><$view field='title'/></$link>
+<$list filter='[tag[Tiddler Bundle]prefix{$:/state/Fetch Tiddler Bundle!!bundle_name}]' emptyMessage='Fetch bundle first'>
+<$link to=<<currentTiddler>>><$view field='title'/></$link><br>
 </$list>

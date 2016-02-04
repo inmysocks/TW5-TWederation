@@ -34,6 +34,16 @@ $tw.wiki.bundleFunction = $tw.wiki.bundleFunction || {};
 $tw.wiki.bundleHandler.full = function(event) {
 	var creationFields = $tw.wiki.getCreationFields();
 	$tw.wiki.addTiddler(new $tw.Tiddler(creationFields, event.data.bundle));
+	var historyTiddler = $tw.wiki.getTiddler('$:/FetchHistory/' + event.data.origin);
+	if (historyTiddler) {
+		var newText = JSON.parse(historyTiddler.fields.text);
+		newText[event.data.filter] = $tw.utils.stringifyDate(creationFields.created);
+	} else {
+		var newText = {};
+		newText[event.data.filter] = $tw.utils.stringifyDate(creationFields.created);
+		historyTiddler = {title: '$:/FetchHistory/' + event.data.origin, type: 'application/json', text: ''};
+	}
+	$tw.wiki.addTiddler(new $tw.Tiddler(historyTiddler, {text: JSON.stringify(newText)}));
 };
 
 $tw.wiki.bundleHandler.shortMessages = function(event) {
@@ -72,6 +82,7 @@ $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
 	var status = status_message || '';
 	var separator = event.data.separator ? event.data.separator:'thisisthetiddlerdivisionstringwhywouldyouevenhavethisinyourtiddlerseriouslywhythisisjustridiculuous';
 	var bundleFilter = event.data.filter ? event.data.filter : '[is[system]!is[system]]';
+	var previousTime = event.data.previousTime ? event.data.previousTime : 0;
 	var currentTimeStamp = new Date();
 	var messageSuffix = ' - (' + currentTimeStamp.getHours() + ":" + currentTimeStamp.getMinutes() + ":" + currentTimeStamp.getSeconds() + currentTimeStamp.getDate() + '/' + (currentTimeStamp.getMonth()+1) + '/' + + currentTimeStamp.getFullYear() + ')';
 	var bundleTitle = event.data.bundlename ? event.data.bundlename:"Default Bundle";
@@ -84,25 +95,30 @@ $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
 	for (i = 0; i < bundleTiddlers.length; i++) {
 		var currentBundleTiddler = $tw.wiki.getTiddler(decodeURI(bundleTiddlers[i]));
 	    if (currentBundleTiddler) {
-			bundleText += 'title:' + currentBundleTiddler.fields.title + '\n';
-			bundleText += 'tags:' + $tw.utils.parseStringArray(currentBundleTiddler.fields.tags) + '\n';
-			if (currentBundleTiddler.fields.created) {
-				bundleText += 'created:' + $tw.utils.stringifyDate(currentBundleTiddler.fields.created);
-			}
-			if (currentBundleTiddler.fields.modified) {
-				bundleText += 'modified:' + $tw.utils.stringifyDate(currentBundleTiddler.fields.modified);
-			}
-			var fieldTitle;
-			for (fieldTitle in currentBundleTiddler.fields) {
-				if (fieldTitle !== 'title' && fieldTitle !== 'text' && fieldTitle !== 'tags' && fieldTitle !== 'created' && fieldTitle !== 'modified') {
-					bundleText += fieldTitle + ':' + currentBundleTiddler.fields[fieldTitle] + '\n';
+	    	var isNewTiddler = currentBundleTiddler.fields.created > previousTime;
+	    	if (isNewTiddler) {
+				bundleText += 'title:' + currentBundleTiddler.fields.title + '\n';
+				if (currentBundleTiddler.fields.tags) {
+					bundleText += 'tags:' + $tw.utils.parseStringArray(currentBundleTiddler.fields.tags) + '\n';
 				}
+				if (currentBundleTiddler.fields.created) {
+					bundleText += 'created:' + $tw.utils.stringifyDate(currentBundleTiddler.fields.created) + '\n';
+				}
+				if (currentBundleTiddler.fields.modified) {
+					bundleText += 'modified:' + $tw.utils.stringifyDate(currentBundleTiddler.fields.modified) + '\n';
+				}
+				var fieldTitle;
+				for (fieldTitle in currentBundleTiddler.fields) {
+					if (fieldTitle !== 'title' && fieldTitle !== 'text' && fieldTitle !== 'tags' && fieldTitle !== 'created' && fieldTitle !== 'modified') {
+						bundleText += fieldTitle + ':' + currentBundleTiddler.fields[fieldTitle] + '\n';
+					}
+				}
+				bundleText += 'text:' + currentBundleTiddler.fields.text + '\n' + separator;
 			}
-			bundleText += 'text:' + currentBundleTiddler.fields.text + '\n' + separator;
 	    }
 	}
 	var Bundle = {title: bundleTitle, text: bundleText, list: $tw.utils.stringifyList(bundleTiddlers), tags: '[[Tiddler Bundle]]', separator: separator, type: 'text/plain', status: status};
-	event.source.postMessage({verb:"DELIVER_BUNDLE", bundle: Bundle, origin: event.data.destination, type: 'full'},"*");
+	event.source.postMessage({verb:"DELIVER_BUNDLE", bundle: Bundle, origin: event.data.destination, type: 'full', filter: bundleFilter},"*");
 };
 
 $tw.wiki.bundleFunction.tiddlerSummary = function(event, status_message) {
