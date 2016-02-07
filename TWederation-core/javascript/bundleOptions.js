@@ -41,7 +41,11 @@ $tw.wiki.bundleHandler.full = function(event) {
 	} else {
 		var newText = {};
 		newText[event.data.filter] = $tw.utils.stringifyDate(creationFields.created);
-		historyTiddler = {title: '$:/FetchHistory/' + event.data.origin, type: 'application/json', text: ''};
+		historyTiddler = {
+			title: '$:/FetchHistory/' + event.data.origin, 
+			type: 'application/json', 
+			text: ''
+		};
 	}
 	$tw.wiki.addTiddler(new $tw.Tiddler(historyTiddler, {text: JSON.stringify(newText)}));
 };
@@ -49,7 +53,6 @@ $tw.wiki.bundleHandler.full = function(event) {
 $tw.wiki.bundleHandler.shortMessages = function(event) {
 	var creationFields = $tw.wiki.getCreationFields();
 	var messagesObject;
-	var i;
 	var name = '$:/Messages/' + event.data.sender;
 	var messagesTiddler = $tw.wiki.getTiddler(name);
 	if (messagesTiddler) {
@@ -58,7 +61,7 @@ $tw.wiki.bundleHandler.shortMessages = function(event) {
 		messagesObject = {};
 	}
 	var messageThing = JSON.parse(event.data.bundle.text);
-	for (i in messageThing) {
+	for (var i in messageThing) {
 		messagesObject[i] = messageThing[i];
 	}
 	event.data.bundle.text = JSON.stringify(messagesObject);
@@ -71,32 +74,50 @@ $tw.wiki.bundleFunction.fetchShortMessages = function(event, status_message) {
 	var messageTiddlerTitle = '$:/Messages/' + event.data.sender;
 	var messageTiddler = $tw.wiki.getTiddler(messageTiddlerTitle);
 	var currentTimeStamp = new Date();
-	var messageSuffix = ' - (' + $tw.utils.pad(currentTimeStamp.getHours()) + ":" + $tw.utils.pad(currentTimeStamp.getMinutes()) + ":" + $tw.utils.pad(currentTimeStamp.getSeconds()) + $tw.utils.pad(currentTimeStamp.getDate()) + '/' + $tw.utils.pad(currentTimeStamp.getMonth()+1) + '/' + + currentTimeStamp.getFullYear() + ')';
+	var messageSuffix = ' - (' + $tw.utils.pad(currentTimeStamp.getHours()) + ":" + $tw.utils.pad(currentTimeStamp.getMinutes()) + ":" + $tw.utils.pad(currentTimeStamp.getSeconds()) + '-' + $tw.utils.pad(currentTimeStamp.getDate()) + '/' + $tw.utils.pad(currentTimeStamp.getMonth()+1) + '/' + + currentTimeStamp.getFullYear() + ')';
 	var bundleTitle = 'MessageBundle';
 	bundleTitle += messageSuffix;
-	var Bundle = {title: bundleTitle, text: messageTiddler.fields.text, list: '', tags: '[[Tiddler Bundle]]', separator: separator, type: 'application/json', status: status};
-	event.source.postMessage({verb:"DELIVER_BUNDLE", bundle: Bundle, origin: event.data.destination, type: 'shortMessages', sender: event.data.sender, recipient: event.data.recipient},"*");
+	var Bundle = {
+		title: bundleTitle, 
+		text: messageTiddler.fields.text, 
+		list: '', 
+		tags: '[[Tiddler Bundle]]', 
+		separator: separator, 
+		type: 'application/json', 
+		status: status
+	};
+	var messageObject = {
+		verb:"DELIVER_BUNDLE", 
+		bundle: Bundle, 
+		origin: event.data.destination, 
+		type: 'shortMessages', 
+		sender: event.data.sender, 
+		recipient: event.data.recipient
+	};
+	event.source.postMessage(messageObject,"*");
 };
 
 $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
 	var status = status_message || '';
 	var separator = event.data.separator ? event.data.separator:'thisisthetiddlerdivisionstringwhywouldyouevenhavethisinyourtiddlerseriouslywhythisisjustridiculuous';
 	var bundleFilter = event.data.filter ? event.data.filter : '[is[system]!is[system]]';
-	var previousTime = event.data.previousTime ? event.data.previousTime : 0;
+	var previousTime = event.data.previousTime ? event.data.previousTime : '0';
 	var currentTimeStamp = new Date();
-	var messageSuffix = ' - (' + currentTimeStamp.getHours() + ":" + currentTimeStamp.getMinutes() + ":" + currentTimeStamp.getSeconds() + currentTimeStamp.getDate() + '/' + (currentTimeStamp.getMonth()+1) + '/' + + currentTimeStamp.getFullYear() + ')';
+	var messageSuffix = ' - (' + $tw.utils.pad(currentTimeStamp.getHours()) + ":" + $tw.utils.pad(currentTimeStamp.getMinutes()) + ":" + $tw.utils.pad(currentTimeStamp.getSeconds()) + $tw.utils.pad(currentTimeStamp.getDate()) + '/' + $tw.utils.pad(currentTimeStamp.getMonth()+1) + '/' + + currentTimeStamp.getFullYear() + ')';
 	var bundleTitle = event.data.bundlename ? event.data.bundlename:"Default Bundle";
 	bundleTitle += messageSuffix;
+	bundleList = [];
 	var bundleTiddlers = $tw.wiki.filterTiddlers(bundleFilter);
 	for (var i = 0; i < bundleTiddlers.length; i++) {
 		bundleTiddlers[i] = decodeURI(bundleTiddlers[i]);
 	}
 	var bundleText = '';
-	for (i = 0; i < bundleTiddlers.length; i++) {
+	for (var i = 0; i < bundleTiddlers.length; i++) {
 		var currentBundleTiddler = $tw.wiki.getTiddler(decodeURI(bundleTiddlers[i]));
 	    if (currentBundleTiddler) {
 	    	var isNewTiddler = currentBundleTiddler.fields.created > previousTime || previousTime.trim() === '';
 	    	if (isNewTiddler) {
+	    		bundleList.push(currentBundleTiddler.fields.title);
 				bundleText += 'title:' + currentBundleTiddler.fields.title + '\n';
 				if (currentBundleTiddler.fields.tags) {
 					bundleText += 'tags:' + $tw.utils.parseStringArray(currentBundleTiddler.fields.tags) + '\n';
@@ -107,18 +128,36 @@ $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
 				if (currentBundleTiddler.fields.modified) {
 					bundleText += 'modified:' + $tw.utils.stringifyDate(currentBundleTiddler.fields.modified) + '\n';
 				}
-				var fieldTitle;
-				for (fieldTitle in currentBundleTiddler.fields) {
+				for (var fieldTitle in currentBundleTiddler.fields) {
 					if (fieldTitle !== 'title' && fieldTitle !== 'text' && fieldTitle !== 'tags' && fieldTitle !== 'created' && fieldTitle !== 'modified') {
 						bundleText += fieldTitle + ':' + currentBundleTiddler.fields[fieldTitle] + '\n';
 					}
 				}
-				bundleText += 'text:' + currentBundleTiddler.fields.text + '\n' + separator;
+				bundleText += 'text:' + currentBundleTiddler.fields.text + '\n' + separator + '\n';
 			}
 	    }
 	}
-	var Bundle = {title: bundleTitle, text: bundleText, list: $tw.utils.stringifyList(bundleTiddlers), tags: '[[Tiddler Bundle]]', separator: separator, type: 'text/plain', status: status, origin: event.data.destination, bundle_function: event.data.bundleFunction, unbundle_function: 'full', filter: bundleFilter};
-	event.source.postMessage({verb:"DELIVER_BUNDLE", bundle: Bundle, origin: event.data.destination, type: 'full', filter: bundleFilter},"*");
+	var Bundle = {
+		title: bundleTitle, 
+		text: bundleText, 
+		list: $tw.utils.stringifyList(bundleList), 
+		tags: '[[Tiddler Bundle]]', 
+		separator: separator, 
+		type: 'text/plain', 
+		status: status, 
+		origin: event.data.destination, 
+		bundle_function: event.data.bundleFunction, 
+		unbundle_function: 'full', 
+		filter: bundleFilter
+	};
+	var messageObject = {
+		verb:"DELIVER_BUNDLE",
+		bundle: Bundle,
+		origin: event.data.destination,
+		type: 'full',
+		filter: bundleFilter
+	};
+	event.source.postMessage(messageObject,"*");
 };
 
 $tw.wiki.bundleFunction.tiddlerSummary = function(event, status_message) {
@@ -145,8 +184,7 @@ $tw.wiki.bundleFunction.tiddlerSummary = function(event, status_message) {
 			if (currentBundleTiddler.fields.modified) {
 				bundleText += 'modified:' + $tw.utils.stringifyDate(currentBundleTiddler.fields.modified);
 			}
-			var fieldTitle;
-			for (fieldTitle in currentBundleTiddler.fields) {
+			for (var fieldTitle in currentBundleTiddler.fields) {
 				if (fieldTitle !== 'title' && fieldTitle !== 'text' && fieldTitle !== 'tags' && fieldTitle !== 'created' && fieldTitle !== 'modified') {
 					bundleText += fieldTitle + ':' + currentBundleTiddler.fields[fieldTitle] + '\n';
 				}
@@ -154,8 +192,22 @@ $tw.wiki.bundleFunction.tiddlerSummary = function(event, status_message) {
 			bundleText += '\n\n';
 	    }
 	}
-	var Bundle = {title: bundleTitle, text: bundleText, list: $tw.utils.stringifyList(bundleTiddlers), tags: '[[Bundle Summary]]', separator: separator, type: 'text/plain', status: status};
-	event.source.postMessage({verb:"DELIVER_BUNDLE", bundle: Bundle, origin: event.data.destination, type: 'summary'},"*");
+	var Bundle = {
+		title: bundleTitle, 
+		text: bundleText, 
+		list: $tw.utils.stringifyList(bundleTiddlers), 
+		tags: '[[Bundle Summary]]', 
+		separator: separator, 
+		type: 'text/plain', 
+		status: status
+	};
+	var messageObject = {
+		verb:"DELIVER_BUNDLE", 
+		bundle: Bundle, 
+		origin: event.data.destination, 
+		type: 'summary'
+	};
+	event.source.postMessage(messageObject,"*");
 
 };
 
