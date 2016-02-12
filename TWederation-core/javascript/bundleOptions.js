@@ -179,10 +179,10 @@ $tw.wiki.bundleFunction.tiddlerSummary = function(event, status_message) {
 			bundleText += 'title:' + currentBundleTiddler.fields.title + '\n';
 			bundleText += 'tags:' + $tw.utils.parseStringArray(currentBundleTiddler.fields.tags) + '\n';
 			if (currentBundleTiddler.fields.created) {
-				bundleText += 'created:' + $tw.utils.stringifyDate(currentBundleTiddler.fields.created);
+				bundleText += 'created:' + $tw.utils.stringifyDate(currentBundleTiddler.fields.created) + '\n';
 			}
 			if (currentBundleTiddler.fields.modified) {
-				bundleText += 'modified:' + $tw.utils.stringifyDate(currentBundleTiddler.fields.modified);
+				bundleText += 'modified:' + $tw.utils.stringifyDate(currentBundleTiddler.fields.modified) + '\n';
 			}
 			for (var fieldTitle in currentBundleTiddler.fields) {
 				if (fieldTitle !== 'title' && fieldTitle !== 'text' && fieldTitle !== 'tags' && fieldTitle !== 'created' && fieldTitle !== 'modified') {

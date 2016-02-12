@@ -9,6 +9,37 @@ title: Fetch Communication
 <$checkbox tiddler='$:/state/Fetch Tiddler Bundle' field='only_new' checked="""$PreviousTime$""" unchecked='0'>Only fetch new tiddlers created after last import</$checkbox>
 \end
 
+<$button>Get all new blog posts
+	<$list filter='[[$:/Settings/Follow Wiki List]indexes[]has[url]]'>
+		<$list filter='[[$:/Settings/Follow Wiki List]getindex<currentTiddler>prefix[True]]' variable='dummy'>
+			<$action-sendmessage 
+				$message='tm-request-bundle' 
+				url={{!!url}} 
+				filter='[type[Blog Post]]' 
+				bundleName='New Blog Posts' 
+				separator='SOMESTRINGIDONOTKNOWWHAT' 
+				packingFunction='tiddlerSummary'
+				previousTime={{$:/state/Fetch Tiddler Bundle!!only_new}}
+			/>
+		</$list>
+	</$list>
+</$button>
+<$button>Get all new messages
+	<$list filter='[[$:/Settings/Follow Wiki List]indexes[]has[url]]'>
+		<$list filter='[[$:/Settings/Follow Wiki List]getindex<currentTiddler>prefix[True]]' variable='dummy'>
+			<$action-sendmessage 
+				$message='tm-request-bundle' 
+				url={{!!url}} 
+				filter=<<BundleFilter>> 
+				bundleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}} 
+				separator='SOMESTRINGIDONOTKNOWWHAT' 
+				packingFunction='fetchShortMessages'
+				previousTime={{$:/state/Fetch Tiddler Bundle!!only_new}}
+			/>
+		</$list>
+	</$list>
+</$button>
+
 What to fetch:
 <$select tiddler='$:/state/Fetch Tiddler Bundle' field='what_to_fetch'>
 	<option value=''>

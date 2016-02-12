@@ -5,6 +5,16 @@ user_identifier: This is what others in the TWederation will use for //addressin
 wiki_subtitle: This is the displayed subtitle on your wiki site. It is displayed by the browser window and in the upper right by default.
 wiki_title: This is the displayed title on your wiki site. It is displayed by the browser window and in the upper right by default.
 wiki_url: This is the url used to access your wiki. If you are using tiddlyspot and this says something like `http://yourwiki.tiddlyspot.com` than you can leave it alone.
+why_required: A username and wiki url are required for the basic operation of the TWederation. Username is used to address you (the user) and the wiki url is required to connect the wikis together.
+why_optional: These are not absolutely required to be connected to the TWederation, but they can help everything run smoothly. Wiki name, topic and description are particularly helpful.
+wiki_name: The name used for your wiki. Like `TWederation`, or `TWaddle` or `Wiki reference wiki`. This is optional.
+topic: The topic of your wiki. This helps people search for content. This is optional.
+description: A description of your wiki. This lets people know what your wiki is when listed in a public listing.
+author: This is your name, listed along with the description of your wiki.
+first_name: This is your given name. It is optional.
+last_name: This is your family name. It is optional.
+homepage: This is your personal homepage. It may be the same as your twederation wiki, but it doesn't have to be.
+wiki: This is the url of your twederation wiki.
 
 \define placeholderSiteTitle() perhaps $(sitetitle)$
 
