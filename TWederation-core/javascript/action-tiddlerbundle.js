@@ -42,6 +42,7 @@ ActionTiddlerBundle.prototype.execute = function() {
 	this.actionSeparator = this.getAttribute("$separator");
 	this.actionAction = this.getAttribute("$action");
 	this.unpackFilter = this.getAttribute("$unpackFilter");
+	this.bundleType = this.getAttribute("$type");
 };
 
 /*
@@ -69,6 +70,7 @@ ActionTiddlerBundle.prototype.invokeAction = function(triggeringWidget,event) {
 	}
 	
 	if (this.actionAction === 'pack') {
+		var bundleType = this.bundleType ? this.bundleType:'Tiddler';
 		var urlBundleDefinition = $tw.utils.getLocationHash();
 		var action = urlBundleDefinition.split(':',1);
 		if (action[0] === '#bundle') {
@@ -82,22 +84,32 @@ ActionTiddlerBundle.prototype.invokeAction = function(triggeringWidget,event) {
 			var bundleTiddlers = this.wiki.filterTiddlers(bundleFilter);
 		}
 		var bundleText = '';
+		var bundleObject = {};
 		for (var i = 0; i < bundleTiddlers.length; i++) {
-			var currentBundleTiddler = this.wiki.getTiddler(decodeURI(bundleTiddlers[i]));
-			bundleText += 'title:' + currentBundleTiddler.fields.title + '\n';
-			bundleText += 'tags:' + $tw.utils.stringifyList(currentBundleTiddler.fields.tags) + '\n';
-			var fieldTitle;
-			for (fieldTitle in currentBundleTiddler.fields) {
-				if (fieldTitle !== 'title' && fieldTitle !== 'text' && fieldTitle !== 'tags') {
-					bundleText += fieldTitle + ':' + currentBundleTiddler.fields[fieldTitle] + '\n';
+			if (this.bundleType === "JSON") {
+				var currentBundleTiddler = this.wiki.getTiddler(decodeURI(bundleTiddlers[i]));
+				bundleObject[bundleTiddlers[i]] = currentBundleTiddler;
+			} else {
+				var currentBundleTiddler = this.wiki.getTiddler(decodeURI(bundleTiddlers[i]));
+				bundleText += 'title:' + currentBundleTiddler.fields.title + '\n';
+				bundleText += 'tags:' + $tw.utils.stringifyList(currentBundleTiddler.fields.tags) + '\n';
+				var fieldTitle;
+				for (fieldTitle in currentBundleTiddler.fields) {
+					if (fieldTitle !== 'title' && fieldTitle !== 'text' && fieldTitle !== 'tags') {
+						bundleText += fieldTitle + ':' + currentBundleTiddler.fields[fieldTitle] + '\n';
+					}
 				}
+				bundleText += 'text:' + currentBundleTiddler.fields['text'] + '\n' + separator;
 			}
-			bundleText += 'text:' + currentBundleTiddler.fields['text'] + '\n' + separator;
+		}
+		if (this.bundleType === "JSON") {
+			bundleText = JSON.stringify(bundleObject);
 		}
 		$tw.wiki.setText(this.actionBundle, 'list', undefined, $tw.utils.stringifyList(bundleTiddlers));
 		$tw.wiki.setText(this.actionBundle, 'tags', undefined, '[[Tiddler Bundle]]');
 		$tw.wiki.setText(this.actionBundle, 'text', undefined, bundleText);
 		$tw.wiki.setText(this.actionBundle, 'separator', undefined, separator);
+		$tw.wiki.setText(this.actionBundle, 'bundle_type', undefined, bundleType);
 	}
 
 
@@ -110,27 +122,34 @@ ActionTiddlerBundle.prototype.invokeAction = function(triggeringWidget,event) {
 		if (tiddler) {
 			//Get the raw text for the bundle.
 			var bundleText = tiddler.getFieldString('text');
-			//Get the raw text for each tiddler.
-			var rawBundleTiddlers = bundleText.split(separator);
-			//Create a tiddler from each tiddler. Only overwrite existing tiddlers if this.actionOverwrite is true
-			for (var i = 0; i < rawBundleTiddlers.length; i++) {
-				if (rawBundleTiddlers[i].trim() !== '') {
-					//Get the raw fields text.
-					var rawOtherFields = rawBundleTiddlers[i].split('text:',1);
-					var otherFields = rawOtherFields[0].split('\n');
-					var textField = rawBundleTiddlers[i].replace(otherFields.join('\n') + 'text:','');
-					var fields = {};
-					for (var j = 0; j < otherFields.length; j++) {
-						var currentField = otherFields[j].slice(otherFields[j].indexOf(':')+1);
-						var currentFieldName = otherFields[j].split(':',1);
-						if (currentFieldName[0].trim() !== '') {
-							fields[currentFieldName[0]] = currentField;
+			if (tiddler.fields.bundle_type === 'JSON') {
+				var bundleObject = JSON.parse(tiddler.fields.text);
+				for (var tiddlerName in bundleObject) {
+					this.wiki.addTiddler(bundleObject[tiddlerName]);
+				}
+			} else {
+				//Get the raw text for each tiddler.
+				var rawBundleTiddlers = bundleText.split(separator);
+				//Create a tiddler from each tiddler. Only overwrite existing tiddlers if this.actionOverwrite is true
+				for (var i = 0; i < rawBundleTiddlers.length; i++) {
+					if (rawBundleTiddlers[i].trim() !== '') {
+						//Get the raw fields text.
+						var rawOtherFields = rawBundleTiddlers[i].split('text:',1);
+						var otherFields = rawOtherFields[0].split('\n');
+						var textField = rawBundleTiddlers[i].replace(otherFields.join('\n') + 'text:','');
+						var fields = {};
+						for (var j = 0; j < otherFields.length; j++) {
+							var currentField = otherFields[j].slice(otherFields[j].indexOf(':')+1);
+							var currentFieldName = otherFields[j].split(':',1);
+							if (currentFieldName[0].trim() !== '') {
+								fields[currentFieldName[0]] = currentField;
+							}
 						}
-					}
-					fields['text'] = textField;
-					if (filterOutput === false || (unpackList.indexOf(fields.title) !== -1)) {
-						if (this.actionOverwrite || !this.wiki.getTiddler(fields.title)) {
-							this.wiki.addTiddler(fields);
+						fields['text'] = textField;
+						if (filterOutput === false || (unpackList.indexOf(fields.title) !== -1)) {
+							if (this.actionOverwrite || !this.wiki.getTiddler(fields.title)) {
+								this.wiki.addTiddler(fields);
+							}
 						}
 					}
 				}

@@ -1,6 +1,6 @@
 list-after: $:/core/ui/ViewTemplate/tags
 tags: Templates $:/tags/ViewTemplate
-title: $:/plugins/inmysocks/TWederation/Templates/BundleDisplayTemplate
+title: $:/plugins/inmysocks/TWederation/Templates/JSONBundleDisplayTemplate
 
 \define thisSelectTagThing()
 $:/state/Tiddler Bundles/Selected Tiddlers/$(currentTiddler)$
@@ -10,14 +10,13 @@ $:/state/Tiddler Bundles/Selected Tiddlers/$(currentTiddler)$
 [[$:/state/Tiddler Bundles/Selected Tiddlers/$(currentTiddler)$]tags[]]
 \end
 
-<$list filter='[is[current]tag[Tiddler Bundle]]'>
+<$list filter='[is[current]tag[JSON Bundle]]'>
 
 @@width:100%;
 
 |!Date |{{!!created}} |
 |!Bundle Origin |{{!!origin}} |
 |!Bundle Status Message |{{!!status}} |
-|!Separator Used |{{!!separator}} |
 |!Bundle Function |{{!!bundle_function}} |
 |!Unbundle Function |{{!!unbundle_function}} |
 
