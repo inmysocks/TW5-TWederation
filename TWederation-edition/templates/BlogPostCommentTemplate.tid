@@ -62,5 +62,30 @@ Comment Text:
 
 </div>
 
+<$vars 
+	TiddlerTitle={{!!title}} 
+	PostTitle={{!!post_title}}
+>
+	<$button>Fetch comments for this post
+		<$list filter=<<FollowedWikisFilter>>>
+			<$vars WikiName={{!!name}}>
+				<$list 
+					filter='[[type]addprefix<OPEN>addsuffix<OPEN>addsuffix[Post Comment]addsuffix<CLOSE>addsuffix[post]addsuffix<OPEN>addsuffix<TiddlerTitle>addsuffix<CLOSE>addsuffix[post_author]addsuffix<OPEN>addsuffix{$:/SiteAuthor}addsuffix<CLOSE>addsuffix<CLOSE>]' 
+					variable=FILTER
+				>
+					<$action-sendmessage 
+						$message='tm-request-bundle' 
+						url={{!!url}} 
+						filter=<<FILTER>>
+						bundleName=<<PostCommentsBundleName>>
+						separator='SOMESTRINGIDONOTKNOWWHAT' 
+						packingFunction='bundleTiddlers'
+					/>
+				</$list>
+			</$vars>
+		</$list>
+	</$button>
+</$vars>
+
 </$list>
 
