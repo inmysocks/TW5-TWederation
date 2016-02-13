@@ -9,6 +9,17 @@ title: Fetch Communication
 <$checkbox tiddler='$:/state/Fetch Tiddler Bundle' field='only_new' checked="""$PreviousTime$""" unchecked='0'>Only fetch new tiddlers created after last import</$checkbox>
 \end
 
+\define thisGetCommentsOption()
+<$list 
+	filter='[{$:/SiteAuthor}get[username]]' 
+	variable=SiteAutherUserName 
+>
+	<option value="""[type[Post Comment]post_author[$(SiteAuthor)$]]""">
+		Comments on my posts
+	</option>
+</$list>
+\end
+
 <$button>Get all new blog posts
 	<$list filter='[[$:/Settings/Follow Wiki List]indexes[]has[url]]'>
 		<$list filter='[[$:/Settings/Follow Wiki List]getindex<currentTiddler>prefix[True]]' variable='dummy'>
@@ -63,6 +74,11 @@ What to fetch:
 	<option value='[[$:/SiteAuthor]get[text]]'>
 		The Site Authors twCard
 	</option>
+	<$vars 
+		SiteAuthor={{$:/SiteAuthor}}
+	>
+		<<thisGetCommentsOption>>
+	</$vars>
 	<option>
 		Messages
 	</option>
@@ -107,7 +123,10 @@ Fetch Type:
 	</option>
 </$select> (optional, defaults to Bundle Tiddlers)
 
-<$vars URL={{$:/state/Fetch Tiddler Bundle!!wiki_url}} FILTER={{$:/state/Fetch Tiddler Bundle!!what_to_fetch}}>
+<$vars 
+	URL={{$:/state/Fetch Tiddler Bundle!!wiki_url}} 
+	FILTER={{$:/state/Fetch Tiddler Bundle!!what_to_fetch}}
+>
 <<thisMakeCheckboxThing>>
 </$vars>
 

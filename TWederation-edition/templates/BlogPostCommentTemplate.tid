@@ -50,6 +50,7 @@ Comment Text:
 			author={{$:/state/Post Comment!!author}} 
 			post={{!!title}} 
 			type='Post Comment'
+			post_author={{!!author}}
 		/>
 		<$action-setfield 
 			$tiddler='$:/state/Post Comment' 

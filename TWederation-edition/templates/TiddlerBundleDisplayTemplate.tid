@@ -40,16 +40,16 @@ $:/state/Tiddler Bundles/Selected Tiddlers/$(currentTiddler)$
 					tiddler=<<thisSelectTagThing>> 
 					tag=<<BundledTiddler>>
 				/>
-				</td>
-				<td>
-					<$list 
-						filter='[<BundledTiddler>has[title]]' 
-						emptyMessage="""<$view tiddler=<<BundledTiddler>> field='title'/>"""
-					>
-						<$link to=<<BundledTiddler>>>
-							<$view tiddler=<<BundledTiddler>> field='title'/>
-						</$link>
-					</$list>
+			</td>
+			<td>
+				<$list 
+					filter='[<BundledTiddler>has[title]]' 
+					emptyMessage="""<$view tiddler=<<BundledTiddler>> field='title'/>"""
+				>
+					<$link to=<<BundledTiddler>>>
+						<$view tiddler=<<BundledTiddler>> field='title'/>
+					</$link>
+				</$list>
 			</td>
 		</tr>
 	</$list>
