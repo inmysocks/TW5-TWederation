@@ -54,23 +54,27 @@ $:/state/Tiddler Bundles/Selected Tiddlers/$(currentTiddler)$
 	</$list>
 </table>
 
-<$button>Unpack All
-	<$action-tiddlerbundle 
-		$bundle=<<currentTiddler>> 
-		$overwrite={{$:/state/Tiddler Bundles!!overwrite}} 
-		$action='unpack' 
-		$separator={{!!separator}}
-	/>
-</$button>
-<$button>Unpack Selected
-	<$action-tiddlerbundle 
-		$bundle=<<currentTiddler>> 
-		$overwrite={{$:/state/Tiddler Bundles!!overwrite}} 
-		$action='unpack' 
-		$separator={{!!separator}}
-		$unpackFilter=<<thisUnpackFilter>>
-	/>
-</$button>
+<$checkbox tiddler=<<thisSelectTagThing>> field='overwrite' checked='true' unchecked='false'>Overwrite Existing Tiddlers</$checkbox>
+
+<$set name='OverWrite' filter='[<thisSelectTagThing>get[overwrite]]' emptyValue='false'>
+	<$button>Unpack All
+		<$action-tiddlerbundle 
+			$bundle=<<currentTiddler>> 
+			$overwrite={{$:/state/Tiddler Bundles!!overwrite}} 
+			$action='unpack' 
+			$separator={{!!separator}}
+		/>
+	</$button>
+	<$button>Unpack Selected
+		<$action-tiddlerbundle 
+			$bundle=<<currentTiddler>> 
+			$overwrite={{$:/state/Tiddler Bundles!!overwrite}} 
+			$action='unpack' 
+			$separator={{!!separator}}
+			$unpackFilter=<<thisUnpackFilter>>
+		/>
+	</$button>
+</$set>
 
 <hr>
 

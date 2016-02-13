@@ -10,32 +10,65 @@ title: $:/plugins/inmysocks/TWederation/Fetch Tiddler Bundle
 \end
 
 \define thisMakeChoiceSelect()
-What to fetch: <$select tiddler='$:/state/Fetch Tiddler Bundle' field='what_to_fetch'>
-<option value=''>--</option>
-<option>Enter Filter</option>
-<option value='[type[Blog Post]]'>All Blog Posts</option>
-<option value='[type[Wiki twCard]]'>All Wiki twCards</option>
-<option value='[type[Identity twCard]]'>All Identity twCards</option>
-<option value='[[$:/SitetwCard]get[text]]'>The wikis twCard</option>
-<option value='[[$:/SiteAuthor]get[text]]'>The Site Authors twCard</option>
-<option value="""[tag[$(SiteAutherUserName)$]][to[$(SiteAuthor)$]]""">Messages to me</option>
+What to fetch:
+<$select 
+	tiddler='$:/state/Fetch Tiddler Bundle' 
+	field='what_to_fetch'
+>
+	<option value=''>
+		--
+	</option>
+	<option>
+		Enter Filter
+	</option>
+	<option value='[type[Blog Post]]'>
+		All Blog Posts
+	</option>
+	<option value='[type[Wiki twCard]]'>
+		All Wiki twCards
+	</option>
+	<option value='[type[Identity twCard]]'>
+		All Identity twCards
+	</option>
+	<option value='[[$:/SitetwCard]get[text]]'>
+		The wikis twCard
+	</option>
+	<option value='[[$:/SiteAuthor]get[text]]'>
+		The Site Authors twCard
+	</option>
+	<$list 
+		filter='[{$:/SiteAuthor}get[username]]' 
+		variable=SiteAutherUserName 
+	>
+		<option value="""[tag<SiteAutherUserName>][to{$:/SiteAuthor}]""">
+			Messages to me
+		</option>
+	</$list>
 </$select>
 \end
 
-Select Wiki: <$select tiddler='$:/state/Fetch Tiddler Bundle' field='wiki_url'>
-<option value=''>--</option>
-<$list filter='[all[tiddlers+shadows]type[Wiki twCard]]'>
-<option value={{!!url}}><$view field='name'/></option>
-</$list>
+Select Wiki:
+<$select 
+	tiddler='$:/state/Fetch Tiddler Bundle' 
+	field='wiki_url'
+>
+	<option value=''>--</option>
+	<$list filter='[all[tiddlers+shadows]type[Wiki twCard]]'>
+		<option value={{!!url}}>
+			<$view field='name'/>
+		</option>
+	</$list>
 </$select>
 
 or enter wiki url: <$edit-text tiddler='$:/state/Fetch Tiddler Bundle' field='wiki_url' class='tc-edit-texteditor'/>
 
-<$list filter='[{$:/SiteAuthor}get[username]]' variable=SiteAutherUserName emptyMessage='Set site author and site twCard [[Wiki Configuration for TWederation]]'>
-<$set value={{$:/SiteAuthor}} name=SiteAuthor>
-<<thisMakeChoiceSelect>>
-</$set>
+<$list 
+	filter='[{$:/SiteAuthor}get[username]]' 
+	variable=SiteAutherUserName 
+	emptyMessage='Set site author and site twCard [[Wiki Configuration for TWederation]]'
+>
 </$list>
+<<thisMakeChoiceSelect>>
 
 <$reveal type='match' state='$:/state/Fetch Tiddler Bundle!!what_to_fetch' text='Enter Filter'>
 
@@ -45,12 +78,26 @@ Filter: <$edit-text tiddler='$:/state/Fetch Tiddler Bundle' field='filter' class
 
 Bundle Name: <$edit-text tiddler='$:/state/Fetch Tiddler Bundle' field='bundle_name' class='tc-edit-texteditor'/>
 
-Fetch Type: <$select tiddler='$:/state/Fetch Tiddler Bundle' field='bundle_function'>
-<option value=''>--</option>
-<option value='bundleTiddlers'>Bundle Tiddlers</option>
-<option value='tiddlerSummary'>Tiddler Summaries</option>
-<option value='fetchShortMessages'>Short Messages</option>
-<option value='JSONBundle'>JSON Bundle</option>
+Fetch Type:
+<$select 
+	tiddler='$:/state/Fetch Tiddler Bundle' 
+	field='bundle_function'
+>
+	<option value=''>
+		--
+	</option>
+	<option value='bundleTiddlers'>
+		Bundle Tiddlers
+	</option>
+	<option value='tiddlerSummary'>
+		Tiddler Summaries
+	</option>
+	<option value='fetchShortMessages'>
+		Short Messages
+	</option>
+	<option value='JSONBundle'>
+		JSON Bundle
+	</option>
 </$select> (optional, defaults to Bundle Tiddlers)
 
 <$vars URL={{$:/state/Fetch Tiddler Bundle!!wiki_url}} FILTER={{$:/state/Fetch Tiddler Bundle!!what_to_fetch}}>

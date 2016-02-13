@@ -1,18 +1,35 @@
 tags: Communication
 title: Posts
 
-Author: <$select tiddler='$:/state/Post' field='selected_author'>
-<option value=''>--</option>
-<$list filter='[all[tiddlers+shadows]type[Identity twCard]]'>
-<option value=<<currentTiddler>>><$view field='username'/></option>
-</$list>
+Author: 
+<$select tiddler='$:/state/Post' field='selected_author'>
+	<option value=''>
+		--
+	</option>
+	<$list 
+		filter='[all[tiddlers+shadows]type[Identity twCard]]'
+	>
+		<option value=<<currentTiddler>>>
+			<$view field='username'/>
+		</option>
+	</$list>
 </$select>
 
-Post Title: <$select tiddler='$:/state/Post' field='selected_post'>
-<option value=''>--</option>
-<$list filter='[type[Blog Post]author{$:/state/Post!!selected_author}]'>
-<option value=<<currentTiddler>>><$view field='post_title'/></option>
-</$list>
+Post Title: 
+<$select 
+	tiddler='$:/state/Post' 
+	field='selected_post'
+>
+	<option value=''>
+		--
+	</option>
+	<$list 
+		filter='[type[Blog Post]author{$:/state/Post!!selected_author}]'
+	>
+		<option value=<<currentTiddler>>>
+			<$view field='post_title'/>
+		</option>
+	</$list>
 </$select>
 
 <$tiddler tiddler={{$:/state/Post!!selected_post}}>

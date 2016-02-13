@@ -61,7 +61,6 @@ ActionTiddlerBundle.prototype.refresh = function(changedTiddlers) {
 Invoke the action associated with this widget
 */
 ActionTiddlerBundle.prototype.invokeAction = function(triggeringWidget,event) {
-	console.log(location.hash.substr(0,7));
 	var separator;
 	if (this.actionSeparator) {
 		separator = this.actionSeparator;
@@ -125,7 +124,11 @@ ActionTiddlerBundle.prototype.invokeAction = function(triggeringWidget,event) {
 			if (tiddler.fields.bundle_type === 'JSON') {
 				var bundleObject = JSON.parse(tiddler.fields.text);
 				for (var tiddlerName in bundleObject) {
-					this.wiki.addTiddler(bundleObject[tiddlerName]);
+					if (filterOutput === false || (unpackList.indexOf(tiddlerName) !== -1)) {
+						if (this.actionOverwrite || !this.wiki.getTiddler(tiddlerName)) {
+							this.wiki.addTiddler(bundleObject[tiddlerName].fields);
+						}
+					}
 				}
 			} else {
 				//Get the raw text for each tiddler.

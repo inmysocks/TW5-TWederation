@@ -2,21 +2,45 @@ tags: Communication
 title: New Short Message
 
 \define thisSaveMessage(TIME)
-<$list filter='[[$:/Messages/]addsuffix{$:/SiteAuthor}]' variable=TiddlerName>
-<$list filter='[{$:/state/Short Messages!!selected_recipient}addprefix[ - ]addprefix[$TIME$]]' variable=IndexName>
-<$button>Save Message
-<$action-setfield $tiddler=<<TiddlerName>> $index=<<IndexName>> $value={{$:/state/Short Messages!!message}}/>
-<$action-setfield $tiddler='$:/state/Short Messages' message=''/>
-</$button>
-</$list>
+<$list 
+	filter='[[$:/Messages/]addsuffix{$:/SiteAuthor}]' 
+	variable=TiddlerName
+>
+	<$list 
+		filter='[{$:/state/Short Messages!!selected_recipient}addprefix[ - ]addprefix[$TIME$]]' 
+		variable=IndexName
+	>
+		<$button>
+			Save Message
+			<$action-setfield 
+				$tiddler=<<TiddlerName>> 
+				$index=<<IndexName>> 
+				$value={{$:/state/Short Messages!!message}}
+			/>
+			<$action-setfield 
+				$tiddler='$:/state/Short Messages' 
+				message=''
+			/>
+		</$button>
+	</$list>
 </$list>
 \end
 
-To: <$select tiddler='$:/state/Short Messages' field='selected_recipient'>
-<option value=''>--</option>
-<$list filter='[all[tiddlers+shadows]type[Identity twCard]]'>
-<option value=<<currentTiddler>>><$view field='username'/></option>
-</$list>
+To: 
+<$select 
+	tiddler='$:/state/Short Messages' 
+	field='selected_recipient'
+>
+	<option value=''>
+		--
+	</option>
+	<$list 
+		filter='[all[tiddlers+shadows]type[Identity twCard]]'
+	>
+		<option value=<<currentTiddler>>>
+			<$view field='username'/>
+		</option>
+	</$list>
 </$select>
 
 Message: <$edit-text tiddler='$:/state/Short Messages' field='message' class='tc-edit-texteditor'/>

@@ -4,13 +4,13 @@ title: $:/plugins/inmysocks/TWederation/Templates/BlogPostTiddlerFooterTemplate
 
 \define thisCreatetwCardButton()
 <$button>Create twCard for this post
-<$action-setfield 
-	$tiddler='$:/twCard/post/$(Wiki)$/$(Author)$/$(PostTitle)$'
-	author={{!!author}}
-	wiki={{!!wiki_url}}
-	date={{!!date}}
-	topic={{!!topic}}
-/>
+	<$action-setfield 
+		$tiddler='$:/twCard/post/$(Wiki)$/$(Author)$/$(PostTitle)$'
+		author={{!!author}}
+		wiki={{!!wiki_url}}
+		date={{!!date}}
+		topic={{!!topic}}
+	/>
 </$button>
 \end
 
@@ -20,4 +20,9 @@ title: $:/plugins/inmysocks/TWederation/Templates/BlogPostTiddlerFooterTemplate
 
 \define thisFetchCommentsButton()
 <$button>Fetch Comments
-<$action-sendmessage $message='tm-request-bundle' url={{$:/state/Fetch Tiddler Bundle!!wiki_url}} filter="""[type[Post Comment]post[$(currentTiddler)$]]""" bundleName=<<CommentBundleName>> separator='
+<$action-sendmessage 
+	$message='tm-request-bundle' 
+	url={{$:/state/Fetch Tiddler Bundle!!wiki_url}} 
+	filter="""[type[Post Comment]post[$(currentTiddler)$]]""" 
+	bundleName=<<CommentBundleName>> 
+	separator='

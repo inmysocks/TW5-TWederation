@@ -6,29 +6,62 @@ type:
 
 \define thisMakeMessageButton(TIME)
 <$list filter='[{$:/state/New Message!!to_field}get[username]]' variable=MessageRecepient>
-<$button>Create Message
-<$list filter='[[Message - ]addsuffix{$:/state/New Message!!message_title}addsuffix[ - ]addsuffix<UserName>addsuffix[ ($TIME$)]]' variable=MessageTiddlerTitle>
-<$action-setfield $tiddler=<<MessageTiddlerTitle>> text={{$:/state/New Message!!text}} to={{$:/state/New Message!!to_field}} from={{$:/state/New Message!!from_field}} tags=<<MakeTags>>/>
-<$action-setfield $tiddler='$:/state/New Message' message_title='' text=''/>
-</$list>
-</$button>
+	<$button>Create Message
+		<$list 
+			filter='[[Message - ]addsuffix{$:/state/New Message!!message_title}addsuffix[ - ]addsuffix<UserName>addsuffix[ ($TIME$)]]' 
+			variable=MessageTiddlerTitle
+		>
+			<$action-setfield 
+				$tiddler=<<MessageTiddlerTitle>> 
+				text={{$:/state/New Message!!text}} 
+				to={{$:/state/New Message!!to_field}} 
+				from={{$:/state/New Message!!from_field}} 
+				tags=<<MakeTags>>
+			/>
+			<$action-setfield 
+				$tiddler='$:/state/New Message' 
+				message_title='' 
+				text=''
+			/>
+		</$list>
+	</$button>
 </$list>
 \end
 
 Remember: For the moment everything here is public. Anyone can see it.
 
-To: <$select tiddler='$:/state/New Message' field='to_field'>
-<option value=''>--</option>
-<$list filter='[all[tiddlers+shadows]type[Identity twCard]]'>
-<option value=<<currentTiddler>>><$view field='username'/></option>
-</$list>
+To: 
+<$select 
+	tiddler='$:/state/New Message' 
+	field='to_field'
+>
+	<option value=''>
+		--
+	</option>
+	<$list 
+		filter='[all[tiddlers+shadows]type[Identity twCard]]'
+	>
+		<option value=<<currentTiddler>>>
+			<$view field='username'/>
+		</option>
+	</$list>
 </$select>
 
-From: <$select tiddler='$:/state/New Message' field='from_field'>
-<option value=''>--</option>
-<$list filter='[all[tiddlers+shadows]type[Identity twCard]]'>
-<option value=<<currentTiddler>>><$view field='username'/></option>
-</$list>
+From: 
+<$select 
+	tiddler='$:/state/New Message' 
+	field='from_field'
+>
+	<option value=''>
+		--
+	</option>
+	<$list 
+		filter='[all[tiddlers+shadows]type[Identity twCard]]'
+	>
+		<option value=<<currentTiddler>>>
+			<$view field='username'/>
+		</option>
+	</$list>
 </$select>
 
 Message title: <$edit-text tiddler='$:/state/New Message' field='message_title' class='tc-edit-texteditor'/>
@@ -38,7 +71,7 @@ Message:
 <$edit-text tiddler='$:/state/New Message' class='tc-edit-texteditor'/>
 
 <$tiddler tiddler={{$:/state/New Message!!from_field}}>
-<$set name=UserName value={{!!username}}>
-<$macrocall $name=thisMakeMessageButton TIME=<<now 0hhh0mm-0DD/MM/YYYY>>/>
-</$set>
+	<$set name=UserName value={{!!username}}>
+		<$macrocall $name=thisMakeMessageButton TIME=<<now 0hhh0mm-0DD/MM/YYYY>>/>
+	</$set>
 </$tiddler>
