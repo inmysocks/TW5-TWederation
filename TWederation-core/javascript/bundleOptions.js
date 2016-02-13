@@ -211,4 +211,40 @@ $tw.wiki.bundleFunction.tiddlerSummary = function(event, status_message) {
 
 };
 
+$tw.wiki.bundleFunction.JSONBundle = function(event, status_message) {
+	var status = status_message || '';
+	var separator = event.data.separator ? event.data.separator:'thisisthetiddlerdivisionstringwhywouldyouevenhavethisinyourtiddlerseriouslywhythisisjustridiculuous';
+	var bundleFilter = event.data.filter ? event.data.filter : '[is[system]!is[system]]';
+	var previousTime = event.data.previousTime ? event.data.previousTime : '0';
+	var currentTimeStamp = new Date();
+	var messageSuffix = ' - (' + $tw.utils.pad(currentTimeStamp.getHours()) + ":" + $tw.utils.pad(currentTimeStamp.getMinutes()) + ":" + $tw.utils.pad(currentTimeStamp.getSeconds()) + $tw.utils.pad(currentTimeStamp.getDate()) + '/' + $tw.utils.pad(currentTimeStamp.getMonth()+1) + '/' + + currentTimeStamp.getFullYear() + ')';
+	var bundleTitle = event.data.bundlename ? event.data.bundlename:"JSON Bundle";
+	bundleTitle += messageSuffix;
+	bundleList = [];
+	var bundleTiddlers = $tw.wiki.filterTiddlers(bundleFilter);
+	for (var i = 0; i < bundleTiddlers.length; i++) {
+		bundleTiddlers[i] = decodeURI(bundleTiddlers[i]);
+	}
+	var bundleObject = {};
+	for (i = 0; i < bundleTiddlers.length; i++) {
+		bundleObject[bundleTiddlers[i]] = $tw.wiki.getTiddler(decodeURI(bundleTiddlers[i]));
+	};
+	var Bundle = {
+		title: bundleTitle, 
+		text: JSON.stringify(bundleObject), 
+		list: $tw.utils.stringifyList(bundleTiddlers), 
+		tags: '[[JSON Bundle]]', 
+		separator: separator, 
+		type: 'text/plain', 
+		status: status
+	};
+	var messageObject = {
+		verb:"DELIVER_BUNDLE", 
+		bundle: Bundle, 
+		origin: event.data.destination, 
+		type: 'JSON Bundle'
+	};
+	event.source.postMessage(messageObject,"*");
+};
+
 })();

@@ -50,6 +50,7 @@ Fetch Type: <$select tiddler='$:/state/Fetch Tiddler Bundle' field='bundle_funct
 <option value='bundleTiddlers'>Bundle Tiddlers</option>
 <option value='tiddlerSummary'>Tiddler Summaries</option>
 <option value='fetchShortMessages'>Short Messages</option>
+<option value='JSONBundle'>JSON Bundle</option>
 </$select> (optional, defaults to Bundle Tiddlers)
 
 <$vars URL={{$:/state/Fetch Tiddler Bundle!!wiki_url}} FILTER={{$:/state/Fetch Tiddler Bundle!!what_to_fetch}}>
