@@ -1,0 +1,11 @@
+created: 20160221121520607
+modified: 20160221124918214
+tags: 
+title: $:/plugins/inmysocks/TWederation/Templates/PostListViewTemplate
+
+
+{{||$:/plugins/inmysocks/TWederation/Templates/PostTitleTemplate}}
+{{||$:/plugins/inmysocks/TWederation/Templates/BlogPostTiddlerHeaderTemplate}}
+{{||$:/core/ui/ViewTemplate/subtitle}}
+{{||$:/core/ui/ViewTemplate/body}}
+{{||$:/plugins/inmysocks/TWederation/Templates/BlogPostCommentTemplate}}

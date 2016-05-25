@@ -1,0 +1,56 @@
+title: $:/plugins/inmysocks/TWederation/ReadMe
+
+!How it works
+
+''Note:'' There is no security on this in terms of who can see what. Assume that anything you put on a twederated wiki is public and can be easily viewed. Because it can be. I am working on some ideas for how to change this but I am going to get the initial things working first.
+
+This is all just an example. It is going to be set up so if you don't want to use twederation.tiddlyspot.com you can set up your own federation and have nothing to do with us. You could connect directly to another persons wiki and not involve anyone else if you wish.
+
+This doesn't need to be hosted on tiddlyspot.com. You can use other hosting options and may even be able to host it on dropbox. There should be instructions for different hosting options on twederation.tiddlyspot.com in the future.
+
+All of the code and instructions for how to set everything up will be available as I make them. If you have any questions just ask.
+
+!!Initial Setup
+
+#Edwina decides they want to join the TWederation
+#Edwina gets a tiddlyspot
+#Edwina installs the twederation plugins
+#Edwina uses the form provided in the twederation plugin to add her tiddlyspot site to the twederation listing
+#*The form submits data to a google form which stores the data in a google sheet. This is then retrieved by the maintainer of twederation.tiddlyspot.com and the new listing is added to the site.
+#*The form also populates the fields of the twCard for Edwinas site.
+#*Now that it is listed Edwina can update the info for her site on her own site by using the twCard editing tool and the information will be updated on twederation.tiddlyspot.com the next time the maintainer checks for updates. Checking for updates will be a mostly automated process (there will be a button that will check for updates and pull any new or updated twCards as needed). This update process will only be saved if the maintainer of twederation.tiddlyspot.com saves the wiki afterward, but the process of fetching the new data could be triggered by anyone who uses the site (but the data will only be in their browser, not saved). This way someone can look for new connections even if the maintainer isn't available.
+
+!!First global message
+
+#Edwina makes a message on her wiki (using the tools that come with the plugin) that is addressed to twederation.tiddlyspot.com saying 'Hello TWederation! I just joined!' and then saves her wiki.
+#The maintainer of twederation.tiddlyspot.com runs the update process and the message from Edwina is pulled from her wiki and posted to the main wall on twederation.tiddlyspot.com
+#*Someone other than the maintainer can fetch the messages (so they don't have to wait for the maintainer), but only the maintainer will be able to save the messages to the twederation.tiddlyspot.com wiki.
+
+!!Connecting to other people
+
+#Edwina wants to connect with Mert who is also listed on twederation.tiddlyspot.com
+#Edwina uses the tools from the plugin to pull Mert's twCard from twederation.tiddlyspot.com
+#Edwina adds Mert's wiki to her list of sources using the tools from the plugin
+#Edwina writes a message requesting to connect to Mert and addresses it to both twederation.tiddlyspot.com and Mert using their respective twCards
+#Edwina saves her wiki
+#The maintainer of twederation.tiddlyspot.com does an autoupdate, the message from Edwina is saved to the wiki
+#Mert opens his wiki and checks for new messages, since he has twederation.tiddlyspot.com listed as a source he sees that there is a message for him on that wiki
+#Mert pulls the message from twederation.tiddlyspot.com and decides to connect to Edwina.
+#*To do this he pulls Edwina's twCard from twederation.tiddlyspot.com (''or from her site, but it will be easier to go through twederation.tiddlyspot.com'') and adds her wiki to his list of sources.
+#Now Edwina and Mert can send messages to each other by just addressing the message directly and twederation.tiddlyspot.com doesn't have to be involved at all.
+
+!!First non-global message
+
+#Edwina wants to send a message to Mert they have already gone through the process above to exchange twCards
+#Edwina writes her message to Mert and addresses it using his twCard
+#Edwina saves her wiki
+#Mert opens his wiki and checks for messages. Since he has Edwina's wiki listed as a source it is automatically checked
+#Mert pulls the new message from Edwina's wiki onto his own so he can read it.
+
+!Things I need to make
+
+#A widget to bundle and unbundle tiddlers (finished)
+#A widget to fetch tiddlers or bundles from other wikis (finished)
+#A widget to submit google forms information. This is only for bootstrapping the initial connection. It could also be used to leave comments if a person doesn't have their own wiki. (already completed)
+#A widget to pull the data from google sheets. This is the other part for bootstrapping the initial connection. Or for the comments stuff. (in progress, mostly working)
+#A bunch of templates and stuff to make using this easy (in progress)

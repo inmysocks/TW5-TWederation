@@ -1,0 +1,40 @@
+created: 20160221121739483
+modified: 20160221124714721
+tags: 
+title: $:/plugins/inmysocks/TWederation/Templates/PostTitleTemplate
+
+\define title-styles()
+fill:$(foregroundColor)$;
+\end
+\define config-title()
+$:/config/ViewToolbarButtons/Visibility/$(listItem)$
+\end
+<div class="tc-tiddler-title">
+<div class="tc-titlebar">
+<$set name="tv-wikilinks" value={{$:/config/Tiddlers/TitleLinks}}>
+<$link>
+<$set name="foregroundColor" value={{!!color}}>
+<span class="tc-tiddler-title-icon" style=<<title-styles>>>
+<$transclude tiddler={{!!icon}}/>
+</span>
+</$set>
+<$list filter="[all[current]removeprefix[$:/]]">
+<h2 class="tc-title" title={{$:/language/SystemTiddler/Tooltip}}>
+<span class="tc-system-title-prefix">$:/</span><$text text=<<currentTiddler>>/>
+</h2>
+</$list>
+<$list filter="[all[current]!prefix[$:/]]">
+<h2 class="tc-title">
+__<$view field="post_title"><$view field='title'/></$view>__
+</h2>
+</$list>
+</$link>
+</$set>
+</div>
+
+<$reveal type="nomatch" text="" default="" state=<<tiddlerInfoState>> class="tc-tiddler-info tc-popup-handle" animate="yes" retain="yes">
+
+<$transclude tiddler="$:/core/ui/TiddlerInfo"/>
+
+</$reveal>
+</div>

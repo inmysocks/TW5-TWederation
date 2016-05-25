@@ -1,0 +1,10 @@
+created: 20160525191638147
+modified: 20160525192133201
+tags: 
+title: $:/plugins/inmysocks/TWederation/Fetch from google
+
+Clicking on this button will import new wiki twCards from the google sheet
+
+<$button>Fetch New twCards from google
+<$action-requestdata $url='https://spreadsheets.google.com/feeds/list/1T6dOAVQRkXCeh4zItkok9OSX8CA9UDB6ExC9WFKLGgs/o3ohv50/public/full?alt=json'/>
+</$button>
