@@ -11,7 +11,7 @@ title: Fetch Communication
 
 \define thisGetCommentsOption()
 <$list
-	filter='[{$:/SiteAuthor}get[username]]'
+	filter='[{$:/SitetwCard}get[username]]'
 	variable=SiteAutherUserName
 >
 	<option value="""[type[Post Comment]post_author[$(SiteAuthor)$]]""">
@@ -67,14 +67,8 @@ What to fetch:
 	<option value='[type[Wiki twCard]]'>
 		All Wiki twCards
 	</option>
-	<option value='[type[Identity twCard]]'>
-		All Identity twCards
-	</option>
 	<option value='[[$:/SitetwCard]get[text]]'>
-		The wikis twCard
-	</option>
-	<option value='[[$:/SiteAuthor]get[text]]'>
-		The Site Authors twCard
+		The wiki's twCard
 	</option>
 	<$vars
 		SiteAuthor={{$:/SiteAuthor}}
