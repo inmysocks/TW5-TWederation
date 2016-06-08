@@ -32,7 +32,7 @@ wiki_url: This is the url used to access your wiki. If you are using tiddlyspot 
 
 <$button>Create twCard
 	<$action-setfield
-		$tiddler='$:/twCard/wiki/$Name$ - $URL$'
+		$tiddler='$:/twCard/$Name$ - $URL$'
 		type='Wiki twCard'
 		url='$URL$'
 		name='$Name$'
@@ -49,30 +49,17 @@ wiki_url: This is the url used to access your wiki. If you are using tiddlyspot 
 		twitter={{$:/state/Create twCard!!twitter}}
 		facebook={{$:/state/Create twCard!!facebook}}
 	/>
-	<$set name=SiteAuthor filter='[{$:/state/Create twCard!!author}addprefix[$:/twCard/identity/]]'>
-		<$action-setfield
-			$tiddler=<<SiteAuthor>>
-			type='Identity twCard'
-			publishonlist={{$:/state/Create twCard!!publishonlist}}
-			username={{$:/state/Create twCard!!author}}
-			given_name={{$:/state/Create twCard!!first_name}}
-			family_name={{$:/state/Create twCard!!last_name}}
-			location={{$:/state/Create twCard!!location}}
-			wiki={{$:/state/Create twCard!!wiki}}
-			homepage={{$:/state/Create twCard!!homepage}}
-			email={{$:/state/Create twCard!!email}}
-			twitter={{$:/state/Create twCard!!twitter}}
-			facebook={{$:/state/Create twCard!!facebook}}
-		/>
-		<$action-setfield
-			$tiddler='$:/SitetwCard'
-			text="""$:/twCard/$Name$ - $URL$"""
-		/>
-		<$action-setfield
-			$tiddler='$:/SiteAuthor'
-			text=<<SiteAuthor>>
-		/>
-	</$set>
+	<$action-setfield
+		$tiddler='$:/SitetwCard'
+		text="""$:/twCard/$Name$ - $URL$"""
+	/>
+	<$action-navigate
+		$to=Communication
+	/>
+	<$action-sendmessage
+		$message='tm-close-tiddler'
+		$param=<<currentTiddler>>
+	/>
 	<$action-submitform
 		$url="https://docs.google.com/forms/d/1tCXFjKumfg6qD5DZpEvL6d_fKhY4560hWTFzmOJGsDM/formResponse"
 		$tiddler="$:/settings/twCard Form Submit Location"
@@ -85,22 +72,23 @@ wiki_url: This is the url used to access your wiki. If you are using tiddlyspot 
 You only need to do this set-up once. You can change any of this later but keep in mind that if you change the fields marked as required in the future it may cause some disruptions.
 
 <$set name="protocol" value=<<location "protocol">>>
-<$list filter="[<protocol>!prefix[http]]">
-<br>
-''Prerequisite''<br>
-Host your wiki somewhere accessible online. You don't need anything special, any file server will work. [[Some help for hosting a TiddlyWiki]].<br><br>
-</$list>
+	<$list filter="[<protocol>!prefix[http]]">
+		<br>
+		''Prerequisite''<br>
+		Host your wiki somewhere accessible online. You don't need anything special, any file server will work. [[Some help for hosting a TiddlyWiki]].<br><br>
+	</$list>
 </$set>
 
-<$list filter="[{$:/SiteTitle}suffix[TiddlyWiki]]">
 <table class='xno-border' style='width:100%; border:1px solid lightgray; padding-top:15px;'>
-   <tr>
-   <td style='vertical-align:top;padding:10px;'>
-Give your TiddlyWiki a title:<<HelpButton wiki_title>> <$edit-text tiddler="$:/SiteTitle" default="" tag="input" class='tc-edit-texteditor'/>
-Give your TiddlyWiki a subtitle:<<HelpButton wiki_subtitle>> <$edit-text tiddler="$:/SiteSubtitle" default="" tag="input" class='tc-edit-texteditor'/>
-</td></tr>
+	<tr>
+		<td
+			style='vertical-align:top;padding:10px;'
+		>
+			Give your TiddlyWiki a title:<<HelpButton wiki_title>> <$edit-text tiddler="$:/SiteTitle" default="" tag="input" class='tc-edit-texteditor'/>
+			Give your TiddlyWiki a subtitle:<<HelpButton wiki_subtitle>> <$edit-text tiddler="$:/SiteSubtitle" default="" tag="input" class='tc-edit-texteditor'/>
+		</td>
+	</tr>
 </table>
-</$list>
 
 <br>
 
@@ -108,20 +96,20 @@ Give your TiddlyWiki a subtitle:<<HelpButton wiki_subtitle>> <$edit-text tiddler
 <table class='no-border' style='border:1px solid lightgray;' >
 	<tr>
 		<td style='text-align:right;width:20%;'>
-			TiddlyWiki URL<<HelpButton wiki_url '??'>>
+			~TiddlyWiki URL<<HelpButton wiki_url '??'>>
 		</td>
 		<td>
-			<$set name="origin" value=<<location "origin">>>
+			<$set name="origin" value=<<location "href">>>
 				<<thisEnterSiteURL>>
 			</$set>
 		</td>
 	</tr>
 	<tr>
 		<td style='text-align:right;width:15%;vertical-align:top;'>
-			Name<<HelpButton identifier '??'>>
+			Wiki Name<<HelpButton identifier '??'>>
 		</td>
 		<td>
-			<$set name="name" value={{$:/status/UserName}}>
+			<$set name="name" value={{$:/SiteTitle}}>
 				<<thisEnterName>>
 			</$set>
 		</td>
@@ -130,223 +118,329 @@ Give your TiddlyWiki a subtitle:<<HelpButton wiki_subtitle>> <$edit-text tiddler
 
 <br>
 ''1b. Optional''<<HelpButton why_optional 'why?'>> - nice if you include!<br>
-<$reveal type="nomatch" state="$:/state/RevealOptional" text="show">
-<$button set="$:/state/RevealOptional" setTo="show" class="bigbutton-closed">Open  ⬎ </$button>
-
+<$reveal
+	type="nomatch"
+	state="$:/state/RevealOptional"
+	text="show"
+>
+	<$button
+		set="$:/state/RevealOptional"
+		setTo="show"
+		class="bigbutton-closed"
+	>
+		Open  ⬎
+	</$button>
 </$reveal>
-<$reveal type="match" state="$:/state/RevealOptional" text="show">
-<div style="border:1px solid lightgray;">
-<$button set="$:/state/RevealOptional" setTo="hide" class="bigbutton-open"> Close</$button>
-<$vars sitetitle={{$:/SiteTitle}} >
-<table class='no-border' style='width:100%;'>
-	<tr>
-		<th colspan=2 style='height:2em;font-size:2em;border:solid 2px black;'>
-			About the wiki
-		</th>
-	</tr>
-	<tr>
-		<th style='text-align:left;width:25%'>
-			Wiki name<<HelpButton wiki_name>>
-		</th>
-		<td>
-			<$edit-text
-				tiddler='$:/state/Create twCard'
-				field='wiki_name'
-				class='tc-edit-texteditor'
-				placeholder=<<placeholderSiteTitle>>
-			/>
-		</td>
-	</tr>
-	<tr>
-		<th style='text-align:left;width:15%'>
-			Topic<<HelpButton topic>>
-		</th>
-		<td>
-			<$edit-text
-				tiddler='$:/state/Create twCard'
-				field='topic'
-				class='tc-edit-texteditor'
-			/>
-		</td>
-	</tr>
-	<tr>
-		<th style='text-align:left;width:15%'>
-			Description<<HelpButton description>>
-		</th>
-		<td>
-			<$edit-text
-				tiddler='$:/state/Create twCard'
-				field='description'
-				class='tc-edit-texteditor'
-placeholder='(optional) Describe e.g the purpose with your....'
-			/>
-		</td>
-	</tr>
-	<tr>
-		<th style='text-align:left;width:15%'>
-			Author<<HelpButton author>>
-		</th>
-		<td>
-			<$edit-text
-				tiddler='$:/state/Create twCard'
-				field='author'
-				class='tc-edit-texteditor'
-placeholder="Optional. E.g your name or username or whatever you want."
-			/>
-		</td>
-	</tr>
-	<tr>
-		<th colspan=2 style='height:2em;font-size:2em;border:solid 2px black;'>
-			About you
-		</th>
-	</tr>
-	<tr>
-		<th style='text-align:left;width:15%'>
-			First Name<<HelpButton first_name>>
-		</th>
-		<td>
-			<$edit-text
-				tiddler='$:/state/Create Identity twCard'
-				field='first_name'
-				class='tc-edit-texteditor'
-		/>
-		</td>
-	</tr>
-	<tr>
-		<th style='text-align:left;width:15%'>
-			Last Name<<HelpButton last_name>>
-		</th>
-		<td>
-			<$edit-text
-				tiddler='$:/state/Create Identity twCard'
-				field='last_name'
-				class='tc-edit-texteditor'
-		/>
-		</td>
-	</tr>
-	<tr>
-		<th style='text-align:left;width:15%'>
-			Location<<HelpButton location>>
-		</th>
-		<td>
-			<$edit-text
-				tiddler='$:/state/Create Identity twCard'
-				field='location'
-				class='tc-edit-texteditor'
-				placeholder='Country or even city. Of value for potential meetups'
-		/>
-		</td>
-	</tr>
-	<tr>
-		<th style='text-align:left;width:15%'>
-			Homepage<<HelpButton homepage>>
-		</th>
-		<td>
-			<$edit-text
-				tiddler='$:/state/Create Identity twCard'
-				field='homepage'
-				class='tc-edit-texteditor'
-		/>
-		</td>
-	</tr>
-	<tr>
-		<th style='text-align:left;width:15%'>
-			Wiki<<HelpButton wiki>>
-		</th>
-		<td>
-			<$edit-text
-				tiddler='$:/state/Create Identity twCard'
-				field='wiki'
-				class='tc-edit-texteditor'
-		/>
-		</td>
-	</tr>
-	<tr>
-		<th style='text-align:left;width:15%'>
-			Email
-		</th>
-		<td>
-			<$edit-text
-				tiddler='$:/state/Create Identity twCard'
-				field='email'
-				class='tc-edit-texteditor'
-		/>
-		</td>
-	</tr>
-	<tr>
-		<th style='text-align:left;width:15%'>
-			Twitter
-		</th>
-		<td>
-			<$edit-text
-				tiddler='$:/state/Create twCard'
-				field='twitter'
-				class='tc-edit-texteditor'
-		/>
-		</td>
-	</tr>
-	<tr>
-		<th style='text-align:left;width:15%'>
-			Facebook
-		</th>
-		<td>
-			<$edit-text
-				tiddler='$:/state/Create twCard'
-				field='facebook'
-				class='tc-edit-texteditor'
-		/>
-		</td>
-	</tr>
-</table>
-</$vars>
-</div>
+
+<$reveal
+	type="match"
+	state="$:/state/RevealOptional"
+	text="show"
+>
+	<div
+		style="border:1px solid lightgray;"
+	>
+		<$button
+			set="$:/state/RevealOptional"
+			setTo="hide"
+			class="bigbutton-open"
+		>
+			Close
+		</$button>
+		<$vars
+			sitetitle={{$:/SiteTitle}}
+		>
+			<table
+				class='no-border'
+				style='width:100%;'
+			>
+				<tr>
+					<th
+						colspan=2
+						style='height:2em;font-size:2em;border:solid 2px black;'
+					>
+						About the wiki
+					</th>
+				</tr>
+				<tr>
+					<th
+						style='text-align:left;width:25%'
+					>
+						Wiki name<<HelpButton wiki_name>>
+					</th>
+					<td>
+						<$edit-text
+							tiddler='$:/state/Create twCard'
+							field='wiki_name'
+							class='tc-edit-texteditor'
+							placeholder=<<placeholderSiteTitle>>
+						/>
+					</td>
+				</tr>
+				<tr>
+					<th
+						style='text-align:left;width:15%'
+					>
+						Topic<<HelpButton topic>>
+					</th>
+					<td>
+						<$edit-text
+							tiddler='$:/state/Create twCard'
+							field='topic'
+							class='tc-edit-texteditor'
+						/>
+					</td>
+				</tr>
+				<tr>
+					<th
+						style='text-align:left;width:15%'
+					>
+						Description<<HelpButton description>>
+					</th>
+					<td>
+						<$edit-text
+							tiddler='$:/state/Create twCard'
+							field='description'
+							class='tc-edit-texteditor'
+							placeholder='(optional) Describe e.g the purpose with your....'
+						/>
+					</td>
+				</tr>
+				<tr>
+					<th
+						style='text-align:left;width:15%'
+					>
+						Author<<HelpButton author>>
+					</th>
+					<td>
+						<$edit-text
+							tiddler='$:/state/Create twCard'
+							field='author'
+							class='tc-edit-texteditor'
+							placeholder="Optional. E.g your name or username or whatever you want."
+						/>
+					</td>
+				</tr>
+				<tr>
+					<th
+						colspan=2
+						style='height:2em;font-size:2em;border:solid 2px black;'
+					>
+						About you
+					</th>
+				</tr>
+				<tr>
+					<th
+						style='text-align:left;width:15%'
+					>
+						First Name<<HelpButton first_name>>
+					</th>
+					<td>
+						<$edit-text
+							tiddler='$:/state/Create Identity twCard'
+							field='first_name'
+							class='tc-edit-texteditor'
+					/>
+					</td>
+				</tr>
+				<tr>
+					<th
+						style='text-align:left;width:15%'
+					>
+						Last Name<<HelpButton last_name>>
+					</th>
+					<td>
+						<$edit-text
+							tiddler='$:/state/Create Identity twCard'
+							field='last_name'
+							class='tc-edit-texteditor'
+					/>
+					</td>
+				</tr>
+				<tr>
+					<th
+						style='text-align:left;width:15%'
+					>
+						Location<<HelpButton location>>
+					</th>
+					<td>
+						<$edit-text
+							tiddler='$:/state/Create Identity twCard'
+							field='location'
+							class='tc-edit-texteditor'
+							placeholder='Country or even city. Of value for potential meetups'
+					/>
+					</td>
+				</tr>
+				<tr>
+					<th
+						style='text-align:left;width:15%'
+					>
+						Homepage<<HelpButton homepage>>
+					</th>
+					<td>
+						<$edit-text
+							tiddler='$:/state/Create Identity twCard'
+							field='homepage'
+							class='tc-edit-texteditor'
+					/>
+					</td>
+				</tr>
+				<tr>
+					<th
+						style='text-align:left;width:15%'
+					>
+						Wiki<<HelpButton wiki>>
+					</th>
+					<td>
+						<$edit-text
+							tiddler='$:/state/Create Identity twCard'
+							field='wiki'
+							class='tc-edit-texteditor'
+					/>
+					</td>
+				</tr>
+				<tr>
+					<th
+						style='text-align:left;width:15%'
+					>
+						Email
+					</th>
+					<td>
+						<$edit-text
+							tiddler='$:/state/Create Identity twCard'
+							field='email'
+							class='tc-edit-texteditor'
+					/>
+					</td>
+				</tr>
+				<tr>
+					<th
+						style='text-align:left;width:15%'
+					>
+						Twitter
+					</th>
+					<td>
+						<$edit-text
+							tiddler='$:/state/Create twCard'
+							field='twitter'
+							class='tc-edit-texteditor'
+					/>
+					</td>
+				</tr>
+				<tr>
+					<th
+						style='text-align:left;width:15%'
+					>
+						Facebook
+					</th>
+					<td>
+						<$edit-text
+							tiddler='$:/state/Create twCard'
+							field='facebook'
+							class='tc-edit-texteditor'
+					/>
+					</td>
+				</tr>
+			</table>
+		</$vars>
+	</div>
 </$reveal>
 
 <br>
 ''2. Get listed''<<HelpButton why_list 'why?'>> - strongly recommended
-<table class='no-border' style='width:100%; border:1px solid lightgray; padding-top:15px;'>
-   <tr>
-   <td style='vertical-align:top;padding:10px;'>
-    Request for [[list admin]] to fetch your twCard and publish it on the [[twCards List|http://twederation.tiddlyspot.com/#Wiki%20Listing]].<br>
-    Note that this will send a message to list admin using an integrated Google form.<br>
-   <$list filter="[[$:/state/Create twCard]field:publishonlist[No]]">
-       <$button style="background:pink; margin:10px;">
-         <$action-setfield $tiddler="$:/state/Create twCard" publishonlist="Yes"/>
-         {{toggle_icon.png}};
-      </$button>
-      <$list filter="[[$:/state/Create twCard]publishonlist[No]]">
-          Current status: @@color:red; //twCard will __not__ be listed//.@@
-       </$list>
-       <br>
-   </$list>
-   <$list filter="[[$:/state/Create twCard]field:publishonlist[Yes]]
-                         [[$:/state/Create twCard]!has[publishonlist]]">
-      <$button style="margin:10px; background:lightgreen;">
-         <$action-setfield $tiddler="$:/state/Create twCard" publishonlist="No"/>
-         {{toggle_icon.png}}
-      </$button>
-      <$list filter="[[$:/state/Create twCard]publishonlist[Yes]]
-                         [[$:/state/Create twCard]!has[publishonlist]]">
-                Current status: @@color:green; //twCard __will__ be listed//.@@
-      </$list>
-      <br>
-   </$list>
-</td></tr>
+<table
+	class='no-border'
+	style='width:100%; border:1px solid lightgray; padding-top:15px;'
+>
+	<tr>
+		<td
+	   		style='vertical-align:top;padding:10px;'
+		>
+			Request for [[list admin]] to fetch your twCard and publish it on the [[twCards List|http://twederation.tiddlyspot.com/#Wiki%20Listing]].<br>
+			Note that this will send a message to list admin using an integrated Google form.<br>
+			<$list
+				filter="[[$:/state/Create twCard]field:publishonlist[No]]"
+			>
+				<$button
+					style="background:pink; margin:10px;"
+				>
+					<$action-setfield
+						$tiddler="$:/state/Create twCard"
+						publishonlist="Yes"
+					/>
+					{{toggle_icon.png}};
+				</$button>
+				<$list
+					filter="[[$:/state/Create twCard]publishonlist[No]]"
+				>
+					Current status: @@color:red; //twCard will __not__ be listed//.@@
+				</$list>
+				<br>
+			</$list>
+			<$list
+				filter="[[$:/state/Create twCard]field:publishonlist[Yes]][[$:/state/Create twCard]!has[publishonlist]]"
+			>
+				<$button
+					style="margin:10px; background:lightgreen;"
+				>
+					<$action-setfield
+						$tiddler="$:/state/Create twCard"
+						publishonlist="No"
+					/>
+					{{toggle_icon.png}}
+				</$button>
+				<$list
+					filter="[[$:/state/Create twCard]publishonlist[Yes]][[$:/state/Create twCard]!has[publishonlist]]"
+				>
+					Current status: @@color:green; //twCard __will__ be listed//.@@
+				</$list>
+				<br>
+			</$list>
+		</td>
+	</tr>
 </table>
 
 <br>
 ''3. Create''<br>
 
-<$set name=Name value={{$:/state/Create twCard!!name}} emptyValue={{$:/status/UserName}}>
-<$set name=URL value={{$:/state/Create twCard!!url}} emptyValue=<<location "origin">>>
-<table class='no-border' style='width:100%; border:1px solid lightgray; padding-top:15px;'>
-   <tr>
-   <td style='vertical-align:top;padding:10px;'>
-Click to create the twCard - or to update it if it already exists
-<div style="padding:15px; border:0px;"><$macrocall $name='thisSetWikiCardButton' URL=<<URL>> Name=<<Name>>/></div>
-</td><td>$:/twCard<br>[[$:/state/Create twCard]]</td></tr>
-</table>
-</$set>
+<$set
+	name=WikiName
+	value={{$:/state/Create twCard!!name}}
+	emptyValue={{$:/SiteTitle}}
+>
+	<$set
+		name=URL
+		value={{$:/state/Create twCard!!url}}
+		emptyValue=<<location "href">>
+	>
+		<table
+			class='no-border'
+			style='width:100%; border:1px solid lightgray; padding-top:15px;'
+		>
+			<tr>
+				<td
+			   		style='vertical-align:top;padding:10px;'
+				>
+					Click to create the twCard - or to update it if it already exists
+					<div
+						style="padding:15px; border:0px;"
+					>
+						<$macrocall
+							$name='thisSetWikiCardButton'
+							URL=<<URL>>
+							Name=<<WikiName>>
+						/>
+					</div>
+				</td>
+				<td>
+					[[$:/Wiki twCard]]
+					<br>
+					[[$:/state/Create twCard]]
+				</td>
+			</tr>
+		</table>
+	</$set>
 </$set>
 <br>
 

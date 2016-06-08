@@ -1,0 +1,44 @@
+created: 20150819171443000
+modified: 20150819171628121
+module-type: macro
+title: $:/macros/buggyj/misc/location.js
+type: application/javascript
+
+/*\
+title: $:/macros/buggyj/misc/location.js
+type: application/javascript
+module-type: macro
+
+<<location field>>
+use:
+<<location "show">> to see the all the fields
+then 
+<<location "href">> for url
+
+\*/
+(function(){
+
+/*jslint node: true, browser: true */
+/*global $tw: false */
+"use strict";
+
+
+exports.name = "location";
+
+exports.params = [
+	{ name: "field" }
+];
+/*
+Run the macro
+*/
+
+exports.run = function(field) {
+if (field === "show") {
+	alert (JSON.stringify(window.location));
+}else try {
+		return window.location[field].toString();
+	} catch(e){}
+}
+
+
+})();
