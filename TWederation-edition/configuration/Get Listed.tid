@@ -1,5 +1,7 @@
-tags: 
+tags:
 title: $:/plugins/inmysocks/TWederation/Get Listed
+
+''You should never have to use this tiddler!! If you believe you have reason ask Jed (inmysocks) instead.''
 
 <$reveal type=match state='$:/settings/TWederation/Wiki Info!!listed' text=True>
 You have already requested that this wiki be listed on twederation.tiddlyspot.com. If you believe there has been an error check ''PUT INSTRUCTIONS FOR HOW TO CHECK HERE''. You can update your listing info by using the update wiki info tool.

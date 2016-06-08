@@ -3,7 +3,7 @@ title: $:/settings/twCard Form Submit Location
 type: application/json
 
 {
-    "entry.1543795927": "$:/state/Create twCard!!wiki",
+    "entry.1543795927": "$:/state/Create twCard!!name",
     "entry.1780707291": "$:/state/Create twCard!!url",
-    "entry.1160975793": "$:/state/Create twCard!!name"
+    "entry.1160975793": "$:/state/Create twCard!!author"
 }

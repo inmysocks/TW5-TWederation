@@ -3,13 +3,6 @@ title: Wiki Configuration for TWederation
 
 These are for site settings. They are useful for when other people want to get information about your site.
 
-Set wiki author: <$select tiddler='$:/SiteAuthor' field='text'>
-<option value=''>--</option>
-<$list filter='[all[tiddlers+shadows]type[Identity twCard]]'>
-<option value=<<currentTiddler>>><$view field='username'/></option>
-</$list>
-</$select>
-
 Set site twCard: <$select tiddler='$:/SitetwCard' field='text'>
 <option value=''>--</option>
 <$list filter='[all[tiddlers+shadows]type[Wiki twCard]]'>

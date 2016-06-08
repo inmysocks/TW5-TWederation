@@ -114,6 +114,19 @@ You only need to do this set-up once. You can change any of this later but keep 
 			</$set>
 		</td>
 	</tr>
+	<tr>
+		<td style='text-align:right;width:15%;vertical-align:top;'>
+			Author<<HelpButton author>>
+		</td>
+		<td>
+			<$edit-text
+				tiddler='$:/state/Create twCard'
+				field='author'
+				class='tc-edit-texteditor'
+				placeholder="Optional. E.g your name or username or whatever you want."
+			/>
+		</td>
+	</tr>
 </table>
 
 <br>
@@ -206,6 +219,7 @@ You only need to do this set-up once. You can change any of this later but keep 
 						/>
 					</td>
 				</tr>
+<!--
 				<tr>
 					<th
 						style='text-align:left;width:15%'
@@ -221,6 +235,7 @@ You only need to do this set-up once. You can change any of this later but keep 
 						/>
 					</td>
 				</tr>
+-->
 				<tr>
 					<th
 						colspan=2
