@@ -1,0 +1,16 @@
+tags: $:/tags/AboveStory
+title: $:/plugins/inmysocks/TWederation/TWederation Configuration/Above story
+
+<div style="position:absolute">
+^^<$checkbox tag="$:/tags/AboveStory"> Show<br>&nbsp;[[welcome|$:/plugins/inmysocks/TWederation/TWederation Configuration/Above story]]<br>on startup<br>
+</$checkbox>^^
+</div>
+
+<center>
+
+Welcome to the
+
+! TWederation!
+
+Let's [[get started|$:/plugins/inmysocks/TWederation/TWederation Configuration Wizard]] !
+</center>

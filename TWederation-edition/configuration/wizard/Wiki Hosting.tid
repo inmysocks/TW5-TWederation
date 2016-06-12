@@ -1,0 +1,18 @@
+order: 2
+title: $:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Wiki Hosting
+
+There are multiple ways to use TWederation. For now this just guides you thourgh setting up a wiki online so that you can use it to connect to other people. It works like a distributed social network.
+
+In the future I will add instructions for setting up networks for personal use or in other non-public settings.
+
+For now you must have a way to host your wiki online. Currently the easiest way to do this is to use tiddlyspot.
+
+Some ways to host your wiki:
+
+*Tiddlyspot
+*Your own webserver
+*Dropbox
+
+''THERE ARE SOME SERIOUS BUGS ASSOCIATED WITH USING DROPBOX!!'' We are working on it.
+
+Currently you can not use xmlhttprequests from a site on an https server to get something from a non-https server. Dropbox uses https so if you host your wiki on dropbox you will only be able to connect to wikis that are also on https servers. We are looking for a way to fix this limitation.

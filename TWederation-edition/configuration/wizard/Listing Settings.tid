@@ -1,0 +1,121 @@
+order: 6
+title: $:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Listing Settings
+
+<$set
+    name=URLProtocol
+    value=<<location protocol>>
+>
+
+    <$list filter='[[https]suffix<URLProtocol>][[$:/temp/TWederation Wizard]!fix_url[True]get[url]!prefix<WikiURL>][[$:/temp/TWederation Wizard]!has[url]][[$:/temp/TWederation Wizard]!fix_name[True]!has[name]][[$:/temp/TWederation Wizard]!fix_username[True]!has[author]]'>
+        <h1
+            style='color:red;'
+        >
+            Warning!!
+        </h1>
+    </$list>
+
+    <!-- Display a message if the wiki is on an https page about the bug with http-vs-https -->
+    <$list
+        filter='[[https]suffix<URLProtocol>]'
+    >
+        There is a bug concerning sites using https.
+    </$list>
+</$set>
+<$set name=HREF value=<<location href>>>
+<$set name=HASH value=<<location hash>>>
+<$set name=WikiURL filter='[<HREF>removesuffix<HASH>]' emptyValue=<<HREF>>>
+    <!-- Make sure that the wiki and the listed url are the same -->
+    <$list
+        filter='[[$:/temp/TWederation Wizard]!fix_url[True]get[url]!prefix<WikiURL>][[$:/temp/TWederation Wizard]!has[url]]'
+    >
+        @@color:red;
+        ''The URL you have listed for your wiki doesn't match the current URL. Make sure you have the correct URL before proceeding. ''Note:'' If you do not give an http or https url than you will not be listed on the wiki listing. If you want to make canges you can click <$button>Here<$action-setfield $tiddler='$:/temp/TWederation Wizard' fix_url=True/></$button>.''
+        @@
+        <br>
+    </$list>
+    <$reveal type='match' state='$:/temp/TWederation Wizard!!fix_url' text=True>
+        <$list
+            filter='[[$:/temp/TWederation Wizard]get[url]!prefix<WikiURL>][[$:/temp/TWederation Wizard]!has[url]]'
+            emptyMessage='@@color:green;URLs match.@@'
+        >
+            @@color:red;
+            URLs don't match!
+            @@
+        </$list><br>
+        Current URL:<br>
+        <<WikiURL>><br>
+        Listed URL:<br>
+        <$edit-text tiddler='$:/temp/TWederation Wizard' field='url' class='tc-edit-texteditor'/>
+    </$reveal>
+</$set>
+</$set>
+</$set>
+
+<!-- If the user hasn't set a wiki name give a warning -->
+<$list
+    filter='[[$:/temp/TWederation Wizard]!fix_name[True]!has[name]]'
+>
+    @@color:red;You haven't given your wiki a name.@@ If you don't give a name than the URL will be used. This isn't recommended. Click <$button>here<$action-setfield $tiddler='$:/temp/TWederation Wizard' fix_name=True/></$button> to give your wiki a human readable name.
+</$list>
+<$reveal type='match' state='$:/temp/TWederation Wizard!!fix_name' text=True>
+    Set wiki name: <$edit-text tiddler='$:/temp/TWederation Wizard' field=name class='tc-edit-texteditor'/>
+</$reveal>
+
+<!-- If the user hasn't set a username give a warning -->
+<$list
+    filter='[[$:/temp/TWederation Wizard]!fix_username[True]!has[author]]'
+>
+    @@color:red;You haven't given an author.@@ If you don't give an author than the wiki name will be used. This is a personal preference, but if you are going to use the wiki to send messages and join in discussions an author name can help. Click <$button>here<$action-setfield $tiddler='$:/temp/TWederation Wizard' fix_username=True/></$button> to give an author name.
+</$list>
+<$reveal type='match' state='$:/temp/TWederation Wizard!!fix_username' text=True>
+    Set author: <$edit-text tiddler='$:/temp/TWederation Wizard' field=author class='tc-edit-texteditor'/>
+</$reveal>
+
+This sets if a request is sent for the [[list admin]] to fetch your twCard and publish it on the [[twCards List|http://twederation.tiddlyspot.com/#Wiki%20Listing]].<br>
+Note that this will send a message to list admin using an integrated Google form.<br>
+
+Click on the globe icon to prevent the message from being sent. Do this if you only want to fetch data from other wikis and not share anything or send any messages. Also do this if you only want to use your wikis on local networks.<br>
+<$list
+	filter="[[$:/temp/TWederation Wizard]field:publishonlist[No]]"
+>
+	<$button
+        style="margin:10px; background:white;
+		border:2px solid blue;"
+    >
+		<$action-setfield
+			$tiddler="$:/temp/TWederation Wizard"
+			publishonlist="Yes"
+		/>
+		<span style="fill:red">
+		      {{$:/core/images/home-button}}
+        </span>
+	</$button>
+	<$list
+		filter="[[$:/temp/TWederation Wizard]publishonlist[No]]"
+	>
+		Current status: @@color:red; //twCard will __not__ be listed//@@ after step 3.
+	</$list>
+	<br>
+</$list>
+<$list
+	filter="[[$:/temp/TWederation Wizard]field:publishonlist[Yes]][[$:/temp/TWederation Wizard]!has[publishonlist]]"
+>
+	<$button	style="margin:10px; background:white;
+		border:2px solid blue;">
+		<$action-setfield
+			$tiddler="$:/temp/TWederation Wizard"
+			publishonlist="No"
+		/>
+		<span style="fill: green">
+		      {{$:/core/images/globe}}
+        </span>
+		</$button>
+	<$list
+		filter="[[$:/temp/TWederation Wizard]publishonlist[Yes]][[$:/temp/TWederation Wizard]!has[publishonlist]]"
+	>
+		Current status: @@color:green; //twCard __will__ be listed//@@ when you click `Finish Configuration`.
+	</$list>
+	<br>
+</$list>
+
+<br>

@@ -1,0 +1,10 @@
+order: 1
+title: $:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Wizard Welcome Message
+
+Welcome to TWederation!
+
+This is a wizard for use setting up your own twederated wiki. If you don't know what that means or have other questions than information is [[here|$:/plugins/inmysocks/TWederation/Documentation]].
+
+At the bottom of this tiddler you can see what your finished twCard will look like to track your progress.
+
+Using the buttons below you will navigate through the process required for setting up your wiki. Click on the `Forward` button to go to the next step.

@@ -1,0 +1,92 @@
+order: 5
+title: $:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Other Info
+
+This is where you give your other info. It is all optional.
+
+This doesn't do anything other than list your information. There is no automatic integration or sharing or anything else.
+
+I am currently working on improving my twitter plugin to make it eaiser to post to twitter from your wiki. I may work on plugins to integrate other services into tiddlywiki in the future. ''Note:'' Facebook is very difficult to work with and I will probably never figure out their API so don't expect much integration with Facebook. Google+ doesn't allow third party apps to post so I can't do anything about that.
+
+
+<table class=tc-wiki-twcard>
+    <tr>
+        <th>
+            Topic
+        </th>
+        <td>
+            <$edit-text tiddler='$:/temp/TWederation Wizard' field='topic' class='tc-edit-texteditor'/>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Description
+        </th>
+        <td>
+            <$edit-text tiddler='$:/temp/TWederation Wizard' field='description' class='tc-edit-texteditor'/>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            First Name
+        </th>
+        <td>
+            <$edit-text tiddler='$:/temp/TWederation Wizard' field='first_name' class='tc-edit-texteditor'/>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Last Name
+        </th>
+        <td>
+            <$edit-text tiddler='$:/temp/TWederation Wizard' field='last_name' class='tc-edit-texteditor'/>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Location
+        </th>
+        <td>
+            <$edit-text tiddler='$:/temp/TWederation Wizard' field='location' class='tc-edit-texteditor'/>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Homepage
+        </th>
+        <td>
+            <$edit-text tiddler='$:/temp/TWederation Wizard' field='homepage' class='tc-edit-texteditor'/>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Email
+        </th>
+        <td>
+            <$edit-text tiddler='$:/temp/TWederation Wizard' field='email' class='tc-edit-texteditor'/>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Twitter
+        </th>
+        <td>
+            <$edit-text tiddler='$:/temp/TWederation Wizard' field='twitter' class='tc-edit-texteditor'/>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Facebook
+        </th>
+        <td>
+            <$edit-text tiddler='$:/temp/TWederation Wizard' field='facebook' class='tc-edit-texteditor'/>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            ~LinkedIn
+        </th>
+        <td>
+            <$edit-text tiddler='$:/temp/TWederation Wizard' field='linkedin' class='tc-edit-texteditor'/>
+        </td>
+    </tr>
+</table>
