@@ -1,5 +1,12 @@
 title: TWederation
 
-<$list filter='[[$:/SitetwCard]!has[text]]' emptyMessage="<$transclude tiddler='$:/plugins/inmysocks/TWederation/Communication' mode=block/>">
-<$transclude tiddler='$:/plugins/inmysocks/TWederation/TWederation Configuration Wizard' mode=block/>
+<$list
+    filter='[[$:/SitetwCard]!has[text]]'
+    variable=dummy
+    emptyMessage="<$transclude tiddler='$:/plugins/inmysocks/TWederation/Communication' mode=block/>"
+>
+    <$transclude
+        tiddler='$:/plugins/inmysocks/TWederation/TWederation Configuration Wizard'
+        mode=block
+    />
 </$list>

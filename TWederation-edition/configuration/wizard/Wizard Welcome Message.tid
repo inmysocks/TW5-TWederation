@@ -1,12 +1,12 @@
-order: 1
-title: $:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Wizard Welcome Message
 caption: Welcome!
+order: 1
 tags: [[TWederation Setup Wizard]]
+title: $:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Wizard Welcome Message
 
-Welcome to TWederation!
+<span style="float:right;margin-top:-1em;">([[templink|$:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Wizard Welcome Message]])</span>
 
-This is a wizard for use setting up your own twederated wiki. If you don't know what that means or have other questions than information is [[here|$:/plugins/inmysocks/TWederation/Documentation]].
+Welcome to <<stretch "TWederation!" " If you don't know what //TWederation// is or have other questions, then go [[here|$:/plugins/inmysocks/TWederation/Documentation]].">>
 
-At the bottom of this tiddler you can see what your finished twCard will look like to track your progress.
+This guide will help you to set up your own twederated ~TiddlyWiki. (There are also several <<stretch "other" "ways to use TWederation.)" "This guide will just help you to set up a wiki so it can connect to other wikis and people, like a distributed social network. In the future, there will be instructions for setting up networks for personal use or other non-public settings, wikis for collaboration, and other special applications.">>
 
-Using the buttons below you will navigate through the process required for setting up your wiki. Click on the `Forward` button to go to the next step.
+Here below, you see your <<stretch "twCard" "and how it is completed as you go through the steps." """A twCard is the key to participate in TWederation. It is the ID of your twederated main wiki and possible sub-wikis. ([[more info|$:/plugins/inmysocks/TWederation/Documentation]])""">>.

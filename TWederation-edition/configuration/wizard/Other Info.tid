@@ -1,32 +1,13 @@
-order: 5
-title: $:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Other Info
 caption: Other Info
+order: 5
 tags: [[TWederation Setup Wizard]]
+title: $:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Other Info
 
-This is where you give your other info. It is all optional.
+<span style="float:right;margin-top:-1em;">([[templink|$:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Other Info]])</span>
 
-This doesn't do anything other than list your information. There is no automatic integration or sharing or anything else.
-
-I am currently working on improving my twitter plugin to make it eaiser to post to twitter from your wiki. I may work on plugins to integrate other services into tiddlywiki in the future. ''Note:'' Facebook is very difficult to work with and I will probably never figure out their API so don't expect much integration with Facebook. Google+ doesn't allow third party apps to post so I can't do anything about that.
-
+The following is <<stretch "just plain text" "information on your twCard." """It doesn't //do// anything; There is no automatic integration with the named services, or reporting to them or automatic sharing or anything else.""">>
 
 <table class=tc-wiki-twcard>
-    <tr>
-        <th>
-            Topic
-        </th>
-        <td>
-            <$edit-text tiddler=<<WizardTemp>> field='topic' class='tc-edit-texteditor'/>
-        </td>
-    </tr>
-    <tr>
-        <th>
-            Description
-        </th>
-        <td>
-            <$edit-text tiddler=<<WizardTemp>> field='description' class='tc-edit-texteditor'/>
-        </td>
-    </tr>
     <tr>
         <th>
             First Name
@@ -92,3 +73,11 @@ I am currently working on improving my twitter plugin to make it eaiser to post 
         </td>
     </tr>
 </table>
+
+More about ~TiddlyWiki and social services <<stretch "here." """
+''twitter''; I am currently working on improving my //twitter plugin// to make it easier to post to twitter from your wiki.
+
+''Facebook'' is very difficult to work with and I will probably never figure out their API so don't expect much integration with Facebook.
+
+''Google+'' doesn't allow third party apps to post so I can't do anything about that.
+""">>
