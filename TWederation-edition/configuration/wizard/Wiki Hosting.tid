@@ -12,6 +12,8 @@ Your ~TiddlyWiki must be accessible online, for example via:
 *Dropbox - (see note below)
 
 <h3>https vs http</h3>
-A wiki hosted on a //http''s''// server will not accept fetching of tiddlers from a wiki on an //http// server. We are looking for a way to fix this limitation.
+A wiki hosted on a //http''s''// server can not fetch tiddlers from a wiki on an //http// server.
+Note that this is one way, a wiki on an http server has no problems fetching tiddlers from a wiki on an https server. So you can serve content from an https server (like using dropbox as a file server) without trouble, you just won't be able to pull tiddlers from wikis on http servers (like tiddlyspot).
+We are looking for a way to fix this limitation.
 
-E.g ''Dropbox'' uses //https// so if you host your wiki on dropbox you will only be able to connect to wikis that are //also// on //https// servers.
+E.g ''Dropbox'' uses //https// so if you host your wiki on dropbox you will only be able to connect to wikis that are //also// on //https// servers, but other wikis will be able to connect to your wiki just fine.
