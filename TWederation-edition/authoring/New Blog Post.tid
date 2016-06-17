@@ -1,22 +1,31 @@
-created: 20160221120400913
 list-before: Bookmarks
-modified: 20160221120701287
 tags: Communication
-title: New Blog Post
+title: $:/plugins/inmysocks/TWederation/New Blog Post
+caption: New Blog Post
 
 \define thisMakePostButton(TIME)
 <$button>Make Post
-	<$action-setfield 
-		$tiddler="""$(PostTitle)$ - $(AuthorName)$ ($TIME$)""" 
-		author={{$:/temp/NewBlogPost!!author_card}}
+	<$action-setfield
+		$tiddler="""$(PostTitle)$ - $(AuthorName)$ ($TIME$)"""
+		author=<<AuthorName>>
 		wiki_url=<<WikiUrl>>
 		post_title={{$:/temp/NewBlogPost!!new_post_title}}
 		type='Blog Post'
 		text={{$:/temp/NewBlogPost!!text}}
+		day=<<now 0DD>>
+		month=<<now 0MM>>
+		year=<<now YYYY>>
+		hour=<<now 0hh>>
+		minute=<<now 0mm>>
+		second=<<now 0ss>>
+		hour=<<now 0hh>>
+		minute=<<now 0mm>>
+		second=<<now 0ss>>
+		sort=<<now YYYY0MM0DD0hh0mm0ss>>
 	/>
-	<$action-setfield 
-		$tiddler="$:/temp/NewBlogPost" 
-		new_post_title='' 
+	<$action-setfield
+		$tiddler="$:/temp/NewBlogPost"
+		new_post_title=''
 		text=''
 	/>
 </$button>
@@ -28,10 +37,27 @@ Post:
 
 <$edit-text tiddler='$:/temp/NewBlogPost' class='tc-edit-texteditor'/>
 
-<$list filter='[[$:/temp/NewBlogPost]get[author_card]get[username]]' variable='AuthorName' emptyMessage="""<$vars PostTitle={{$:/temp/NewBlogPost!!new_post_title}}><<thisMakePostButton>></$vars>""">
-<$vars PostTitle={{$:/temp/NewBlogPost!!new_post_title}} AuthorName={{$:/SiteAuthor}}>
-<$list filter='[[$:/SitetwCard]get[text]get[url]]' variable=WikiUrl>
-<$macrocall $name=thisMakePostButton TIME=<<now 0hhh0mm-0DD/MM/YYYY>>/>
-</$list>
-</$vars>
+<$list
+	filter='[{$:/SitetwCard}get[author]]'
+	variable='AuthorName'
+	emptyMessage="""<$vars PostTitle={{$:/temp/NewBlogPost!!new_post_title}}><$macrocall $name=thisMakePostButton TIME=<<now 0hhh0mm-0DD/MM/YYYY>>/></$vars>"""
+>
+	<$vars
+		PostTitle={{$:/temp/NewBlogPost!!new_post_title}}
+	>
+		<$list
+			filter='[[$:/SitetwCard]get[text]get[author]]'
+			variable=AuthorName
+		>
+			<$list
+				filter='[[$:/SitetwCard]get[text]get[url]]'
+				variable=WikiUrl
+			>
+				<$macrocall
+					$name=thisMakePostButton
+					TIME=<<now YYYY0MM0DD0hhh0mm0ss>>
+				/>
+			</$list>
+		</$list>
+	</$vars>
 </$list>

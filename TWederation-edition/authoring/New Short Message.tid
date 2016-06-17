@@ -1,24 +1,25 @@
 tags: Communication
-title: New Short Message
+title: $:/plugins/inmysocks/TWederation/New Short Message
+caption: New Short Message
 
 \define thisSaveMessage(TIME)
-<$list 
-	filter='[[$:/Messages/]addsuffix{$:/SiteAuthor}]' 
+<$list
+	filter='[[$:/Messages/]addsuffix{$:/SitetwCard}]'
 	variable=TiddlerName
 >
-	<$list 
-		filter='[{$:/state/Short Messages!!selected_recipient}addprefix[ - ]addprefix[$TIME$]]' 
+	<$list
+		filter='[{$:/state/Short Messages!!selected_recipient}addprefix[ - ]addprefix[$TIME$]]'
 		variable=IndexName
 	>
 		<$button>
 			Save Message
-			<$action-setfield 
-				$tiddler=<<TiddlerName>> 
-				$index=<<IndexName>> 
+			<$action-setfield
+				$tiddler=<<TiddlerName>>
+				$index=<<IndexName>>
 				$value={{$:/state/Short Messages!!message}}
 			/>
-			<$action-setfield 
-				$tiddler='$:/state/Short Messages' 
+			<$action-setfield
+				$tiddler='$:/state/Short Messages'
 				message=''
 			/>
 		</$button>
@@ -26,19 +27,19 @@ title: New Short Message
 </$list>
 \end
 
-To: 
-<$select 
-	tiddler='$:/state/Short Messages' 
+To:
+<$select
+	tiddler='$:/state/Short Messages'
 	field='selected_recipient'
 >
 	<option value=''>
 		--
 	</option>
-	<$list 
-		filter='[all[tiddlers+shadows]type[Identity twCard]]'
+	<$list
+		filter='[all[tiddlers+shadows]type[Wiki twCard]]'
 	>
 		<option value=<<currentTiddler>>>
-			<$view field='username'/>
+			<$view field='author'/>
 		</option>
 	</$list>
 </$select>

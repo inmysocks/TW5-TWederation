@@ -1,5 +1,7 @@
 order: 1
 title: $:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Wizard Welcome Message
+caption: Welcome!
+tags: [[TWederation Setup Wizard]]
 
 Welcome to TWederation!
 

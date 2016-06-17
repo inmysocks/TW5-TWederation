@@ -1,5 +1,7 @@
 order: 3
 title: $:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Set Wiki URL
+caption: Set Wiki URL
+tags: [[TWederation Setup Wizard]]
 
 The URL is used as the main identification for your wiki. Because each wiki necessarialy has a different URL different wikis can still have the same name without causing too many problems.
 
@@ -19,9 +21,9 @@ Your URL is detected as
 <$text text=<<WikiURL>>/>
 </pre>
 <br>
-if this is correct click <$button>here<$action-setfield $tiddler='$:/temp/TWederation Wizard' url=<<WikiURL>>/></$button> to set this value, otherwise enter the URL below.
+if this is correct click <$button>here<$action-setfield $tiddler=<<WizardTemp>> url=<<WikiURL>>/></$button> to set this value, otherwise enter the URL below.
 
-<$edit-text tiddler='$:/temp/TWederation Wizard' field='url' class='tc-edit-texteditor'/>
+<$edit-text tiddler=<<WizardTemp>> field='url' class='tc-edit-texteditor'/>
 
 </$set>
 </$set>

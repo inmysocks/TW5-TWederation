@@ -1,4 +1,4 @@
-tags: $:/tags/AboveStory
+tags: 
 title: $:/plugins/inmysocks/TWederation/TWederation Configuration/Above story
 
 <div style="position:absolute">
@@ -12,5 +12,5 @@ Welcome to the
 
 ! TWederation!
 
-Let's [[get started|$:/plugins/inmysocks/TWederation/TWederation Configuration Wizard]] !
+Let's [[get started|TWederation]] !
 </center>

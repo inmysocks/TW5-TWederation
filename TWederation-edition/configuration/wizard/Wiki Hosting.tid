@@ -1,5 +1,7 @@
 order: 2
 title: $:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Wiki Hosting
+caption: Wiki Hosting
+tags: [[TWederation Setup Wizard]]
 
 There are multiple ways to use TWederation. For now this just guides you thourgh setting up a wiki online so that you can use it to connect to other people. It works like a distributed social network.
 

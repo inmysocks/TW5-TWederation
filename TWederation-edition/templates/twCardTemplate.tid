@@ -4,7 +4,7 @@ title: $:/plugins/inmysocks/TWederation/Basic twCard Template
     class=tc-wiki-twcard
 >
     <div>
-        <h3><$view field='name'><span>Name</span></$view> by <$view field='author'><span>Author</span></$view></h3>
+        <h3><$view field='name'><$view field='url'><span>Name</span></$view></$view><$reveal type='nomatch' state='!!author' text='' tag=i><br>by<br><$view field='author'>Author</$view></$reveal></h3>
         <table>
             <tr>
                 <th>
@@ -30,20 +30,20 @@ title: $:/plugins/inmysocks/TWederation/Basic twCard Template
                     <$view field='description'/>
                 </td>
             </$reveal>
-            <$reveal type='nomatch' state='!!first_name' text='' tag=tr>
+            <$reveal type='nomatch' state='!!given_name' text='' tag=tr>
                 <th>
                     First Name
                 </th>
                 <td>
-                    <$view field='first_name'/>
+                    <$view field='given_name'/>
                 </td>
             </$reveal>
-            <$reveal type='nomatch' state='!!last_name' text='' tag=tr>
+            <$reveal type='nomatch' state='!!family_name' text='' tag=tr>
                 <th>
                     Last Name
                 </th>
                 <td>
-                    <$view field='last_name'/>
+                    <$view field='family_name'/>
                 </td>
             </$reveal>
             <$reveal type='nomatch' state='!!location' text='' tag=tr>

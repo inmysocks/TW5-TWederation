@@ -1,0 +1,8 @@
+tags: Templates $:/tags/ViewTemplate
+title: $:/plugins/inmysocks/TWederation/Templates/BlogPostCommentViewTemplate
+
+<$list filter='[is[current]type[Blog Post]]'>
+
+{{||$:/plugins/inmysocks/TWederation/Templates/BlogPostCommentTemplate}}
+
+</$list>

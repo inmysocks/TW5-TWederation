@@ -1,5 +1,7 @@
 order: 5
 title: $:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Other Info
+caption: Other Info
+tags: [[TWederation Setup Wizard]]
 
 This is where you give your other info. It is all optional.
 
@@ -14,7 +16,7 @@ I am currently working on improving my twitter plugin to make it eaiser to post 
             Topic
         </th>
         <td>
-            <$edit-text tiddler='$:/temp/TWederation Wizard' field='topic' class='tc-edit-texteditor'/>
+            <$edit-text tiddler=<<WizardTemp>> field='topic' class='tc-edit-texteditor'/>
         </td>
     </tr>
     <tr>
@@ -22,7 +24,7 @@ I am currently working on improving my twitter plugin to make it eaiser to post 
             Description
         </th>
         <td>
-            <$edit-text tiddler='$:/temp/TWederation Wizard' field='description' class='tc-edit-texteditor'/>
+            <$edit-text tiddler=<<WizardTemp>> field='description' class='tc-edit-texteditor'/>
         </td>
     </tr>
     <tr>
@@ -30,7 +32,7 @@ I am currently working on improving my twitter plugin to make it eaiser to post 
             First Name
         </th>
         <td>
-            <$edit-text tiddler='$:/temp/TWederation Wizard' field='first_name' class='tc-edit-texteditor'/>
+            <$edit-text tiddler=<<WizardTemp>> field='given_name' class='tc-edit-texteditor'/>
         </td>
     </tr>
     <tr>
@@ -38,7 +40,7 @@ I am currently working on improving my twitter plugin to make it eaiser to post 
             Last Name
         </th>
         <td>
-            <$edit-text tiddler='$:/temp/TWederation Wizard' field='last_name' class='tc-edit-texteditor'/>
+            <$edit-text tiddler=<<WizardTemp>> field='family_name' class='tc-edit-texteditor'/>
         </td>
     </tr>
     <tr>
@@ -46,7 +48,7 @@ I am currently working on improving my twitter plugin to make it eaiser to post 
             Location
         </th>
         <td>
-            <$edit-text tiddler='$:/temp/TWederation Wizard' field='location' class='tc-edit-texteditor'/>
+            <$edit-text tiddler=<<WizardTemp>> field='location' class='tc-edit-texteditor'/>
         </td>
     </tr>
     <tr>
@@ -54,7 +56,7 @@ I am currently working on improving my twitter plugin to make it eaiser to post 
             Homepage
         </th>
         <td>
-            <$edit-text tiddler='$:/temp/TWederation Wizard' field='homepage' class='tc-edit-texteditor'/>
+            <$edit-text tiddler=<<WizardTemp>> field='homepage' class='tc-edit-texteditor'/>
         </td>
     </tr>
     <tr>
@@ -62,7 +64,7 @@ I am currently working on improving my twitter plugin to make it eaiser to post 
             Email
         </th>
         <td>
-            <$edit-text tiddler='$:/temp/TWederation Wizard' field='email' class='tc-edit-texteditor'/>
+            <$edit-text tiddler=<<WizardTemp>> field='email' class='tc-edit-texteditor'/>
         </td>
     </tr>
     <tr>
@@ -70,7 +72,7 @@ I am currently working on improving my twitter plugin to make it eaiser to post 
             Twitter
         </th>
         <td>
-            <$edit-text tiddler='$:/temp/TWederation Wizard' field='twitter' class='tc-edit-texteditor'/>
+            <$edit-text tiddler=<<WizardTemp>> field='twitter' class='tc-edit-texteditor'/>
         </td>
     </tr>
     <tr>
@@ -78,7 +80,7 @@ I am currently working on improving my twitter plugin to make it eaiser to post 
             Facebook
         </th>
         <td>
-            <$edit-text tiddler='$:/temp/TWederation Wizard' field='facebook' class='tc-edit-texteditor'/>
+            <$edit-text tiddler=<<WizardTemp>> field='facebook' class='tc-edit-texteditor'/>
         </td>
     </tr>
     <tr>
@@ -86,7 +88,7 @@ I am currently working on improving my twitter plugin to make it eaiser to post 
             ~LinkedIn
         </th>
         <td>
-            <$edit-text tiddler='$:/temp/TWederation Wizard' field='linkedin' class='tc-edit-texteditor'/>
+            <$edit-text tiddler=<<WizardTemp>> field='linkedin' class='tc-edit-texteditor'/>
         </td>
     </tr>
 </table>

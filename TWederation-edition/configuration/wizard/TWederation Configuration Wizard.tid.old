@@ -1,0 +1,141 @@
+title: $:/plugins/inmysocks/TWederation/TWederation Configuration Wizard
+
+\define CreateSitetwCard()
+<$action-setfield
+    $tiddler='$:/twCard/$(Name)$ - $(URL)$'
+    type='Wiki twCard'
+    url='$(URL)$'
+    name='$(Name)$'
+    publishonlist={{$:/temp/TWederation Wizard!!publishonlist}}
+    topic={{$:/temp/TWederation Wizard!!topic}}
+    description={{$:/temp/TWederation Wizard!!description}}
+    author={{$:/temp/TWederation Wizard!!author}}
+    given_name={{$:/temp/TWederation Wizard!!first_name}}
+    family_name={{$:/temp/TWederation Wizard!!last_name}}
+    location={{$:/temp/TWederation Wizard!!location}}
+    wiki={{$:/temp/TWederation Wizard!!wiki}}
+    homepage={{$:/temp/TWederation Wizard!!homepage}}
+    email={{$:/temp/TWederation Wizard!!email}}
+    twitter={{$:/temp/TWederation Wizard!!twitter}}
+    facebook={{$:/temp/TWederation Wizard!!facebook}}
+/>
+<$action-setfield
+    $tiddler='$:/SitetwCard'
+    text="""$:/twCard/$(Name)$ - $(URL)$"""
+/>
+\end
+
+\define AddWikiToListing()
+<$action-submitform
+    $url="https://docs.google.com/forms/d/1tCXFjKumfg6qD5DZpEvL6d_fKhY4560hWTFzmOJGsDM/formResponse"
+    $tiddler="$:/settings/twCard Form Submit Location"
+/>
+\end
+
+\define FinishConfigurationButton()
+<$button>Finish Configuration
+    <$vars Name={{$:/temp/TWederation Wizard!!name}} URL={{$:/temp/TWederation Wizard!!url}}>
+        <<CreateSitetwCard>>
+    </$vars>
+    <$reveal type='nomatch' state='$:/temp/TWederation Wizard!!publishonlist' text=No>
+        <$reveal type='nomatch' state='$:/temp/TWederation Wizard!!url' text=''>
+            <$set
+                name=URLProtocol
+                value=<<location protocol>>
+            >
+                <$list filter='[<URLProtocol>prefix[http]]'>
+                    <<AddWikiToListing>>
+                </$list>
+            </$set>
+        </$reveal>
+    </$reveal>
+    <$action-setfield $tiddler='$:/plugins/inmysocks/TWederation/TWederation Configuration/Above story' tags=''/>
+</$button>
+\end
+
+This is the configuration for setting up your own wiki in the TWederation. Follow the steps below to get started!
+
+<$set
+    name=StepList
+    filter='[plugintiddlers[]prefix[$:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/]sort[order]]'
+>
+    <h2>Step <$list filter='[[$:/state/TWederation Wizard]get[current_step]get[order]]' emptyMessage=1><$view field='title'/></$list> of <$count filter=<<StepList>>/>: <$list filter='[[$:/state/TWederation Wizard]get[current_step]]' emptyMessage='Welcome!'><$view field='caption'><$view field='title'/></$view></$list></h2>
+    <div style='border:solid lightgrey 1px;padding:10px;box-shadow:5px 5px 5px #888888;'>
+        <$transclude
+            tiddler={{$:/state/TWederation Wizard!!current_step}}
+            mode=block
+        >
+            <$transclude tiddler='$:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Wizard Welcome Message' mode=block/>
+        </$transclude>
+    </div>
+    <br>
+    <$set
+        name=NextTiddler
+        filter='[plugintiddlers[]prefix[$:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/]sort[order]after{$:/state/TWederation Wizard!!current_step}]'
+        emptyValue='[[$:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Wiki Hosting]]'
+    >
+        <$set
+            name=PreviousTiddler
+            filter='[plugintiddlers[]prefix[$:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/]sort[order]before{$:/state/TWederation Wizard!!current_step}]'
+        >
+            <$list
+                variable=FirstTiddler
+                filter='[plugintiddlers[]prefix[$:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/]sort[order]first[]'
+            >
+                <$list
+                    filter=<<PreviousTiddler>>
+                    variable=PreviousTid
+                >
+                    <$button>Back
+                        <$action-setfield
+                            $tiddler='$:/state/TWederation Wizard'
+                            $field=current_step
+                            $value=<<PreviousTid>>
+                        />
+                    </$button>
+                </$list>
+            </$list>
+            <$list
+                variable=LastTiddler
+                filter='[plugintiddlers[]prefix[$:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/]sort[order]last[]]'
+            >
+                <$reveal
+                    type='nomatch'
+                    state='$:/state/TWederation Wizard!!current_step'
+                    text=<<LastTiddler>>
+                >
+                    <$list
+                        filter=<<NextTiddler>>
+                        variable=NextTid
+                    >
+                        <$button>Forward
+                            <$action-setfield
+                                $tiddler='$:/state/TWederation Wizard'
+                                $field=current_step
+                                $value=<<NextTid>>
+                            />
+                        </$button>
+                    </$list>
+                </$reveal>
+                <$reveal
+                    type='match'
+                    state='$:/state/TWederation Wizard!!current_step'
+                    text=<<LastTiddler>>
+                >
+                    <$list filter='[[$:/temp/TWederation Wizard]!has[url]][[$:/temp/TWederation Wizard]!has[name]][[$:/temp/TWederation Wizard]!has[author]]'>
+                        @@color:red;There are warnings associated with your settings!! See above.@@
+                    </$list>
+                    <<FinishConfigurationButton>>
+                </$reveal>
+            </$list>
+        </$set>
+    </$set>
+</$set>
+
+Your current twCard:
+
+<$tiddler
+    tiddler='$:/temp/TWederation Wizard'
+>
+    {{||$:/plugins/inmysocks/TWederation/Basic twCard Template}}
+</$tiddler>

@@ -1,26 +1,29 @@
 tags: Communication
-title: New Message
-type: 
+title: $:/plugins/inmysocks/TWederation/New Message
+caption: New Message
 
 \define MakeTags() [[@$(MessageRecepient)$]]
 
 \define thisMakeMessageButton(TIME)
-<$list filter='[{$:/state/New Message!!to_field}get[username]]' variable=MessageRecepient>
+<$list
+	filter='[{$:/state/New Message!!to_field}get[author]]'
+	variable=MessageRecepient
+>
 	<$button>Create Message
-		<$list 
-			filter='[[Message - ]addsuffix{$:/state/New Message!!message_title}addsuffix[ - ]addsuffix<UserName>addsuffix[ ($TIME$)]]' 
+		<$list
+			filter='[[Message - ]addsuffix{$:/state/New Message!!message_title}addsuffix[ - ]addsuffix<Author>addsuffix[ ($TIME$)]]'
 			variable=MessageTiddlerTitle
 		>
-			<$action-setfield 
-				$tiddler=<<MessageTiddlerTitle>> 
-				text={{$:/state/New Message!!text}} 
-				to={{$:/state/New Message!!to_field}} 
-				from={{$:/state/New Message!!from_field}} 
+			<$action-setfield
+				$tiddler=<<MessageTiddlerTitle>>
+				text={{$:/state/New Message!!text}}
+				to={{$:/state/New Message!!to_field}}
+				from={{$:/state/New Message!!from_field}}
 				tags=<<MakeTags>>
 			/>
-			<$action-setfield 
-				$tiddler='$:/state/New Message' 
-				message_title='' 
+			<$action-setfield
+				$tiddler='$:/state/New Message'
+				message_title=''
 				text=''
 			/>
 		</$list>
@@ -30,36 +33,36 @@ type:
 
 Remember: For the moment everything here is public. Anyone can see it.
 
-To: 
-<$select 
-	tiddler='$:/state/New Message' 
+To:
+<$select
+	tiddler='$:/state/New Message'
 	field='to_field'
 >
 	<option value=''>
 		--
 	</option>
-	<$list 
-		filter='[all[tiddlers+shadows]type[Identity twCard]]'
+	<$list
+		filter='[all[tiddlers+shadows]type[Wiki twCard]]'
 	>
 		<option value=<<currentTiddler>>>
-			<$view field='username'/>
+			<$view field='author'/>
 		</option>
 	</$list>
 </$select>
 
-From: 
-<$select 
-	tiddler='$:/state/New Message' 
+From:
+<$select
+	tiddler='$:/state/New Message'
 	field='from_field'
 >
 	<option value=''>
 		--
 	</option>
-	<$list 
-		filter='[all[tiddlers+shadows]type[Identity twCard]]'
+	<$list
+		filter='[all[tiddlers+shadows]type[Wiki twCard]]'
 	>
 		<option value=<<currentTiddler>>>
-			<$view field='username'/>
+			<$view field='author'/>
 		</option>
 	</$list>
 </$select>
@@ -68,10 +71,21 @@ Message title: <$edit-text tiddler='$:/state/New Message' field='message_title' 
 
 Message:
 
-<$edit-text tiddler='$:/state/New Message' class='tc-edit-texteditor'/>
+<$edit-text
+	tiddler='$:/state/New Message'
+	class='tc-edit-texteditor'
+/>
 
-<$tiddler tiddler={{$:/state/New Message!!from_field}}>
-	<$set name=UserName value={{!!username}}>
-		<$macrocall $name=thisMakeMessageButton TIME=<<now 0hhh0mm-0DD/MM/YYYY>>/>
+<$tiddler
+	tiddler={{$:/state/New Message!!from_field}}
+>
+	<$set
+		name=Author
+		value={{!!author}}
+	>
+		<$macrocall
+			$name=thisMakeMessageButton
+			TIME=<<now 0hhh0mm-0DD/MM/YYYY>>
+		/>
 	</$set>
 </$tiddler>

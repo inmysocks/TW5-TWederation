@@ -6,7 +6,9 @@ wiki_subtitle: This is the displayed subtitle on your wiki site. It is displayed
 wiki_title: This is the displayed title on your wiki site. It is displayed by the browser window and in the upper right by default.
 wiki_url: This is the url used to access your wiki. If you are using tiddlyspot and this says something like `http://yourwiki.tiddlyspot.com` than you can leave it alone.
 
-<$tiddler tiddler='$:/plugins/inmysocks/TWederation/Edit Site twCard'>
+<$tiddler
+    tiddler='$:/plugins/inmysocks/TWederation/Edit Site twCard'
+>
     <table class='no-border' style='border:1px solid lightgray;' >
     	<tr>
     		<td style='text-align:right;width:20%;'>

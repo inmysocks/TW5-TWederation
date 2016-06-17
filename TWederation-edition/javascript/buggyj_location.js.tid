@@ -1,5 +1,3 @@
-created: 20150819171443000
-modified: 20150819171628121
 module-type: macro
 title: $:/macros/buggyj/misc/location.js
 type: application/javascript
@@ -12,7 +10,7 @@ module-type: macro
 <<location field>>
 use:
 <<location "show">> to see the all the fields
-then 
+then
 <<location "href">> for url
 
 \*/

@@ -1,42 +1,54 @@
 tags: Communication
-title: Posts
+title: $:/plugins/inmysocks/TWederation/Posts
+caption: Posts
 
-Author: 
+Author:
 <$select tiddler='$:/state/Post' field='selected_author'>
 	<option value=''>
 		--
 	</option>
-	<$list 
-		filter='[all[tiddlers+shadows]type[Identity twCard]]'
+	<$list
+		filter='[all[tiddlers+shadows]type[Wiki twCard]]'
 	>
-		<option value=<<currentTiddler>>>
-			<$view field='username'/>
+		<option>
+			<$view field='author'/>
 		</option>
 	</$list>
 </$select>
 
-Post Title: 
-<$select 
-	tiddler='$:/state/Post' 
+Post Title:
+<$select
+	tiddler='$:/state/Post'
 	field='selected_post'
 >
 	<option value=''>
 		--
 	</option>
-	<$list 
+	<$list
 		filter='[type[Blog Post]author{$:/state/Post!!selected_author}]'
 	>
 		<option value=<<currentTiddler>>>
 			<$view field='post_title'/>
 		</option>
 	</$list>
+	<$reveal
+		type='match'
+		state='$:/state/Post!!selected_author'
+		text=''
+	>
+		<$list
+			filter='[type[Blog Post]]'
+		>
+			<option value=<<currentTiddler>>>
+				<$view field='post_title'/>
+			</option>
+		</$list>
+	</$reveal>
 </$select>
 
 <$tiddler tiddler={{$:/state/Post!!selected_post}}>
 
-{{ ||$:/templates/BlogPostTiddlerHeaderTemplate}}
-
-</$tiddler>
+{{ ||$:/plugins/inmysocks/TWederation/Templates/BlogPostTiddlerHeaderTemplate}}
 
 ---
 
@@ -44,8 +56,10 @@ Post Title:
 
 ---
 
-<$tiddler tiddler={{$:/state/Post!!selected_post}}>
+<$reveal type='nomatch' state='$:/state/Post!!selected_post' text=''>
 
-{{ ||$:/templates/BlogPostCommentTemplate}}
+{{ ||$:/plugins/inmysocks/TWederation/Templates/BlogPostCommentTemplate}}
+
+</$reveal>
 
 </$tiddler>

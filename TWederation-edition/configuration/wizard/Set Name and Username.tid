@@ -1,5 +1,7 @@
 order: 4
 title: $:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Set Name and Username
+caption: Set Wiki Name and Author
+tags: [[TWederation Setup Wizard]]
 
 This is where you set the name of your wiki and your username if you have one.
 
@@ -14,8 +16,8 @@ If you decide you don't want a user name separate from your wikis name just leav
 
 Wiki Name:
 
-<$edit-text tiddler='$:/temp/TWederation Wizard' field='name' class='tc-edit-texteditor' placeholder='Wiki Name'/>
+<$edit-text tiddler=<<WizardTemp>> field='name' class='tc-edit-texteditor' placeholder='Wiki Name'/>
 
 Wiki Author/Username:
 
-<$edit-text tiddler='$:/temp/TWederation Wizard' field='author' class='tc-edit-texteditor' placeholder='Wiki Author'/>
+<$edit-text tiddler=<<WizardTemp>> field='author' class='tc-edit-texteditor' placeholder='Wiki Author'/>

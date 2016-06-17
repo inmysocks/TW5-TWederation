@@ -1,5 +1,6 @@
 tags: Communication
-title: Fetch Communication
+title: $:/plugins/inmysocks/TWederation/Fetch Communication
+caption: Fetch Communication
 
 \define thisMakeCheckboxThing()
 <$macrocall $name=thisInnerMakeCheckboxThing PreviousTime={{$:/FetchHistory/$(URL)$##$(FILTER)$}}/>
@@ -14,7 +15,7 @@ title: Fetch Communication
 	filter='[{$:/SitetwCard}get[username]]'
 	variable=SiteAutherUserName
 >
-	<option value="""[type[Post Comment]post_author[$(SiteAuthor)$]]""">
+	<option value="""[type[Post Comment]post_author[$(SitetwCard)$]]""">
 		Comments on my posts
 	</option>
 </$list>
@@ -71,7 +72,7 @@ What to fetch:
 		The wiki's twCard
 	</option>
 	<$vars
-		SiteAuthor={{$:/SiteAuthor}}
+		SitetwCard={{$:/SitetwCard}}
 	>
 		<<thisGetCommentsOption>>
 	</$vars>

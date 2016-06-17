@@ -1,12 +1,9 @@
-tags: Templates $:/tags/ViewTemplate
+tags: Templates
 title: $:/plugins/inmysocks/TWederation/Templates/BlogPostCommentTemplate
-
-<$list filter='[is[current]type[Blog Post]]'>
-
 
 !!''Comments:''
 
-<$list filter='[type[Post Comment]post<currentTiddler>]'>
+<$list filter='[type[Post Comment]post<currentTiddler>sort[created]]'>
 <div class='tc-post-comment-card'>
 
 __''<$view field='author'/>'' says__:
@@ -20,72 +17,70 @@ __<$view field='comment_title'/>__
 
 <div class='tc-post-comment-card'>
 
-Username: 
-<$edit-text 
-	tiddler='$:/state/Post Comment' 
-	field=author 
-	class='tc-post-comment-input'
-/>
-Comment Title: 
-<$edit-text 
-	tiddler='$:/state/Post Comment' 
-	field=comment_title 
+<$list filter='[{$:/SitetwCard}get[author]]' variable=SiteAuthor>
+Username: ''<<SiteAuthor>>''
+
+Comment Title:
+<$edit-text
+	tiddler='$:/state/Post Comment'
+	field=comment_title
 	class='tc-post-comment-input'
 />
 Comment Text:
-<$edit-text 
-	tiddler='$:/state/Post Comment' 
+<$edit-text
+	tiddler='$:/state/Post Comment'
 	class='tc-edit-texteditor'
 />
 <$button>
 	Save Comment
-	<$list 
-		filter='[is[current]addprefix[Comment - ]addsuffix[ - ]addsuffix{$:/state/Post Comment!!author}addsuffix[ - ]addsuffix{$:/state/Post Comment!!comment_title}]' 
+	<$list
+		filter='[is[current]addprefix[Comment - ]addsuffix[ - ]addsuffix<SiteAuthor>addsuffix[ - ]addsuffix{$:/state/Post Comment!!comment_title}]'
 		variable=CommentTitle
 	>
-		<$action-setfield 
-			$tiddler=<<CommentTitle>> 
-			text={{$:/state/Post Comment}} 
-			comment_title={{$:/state/Post Comment!!comment_title}} 
-			author={{$:/state/Post Comment!!author}} 
-			post={{!!title}} 
+		<$action-setfield
+			$tiddler=<<CommentTitle>>
+			text={{$:/state/Post Comment}}
+			comment_title={{$:/state/Post Comment!!comment_title}}
+			author=<<SiteAuthor>>
+			post={{!!title}}
 			type='Post Comment'
 			post_author={{!!author}}
 		/>
-		<$action-setfield 
-			$tiddler='$:/state/Post Comment' 
-			comment_title='' 
+		<$action-setfield
+			$tiddler='$:/state/Post Comment'
+			comment_title=''
 			text=''
 		/>
 	</$list>
 </$button>
-
+</$list>
 </div>
 
-<$vars 
-	TiddlerTitle={{!!title}} 
+<$vars
+	TiddlerTitle={{!!title}}
 	PostTitle={{!!post_title}}
 >
-	<$button>Fetch comments for this post
-		<$list filter=<<FollowedWikisFilter>>>
-			<$vars WikiName={{!!name}}>
-				<$list 
-					filter='[[type]addprefix<OPEN>addsuffix<OPEN>addsuffix[Post Comment]addsuffix<CLOSE>addsuffix[post]addsuffix<OPEN>addsuffix<TiddlerTitle>addsuffix<CLOSE>addsuffix[post_author]addsuffix<OPEN>addsuffix{$:/SiteAuthor}addsuffix<CLOSE>addsuffix<CLOSE>]' 
-					variable=FILTER
-				>
-					<$action-sendmessage 
-						$message='tm-request-bundle' 
-						url={{!!url}} 
-						filter=<<FILTER>>
-						bundleName=<<PostCommentsBundleName>>
-						separator='SOMESTRINGIDONOTKNOWWHAT' 
-						packingFunction='bundleTiddlers'
-					/>
-				</$list>
-			</$vars>
+	<$list
+		filter='[[type]addprefix<OPEN>addsuffix<OPEN>addsuffix[Post Comment]addsuffix<CLOSE>addsuffix[post]addsuffix<OPEN>addsuffix<TiddlerTitle>addsuffix<CLOSE>addsuffix<CLOSE>]'
+		variable=FILTER
+	>
+		<$button>Fetch comments for this post
+			<$list filter='[type[Wiki twCard]]'>
+				<$action-sendmessage
+					$message='tm-request-bundle'
+					url={{!!url}}
+					filter=<<FILTER>>
+					bundleName=<<PostCommentsBundleName>>
+					separator='SOMESTRINGIDONOTKNOWWHAT'
+					packingFunction='bundleTiddlers'
+				/>
+			</$list>
+		</$button>
+		<br>
+		Comment bundles for this post:
+
+		<$list filter='[filter<FILTER>]' emptyMessage='No comments fetched yet.'>
+
 		</$list>
-	</$button>
+	</$list>
 </$vars>
-
-</$list>
-
