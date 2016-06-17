@@ -1,0 +1,74 @@
+button-border-color: 
+created: 20160524112218723
+creator: twMat
+modified: 20160602220710785
+modifier: twMat
+outline-color: 
+tags: $:/tags/Stylesheet
+text-color: yellow
+title: $:/_TWaddle/Stretch/CSS
+type: text/vnd.tiddlywiki
+
+<pre>
+.stretch-closed {
+  display:inline-block;
+  padding: 0 3px 0 2px;
+  margin:0px -2px 0 -1px;
+  line-height:96%;
+  background: none;
+  border: 1px solid lightgray; 
+/*  box-shadow: inset 0 0 5px #b3b3b3; */
+  margin-right:2px; 
+}
+
+.stretch-open {
+  display:inline-block;
+  padding: 0px 3px; /*0 3*/
+  margin:0 -2px;
+  background:#f4f4f4;
+  border: 1px solid transparent; border-bottom:1px solid silver;
+}
+
+.stretch-outline {
+   display:inline-block;
+/* box-shadow: inset 0 0 2px gray; */
+   padding-right:2px; padding-left:0px; /*2*/
+   -webkit-animation: revealoutline 3.5s ease 1 running;
+   animation: revealoutline 3.5s ease 1 running;
+   outline: solid 0px red; 
+   outline-offset:1px;
+/* margin-right:0px; */
+}
+
+@-webkit-keyframes revealoutline {
+  0%  { outline: transparent solid 1px; }
+  25.0%  { outline: silver solid 1px; }
+  50.0%  { outline: silver solid 1px; }
+  100.0%  { outline: transparent solid 1px; }
+}
+@keyframes revealoutline {
+  0%  {outline: transparent solid 1px; }
+  25.0%  { outline: silver solid 1px; }
+  50.0%  { outline: silver solid 1px; }
+  100.0%  { outline: transparent solid 1px; }
+}
+
+.stretch-open:hover + .stretch-outline { outline:silver solid 1px; }
+
+.stretch-content { 
+  padding: 0 0px; /*0 3 */
+  white-space: pre-wrap; 
+/*   margin-right:-6px;  -6 */
+   -webkit-animation: revealcontent .4s ease 1 running;
+   animation: revealcontent .4s ease 1 running;
+   opacity:1;
+}
+
+@-webkit-keyframes revealcontent {
+  0%  {opacity:0;} 100.0% {opacity:1;}
+}
+@keyframes revealcontent {
+  0%  {opacity:0;} 100.0% {opacity:1;}
+}
+
+</pre>

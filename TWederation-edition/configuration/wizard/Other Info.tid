@@ -3,8 +3,6 @@ order: 5
 tags: [[TWederation Setup Wizard]]
 title: $:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Other Info
 
-<span style="float:right;margin-top:-1em;">([[templink|$:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Other Info]])</span>
-
 The following is <<stretch "just plain text" "information on your twCard." """It doesn't //do// anything; There is no automatic integration with the named services, or reporting to them or automatic sharing or anything else.""">>
 
 <table class=tc-wiki-twcard>

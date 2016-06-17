@@ -3,8 +3,6 @@ order: 2
 tags: [[TWederation Setup Wizard]]
 title: $:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Wiki Hosting
 
-<span style="float:right;margin-top:-1em;">([[templink|$:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Wiki Hosting]])</span>
-
 Your ~TiddlyWiki must be accessible online, for example via:
 
 *Tiddlyspot - probably the easiest way

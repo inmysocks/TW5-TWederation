@@ -3,8 +3,6 @@ order: 6
 tags: [[TWederation Setup Wizard]]
 title: $:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Listing Settings
 
-<span style="float:right;margin-top:-1em;">([[templink|$:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Listing Settings]])</span>
-
 <$set
     name=URLProtocol
     value=<<location protocol>>

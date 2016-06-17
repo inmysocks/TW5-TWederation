@@ -1,0 +1,32 @@
+created: 20160525174050094
+creator: twMat
+modified: 20160602152658013
+modifier: twMat
+tags: $:/tags/Macro
+title: $:/_TWaddle/Stretch/Macro
+
+\define cont() $(content)$
+
+\define stretch(label, restornothing, content)
+<$vars restornothing="""$restornothing$""" content="""$content$""">
+<$set name="contentToReveal" filter="[<content>regexp[^$]]"
+          value=<<restornothing>> emptyValue=<<content>>>
+<$set name="rest" filter="[<content>regexp[^$]]"
+          value="" emptyValue=<<restornothing>>>
+<$set name="qualstate" value=<<qualify "$:/state/$label$">> >
+   <$reveal type="nomatch" state=<<qualstate>> text="show" animate="yes">
+      <$button set=<<qualstate>> setTo="show" class="stretch-closed" >
+         <$list filter="[[$label$]splitbefore[_]removesuffix[_]] [[$label$]splitbefore[_]] +[first[]]" variable="lab"><<lab>></$list>
+      </$button>"""<<rest>>"""
+   </$reveal><$reveal type="match" state=<<qualstate>> text="show" animate="yes">
+      <$button set=<<qualstate>> setTo="hide" class="stretch-open" >
+         <$action-setfield $tiddler=<<qualstate>>/>
+         <$list filter="[[$label$]splitbefore[_]removesuffix[_]] [[$label$]splitbefore[_]] +[first[]]" variable="lab"><<lab>></$list>
+      </$button> """<<rest>>"""<span class="stretch-outline">
+         <span class="stretch-content"><<contentToReveal>></span>
+      </span></$reveal>
+</$set>
+</$set>
+</$set>
+</$vars>
+\end

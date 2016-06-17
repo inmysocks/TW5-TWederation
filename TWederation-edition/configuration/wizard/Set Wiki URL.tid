@@ -3,8 +3,6 @@ order: 3
 tags: [[TWederation Setup Wizard]]
 title: $:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Set Wiki URL
 
-<span style="float:right;margin-top:-1em;">([[templink|$:/plugins/inmysocks/TWederation/TWederation Configuration Wizard/Set Wiki URL]])</span>
-
 <$set name=HREF value=<<location href>>>
 <$set name=HASH value=<<location hash>>>
 <$set name=WikiURL filter='[<HREF>removesuffix<HASH>]' emptyValue=<<HREF>>>
@@ -43,7 +41,7 @@ URL where your wiki is to be located:
 
 <$list
     filter="[<WizardTemp>get[url]prefix[http://twederation.tiddlyspot.com]]
-        [<WizardTemp>get[url]prefix[ooktech.com/jed/ExampleWikis/TWederation]]
+        [<WizardTemp>get[url]prefix[http://ooktech.com/jed/ExampleWikis/TWederation]]
         [<WizardTemp>get[url]!prefix[http]]"
     >
     @@color:crimson; We're afraid that is not a valid URL for your wiki.@@
