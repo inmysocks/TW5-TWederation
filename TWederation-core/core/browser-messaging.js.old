@@ -114,33 +114,7 @@ exports.startup = function() {
 			closeIFrame(url);
 		}
 	});
-    /*
-	This sends send bundle requests
-    */
-    $tw.rootWidget.addEventListener("tm-request-bundle", function(event) {
-	    var paramObject = event.paramObject || {},
-			url = paramObject.url;
-		if(url) {
-	    	loadIFrame(url,function(err,iframeInfo) {
-				if(err) {
-					alert("Error loading tiddler bundle: " + url);
-				} else {
-					console.log(event.paramObject);
-    				iframeInfo.domNode.contentWindow.postMessage({
-    					verb: "BUNDLE_REQUEST",
-    					filter: event.paramObject.filter,
-    					bundlename: event.paramObject.bundleName,
-    					separator: event.paramObject.separator,
-    					destination: url,
-    					bundleFunction: event.paramObject.packingFunction,
-    					sender: event.paramObject.sender,
-    					recipient: event.paramObject.recipient,
-    					previousTime: event.paramObject.previousTime
-    				}, "*");
-    			}
-    		});
-    	}
-    });
+
 	$tw.rootWidget.addEventListener("tm-load-plugin-from-library",function(event) {
 		var paramObject = event.paramObject || {},
 			url = paramObject.url,
@@ -195,41 +169,6 @@ exports.startup = function() {
 						}
 					}
 				}
-				break;
-			case "BUNDLE_REQUEST":
-				if (event.data.bundleFunction) {
-					var bundleFunction = $tw.wiki.bundleFunction[event.data.bundleFunction];
-					if (typeof bundleFunction === "function") {
-						bundleFunction(event, 'Ok');
-					} else {
-						//If an invalid is given use the default function
-						$tw.wiki.bundleFunction.bundleTiddlers(event, 'invalid bundle function given, using default function as fallback. Bundle function: ' + event.data.bundleFunction);
-					}
-				} else {
-					//If no bundleFunction is given use the default function
-					$tw.wiki.bundleFunction.bundleTiddlers(event, 'no bundle function given, used default.');
-				}
-				break;
-			case "DELIVER_BUNDLE":
-				//Check if the bundle was sent from a recognized source
-				if ($tw.wiki.recognizedSources[event.origin]) {
-					//Check the type of bundle that was sent and pick the appropriate handler based on the type
-					if (typeof $tw.wiki.bundleHandler[event.data.type] === 'function') {
-						$tw.wiki.bundleHandler[event.data.type](event);
-					} else {
-						//If no recognized type is given make the bundle plain text to be safe.
-						event.data.bundle.type = 'text/plain';
-						console.log('unrecognized source')
-						$tw.wiki.addTiddler(new $tw.Tiddler(event.data.bundle));
-					}
-				} else {
-					//If the source isn't recognized than set the tiddler as plain text and marke it as having an unrecognized source.
-					event.data.bundle.type = 'text/plain';
-					event.data.bundle.source = 'unrecognized';
-					$tw.wiki.addTiddler(new $tw.Tiddler(event.data.bundle));
-				}
-				$tw.wiki.addTiddler(new $tw.Tiddler($tw.wiki.getCreationFields(),{title: '$:/TiddlerBundleData/' + event.data.bundle.title, list: event.data.bundle.list, text: "Source: {{!!source}}<br>Tiddlers: <$list filter='[list[]]'><$link to=<<currentTiddler>>><$view field='title'/></$link>, </$list>", tags: '$:/tags/TiddlerBundle', source: event.origin}));
-				closeIFrame(event.data.origin);
 				break;
 		}
 	},false);

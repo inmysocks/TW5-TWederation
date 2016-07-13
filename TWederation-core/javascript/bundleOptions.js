@@ -3,10 +3,10 @@ title: $:/plugins/inmysocks/TWederation/bundleOptions.js
 type: application/javascript
 module-type: utils
 
-These are functions that define how tiddlers are bundled when a tiddler bundle is requested. 
+These are functions that define how tiddlers are bundled when a tiddler bundle is requested.
 bundleTiddlers is the default one. The function should create the Bundle object which is added as a tiddler in the receiving wiki.
 
-If you want to add more options without chaing this you can create a new tiddler, just copy this one, change the title, the title listed in the first line at the top and replace 
+If you want to add more options without chaing this you can create a new tiddler, just copy this one, change the title, the title listed in the first line at the top and replace
 the function bundleTiddlers with your function. This way we can have multiple plugins use the same communication mechanism without all having to modify the smae tiddlers to work.
 
 You can use this as a function template:
@@ -33,6 +33,7 @@ $tw.wiki.bundleFunction = $tw.wiki.bundleFunction || {};
 
 $tw.wiki.bundleHandler.full = function(event) {
 	var creationFields = $tw.wiki.getCreationFields();
+	event.data.bundle.title = event.data.bundle.title + ' - ' + event.data.origin;
 	$tw.wiki.addTiddler(new $tw.Tiddler(creationFields, event.data.bundle));
 	var historyTiddler = $tw.wiki.getTiddler('$:/FetchHistory/' + event.data.origin);
 	if (historyTiddler) {
@@ -42,8 +43,8 @@ $tw.wiki.bundleHandler.full = function(event) {
 		var newText = {};
 		newText[event.data.filter] = $tw.utils.stringifyDate(creationFields.created);
 		historyTiddler = {
-			title: '$:/FetchHistory/' + event.data.origin, 
-			type: 'application/json', 
+			title: '$:/FetchHistory/' + event.data.origin,
+			type: 'application/json',
 			text: ''
 		};
 	}
@@ -78,20 +79,20 @@ $tw.wiki.bundleFunction.fetchShortMessages = function(event, status_message) {
 	var bundleTitle = 'MessageBundle';
 	bundleTitle += messageSuffix;
 	var Bundle = {
-		title: bundleTitle, 
-		text: messageTiddler.fields.text, 
-		list: '', 
-		tags: '[[Tiddler Bundle]]', 
-		separator: separator, 
-		type: 'application/json', 
+		title: bundleTitle,
+		text: messageTiddler.fields.text,
+		list: '',
+		tags: '[[Tiddler Bundle]]',
+		separator: separator,
+		type: 'application/json',
 		status: status
 	};
 	var messageObject = {
-		verb:"DELIVER_BUNDLE", 
-		bundle: Bundle, 
-		origin: event.data.destination, 
-		type: 'shortMessages', 
-		sender: event.data.sender, 
+		verb:"DELIVER_BUNDLE",
+		bundle: Bundle,
+		origin: event.data.destination,
+		type: 'shortMessages',
+		sender: event.data.sender,
 		recipient: event.data.recipient
 	};
 	event.source.postMessage(messageObject,"*");
@@ -103,9 +104,15 @@ $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
 	var bundleFilter = event.data.filter ? event.data.filter : '[is[system]!is[system]]';
 	var previousTime = event.data.previousTime ? event.data.previousTime : '0';
 	var currentTimeStamp = new Date();
-	var messageSuffix = ' - (' + $tw.utils.pad(currentTimeStamp.getHours()) + ":" + $tw.utils.pad(currentTimeStamp.getMinutes()) + ":" + $tw.utils.pad(currentTimeStamp.getSeconds()) + $tw.utils.pad(currentTimeStamp.getDate()) + '/' + $tw.utils.pad(currentTimeStamp.getMonth()+1) + '/' + + currentTimeStamp.getFullYear() + ')';
+	var messagePrefix =
+	currentTimeStamp.getFullYear() +
+	$tw.utils.pad(currentTimeStamp.getMonth()+1) +
+	$tw.utils.pad(currentTimeStamp.getDate()) +
+	$tw.utils.pad(currentTimeStamp.getHours()) +  $tw.utils.pad(currentTimeStamp.getMinutes()) +  $tw.utils.pad(currentTimeStamp.getSeconds()) +
+	' - ';
+	var bundleBaseName = event.data.bundlename ? event.data.bundlename:"Default Bundle";
 	var bundleTitle = event.data.bundlename ? event.data.bundlename:"Default Bundle";
-	bundleTitle += messageSuffix;
+	bundleTitle = messagePrefix + bundleTitle;
 	var bundleList = [];
 	var bundleTiddlers = $tw.wiki.filterTiddlers(bundleFilter);
 	for (var i = 0; i < bundleTiddlers.length; i++) {
@@ -138,17 +145,19 @@ $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
 	    }
 	}
 	var Bundle = {
-		title: bundleTitle, 
-		text: bundleText, 
-		list: $tw.utils.stringifyList(bundleList), 
-		tags: '[[Tiddler Bundle]]', 
-		separator: separator, 
-		type: 'text/plain', 
-		status: status, 
-		origin: event.data.destination, 
-		bundle_function: event.data.bundleFunction, 
-		unbundle_function: 'full', 
-		filter: bundleFilter
+		title: bundleTitle,
+		text: bundleText,
+		list: $tw.utils.stringifyList(bundleList),
+		tags: '[[Tiddler Bundle]]',
+		separator: separator,
+		type: 'text/plain',
+		status: status,
+		origin: event.data.destination,
+		bundle_function: event.data.bundleFunction,
+		unbundle_function: 'full',
+		filter: bundleFilter,
+		bundle_size: bundleTiddlers.length,
+		bundle_name: bundleBaseName
 	};
 	var messageObject = {
 		verb:"DELIVER_BUNDLE",
@@ -166,6 +175,7 @@ $tw.wiki.bundleFunction.tiddlerSummary = function(event, status_message) {
 	var bundleFilter = event.data.filter ? event.data.filter : '[is[system]!is[system]]';
 	var currentTimeStamp = new Date();
 	var messageSuffix = ' - (' + currentTimeStamp.getHours() + ":" + currentTimeStamp.getMinutes() + ":" + currentTimeStamp.getSeconds() + currentTimeStamp.getDate() + '/' + (currentTimeStamp.getMonth()+1) + '/' + + currentTimeStamp.getFullYear() + ')';
+	var bundleBaseName = event.data.bundlename ? event.data.bundlename:"Default Bundle";
 	var bundleTitle = event.data.bundlename ? event.data.bundlename:"Summary Bundle";
 	bundleTitle += messageSuffix;
 	var bundleTiddlers = $tw.wiki.filterTiddlers(bundleFilter);
@@ -193,18 +203,20 @@ $tw.wiki.bundleFunction.tiddlerSummary = function(event, status_message) {
 	    }
 	}
 	var Bundle = {
-		title: bundleTitle, 
-		text: bundleText, 
-		list: $tw.utils.stringifyList(bundleTiddlers), 
-		tags: '[[Bundle Summary]]', 
-		separator: separator, 
-		type: 'text/plain', 
-		status: status
+		title: bundleTitle,
+		text: bundleText,
+		list: $tw.utils.stringifyList(bundleTiddlers),
+		tags: '[[Bundle Summary]]',
+		separator: separator,
+		type: 'text/plain',
+		status: status,
+		bundle_size: bundleTiddlers.length,
+		bundle_name: bundleBaseName
 	};
 	var messageObject = {
-		verb:"DELIVER_BUNDLE", 
-		bundle: Bundle, 
-		origin: event.data.destination, 
+		verb:"DELIVER_BUNDLE",
+		bundle: Bundle,
+		origin: event.data.destination,
 		type: 'summary'
 	};
 	event.source.postMessage(messageObject,"*");
@@ -218,6 +230,7 @@ $tw.wiki.bundleFunction.JSONBundle = function(event, status_message) {
 	var previousTime = event.data.previousTime ? event.data.previousTime : '0';
 	var currentTimeStamp = new Date();
 	var messageSuffix = ' - (' + $tw.utils.pad(currentTimeStamp.getHours()) + ":" + $tw.utils.pad(currentTimeStamp.getMinutes()) + ":" + $tw.utils.pad(currentTimeStamp.getSeconds()) + $tw.utils.pad(currentTimeStamp.getDate()) + '/' + $tw.utils.pad(currentTimeStamp.getMonth()+1) + '/' + + currentTimeStamp.getFullYear() + ')';
+	var bundleBaseName = event.data.bundlename ? event.data.bundlename:"Default Bundle";
 	var bundleTitle = event.data.bundlename ? event.data.bundlename:"JSON Bundle";
 	bundleTitle += messageSuffix;
 	var bundleList = [];
@@ -230,18 +243,20 @@ $tw.wiki.bundleFunction.JSONBundle = function(event, status_message) {
 		bundleObject[bundleTiddlers[i]] = $tw.wiki.getTiddler(decodeURI(bundleTiddlers[i]));
 	};
 	var Bundle = {
-		title: bundleTitle, 
-		text: JSON.stringify(bundleObject), 
-		list: $tw.utils.stringifyList(bundleTiddlers), 
-		tags: '[[JSON Bundle]]', 
-		separator: separator, 
-		type: 'text/plain', 
-		status: status
+		title: bundleTitle,
+		text: JSON.stringify(bundleObject),
+		list: $tw.utils.stringifyList(bundleTiddlers),
+		tags: '[[JSON Bundle]]',
+		separator: separator,
+		type: 'text/plain',
+		status: status,
+		bundle_size: bundleTiddlers.length,
+		bundle_name: bundleBaseName
 	};
 	var messageObject = {
-		verb:"DELIVER_BUNDLE", 
-		bundle: Bundle, 
-		origin: event.data.destination, 
+		verb:"DELIVER_BUNDLE",
+		bundle: Bundle,
+		origin: event.data.destination,
 		type: 'JSON Bundle'
 	};
 	event.source.postMessage(messageObject,"*");

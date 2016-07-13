@@ -96,7 +96,7 @@ RequestData.prototype.displayResult = function(event) {
 		wikiname = responseData.feed.entry[row]['gsx$wikiname']['$t']
 		wikiurl = responseData.feed.entry[row]['gsx$wikiurl']['$t']
 		var creationFields = $tw.wiki.getCreationFields();
-		var tiddlerFields = {'title':'$:/twCard/' + wikiname + ' - ' + wikiurl, 'text':'', 'author':username, 'name':wikiname, 'url':wikiurl, 'type':'Wiki twCard'};
+		var tiddlerFields = {'title':'New Card - ' + wikiname + ' - ' + wikiurl, 'text':'', 'author':username, 'name':wikiname, 'url':wikiurl, 'type':'Wiki twCard'};
 		if(!$tw.wiki.getTiddler('$:/twCard/' + wikiname + ' - ' + wikiurl)) {
 			$tw.wiki.addTiddler(new $tw.Tiddler(creationFields, tiddlerFields));
 		}

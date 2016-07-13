@@ -33,21 +33,29 @@ $:/state/Tiddler Bundles/Selected Tiddlers/$(currentTiddler)$
 			Tiddler
 		</th>
 	</tr>
-	<$list filter='[list[]]' variable=BundledTiddler>
+	<$list
+		filter='[list[]]'
+		variable=BundledTiddler
+	>
 		<tr>
 			<td>
-				<$checkbox 
-					tiddler=<<thisSelectTagThing>> 
+				<$checkbox
+					tiddler=<<thisSelectTagThing>>
 					tag=<<BundledTiddler>>
 				/>
 			</td>
 			<td>
-				<$list 
-					filter='[<BundledTiddler>has[title]]' 
+				<$list
+					filter='[<BundledTiddler>has[title]]'
 					emptyMessage="""<$view tiddler=<<BundledTiddler>> field='title'/>"""
 				>
-					<$link to=<<BundledTiddler>>>
-						<$view tiddler=<<BundledTiddler>> field='title'/>
+					<$link
+						to=<<BundledTiddler>>
+					>
+						<$view
+							tiddler=<<BundledTiddler>>
+							field='title'
+						/>
 					</$link>
 				</$list>
 			</td>
@@ -55,19 +63,21 @@ $:/state/Tiddler Bundles/Selected Tiddlers/$(currentTiddler)$
 	</$list>
 </table>
 
-<$button>Unpack All
-	<$action-tiddlerbundle 
-		$bundle=<<currentTiddler>> 
-		$overwrite={{$:/state/Tiddler Bundles!!overwrite}} 
-		$action='unpack' 
+<$button>
+	Unpack All
+	<$action-tiddlerbundle
+		$bundle=<<currentTiddler>>
+		$overwrite={{$:/state/Tiddler Bundles!!overwrite}}
+		$action='unpack'
 		$separator={{!!separator}}
 	/>
 </$button>
-<$button>Unpack Selected
-	<$action-tiddlerbundle 
-		$bundle=<<currentTiddler>> 
-		$overwrite={{$:/state/Tiddler Bundles!!overwrite}} 
-		$action='unpack' 
+<$button>
+	Unpack Selected
+	<$action-tiddlerbundle
+		$bundle=<<currentTiddler>>
+		$overwrite={{$:/state/Tiddler Bundles!!overwrite}}
+		$action='unpack'
 		$separator={{!!separator}}
 		$unpackFilter=<<thisUnpackFilter>>
 	/>

@@ -1,10 +1,67 @@
-created: 20160525191638147
-modified: 20160525192133201
-tags: 
+tags:
 title: $:/plugins/inmysocks/TWederation/Fetch from google
+
+\define BundleName()
+twCard - twCard for $(currentTiddler)$
+\end
 
 Clicking on this button will import new wiki twCards from the google sheet
 
 <$button>Fetch New twCards from google
 <$action-requestdata $url='https://spreadsheets.google.com/feeds/list/1T6dOAVQRkXCeh4zItkok9OSX8CA9UDB6ExC9WFKLGgs/o3ohv50/public/full?alt=json'/>
 </$button>
+
+New cards to fetch:
+
+<$list
+    filter='[prefix[New Card - ]has[url]]'
+>
+    <$button>
+        Fetch Card
+        <$action-sendmessage
+            $message='tm-send-request'
+            request_type='request_bundle'
+            url={{!!url}}
+            filter='[[$:/SitetwCard]get[text]]'
+            bundleName=<<BundleName>>
+            separator='SOMESTRINGIDONOTKNOWWHAT'
+        />
+    </$button>
+    <$link
+        to=<<currentTiddler>>
+    >
+        <$view
+            field='wikiname'
+        >
+            <$view
+                field='url'
+            />
+        </$view>
+        by
+        <$view
+            field='author'
+        >
+            <$view
+                field='wikiname'
+            >
+                <$view
+                    field='url'
+                />
+            </$view>
+        </$view>
+    </$link>
+    <$list
+        filter='[!is[current]type[Wiki twCard]url{!!url}]'
+    >
+        A twCard for this site already exists.
+    </$list>
+    <br>
+</$list>
+
+Cards to unpack:
+
+<$list
+    filter='[prefix[twCard - twCard for ]]'
+>
+
+</$list>

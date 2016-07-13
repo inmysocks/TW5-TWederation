@@ -1,21 +1,31 @@
 tags: Templates
 title: $:/plugins/inmysocks/TWederation/Templates/BlogPostCommentTemplate
 
-!!''Comments:''
+<h2>
+	''Comments:''
+</h2>
 
-<$list filter='[type[Post Comment]post<currentTiddler>sort[created]]'>
-<div class='tc-post-comment-card'>
+<$list
+	filter='[type[Post Comment]post<currentTiddler>sort[created]]'
+>
+	<div
+		class='tc-post-comment-card'
+	>
 
-__''<$view field='author'/>'' says__:
+		__''<$view field='author'/>'' says__:
 
-__<$view field='comment_title'/>__
+		__<$view field='comment_title'/>__
 
-<$transclude mode=block/>
-</div>
+		<$transclude
+			mode=block
+		/>
+	</div>
 
 </$list>
 
-<div class='tc-post-comment-card'>
+<div
+	class='tc-post-comment-card'
+>
 
 <$list filter='[{$:/SitetwCard}get[author]]' variable=SiteAuthor>
 Username: ''<<SiteAuthor>>''
@@ -67,7 +77,8 @@ Comment Text:
 		<$button>Fetch comments for this post
 			<$list filter='[type[Wiki twCard]]'>
 				<$action-sendmessage
-					$message='tm-request-bundle'
+					$message='tm-send-request'
+					request_type='request_bundle'
 					url={{!!url}}
 					filter=<<FILTER>>
 					bundleName=<<PostCommentsBundleName>>
@@ -78,9 +89,19 @@ Comment Text:
 		</$button>
 		<br>
 		Comment bundles for this post:
-
-		<$list filter='[filter<FILTER>]' emptyMessage='No comments fetched yet.'>
-
+		<br>
+		<$list filter='[filter<FILTER>]' emptyMessage='There are currently no comment bundles for this post.'>
+			<$count
+				filter='[list[]]-[list[]has[title]]'
+			/> new tiddler(s) in
+			<$link
+				to=<<currentTiddler>>
+			>
+				<$view
+					field='title'
+				/>
+			</$link>
+			<br>
 		</$list>
 	</$list>
 </$vars>
