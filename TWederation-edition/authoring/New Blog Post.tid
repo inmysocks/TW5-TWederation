@@ -10,7 +10,7 @@ caption: New Blog Post
 		author=<<AuthorName>>
 		wiki_url=<<WikiUrl>>
 		post_title={{$:/temp/NewBlogPost!!new_post_title}}
-		type='Blog Post'
+		role='twDiscussionPost'
 		text={{$:/temp/NewBlogPost!!text}}
 		day=<<now 0DD>>
 		month=<<now 0MM>>
