@@ -5,9 +5,9 @@ finish_button: True
 \define CreateSitetwCard()
 <$action-setfield
     $tiddler='$:/twCard/$(Name)$ - $(URL)$'
-    type='Wiki twCard'
-    url='$(URL)$'
-    name='$(Name)$'
+    role='Wiki twCard'
+    url="""$(URL)$"""
+    name="""$(Name)$"""
     publishonlist={{!!publishonlist}}
     topic={{!!topic}}
     description={{!!description}}
