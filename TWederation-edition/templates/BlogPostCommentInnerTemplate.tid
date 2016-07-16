@@ -1,0 +1,27 @@
+tags: Templates
+title: $:/plugins/inmysocks/TWederation/Templates/BlogPostCommentInnerTemplate
+
+<$list
+	filter='[role[twDiscussionPost]parent<currentTiddler>sort[created]]'
+>
+<li>
+	<div
+		class='tc-post-comment-card'
+	>
+
+		__''<$view field='author'/>'' says__:
+
+		__<$view field='comment_title'/>__
+
+		<$transclude
+			mode=block
+		/>
+
+{{||$:/plugins/inmysocks/TWederation/Templates/BlogPostWriteCommentInnerTemplate}}
+	</div>
+
+<ul>
+{{ ||$:/plugins/inmysocks/TWederation/Templates/BlogPostCommentInnerTemplate}}
+</ul>
+</li>
+</$list>
