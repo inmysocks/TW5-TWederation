@@ -97,8 +97,6 @@ posts.
             </$list>
         </h2>
 
-        ---
-
         <$transclude
             mode=block
         />
