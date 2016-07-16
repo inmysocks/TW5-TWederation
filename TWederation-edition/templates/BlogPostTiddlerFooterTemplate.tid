@@ -5,7 +5,7 @@ title: $:/plugins/inmysocks/TWederation/Templates/BlogPostTiddlerFooterTemplate
 \define thisCreatetwCardButton()
 <$button>Create twCard for this post
 	<$action-setfield 
-		$tiddler='$:/twCard/post/$(Wiki)$/$(Author)$/$(PostTitle)$'
+		$tiddler="""$:/twCard/post/$(Wiki)$/$(Author)$/$(PostTitle)$"""
 		author={{!!author}}
 		wiki={{!!wiki_url}}
 		date={{!!date}}
@@ -23,6 +23,6 @@ title: $:/plugins/inmysocks/TWederation/Templates/BlogPostTiddlerFooterTemplate
 <$action-sendmessage 
 	$message='tm-request-bundle' 
 	url={{$:/state/Fetch Tiddler Bundle!!wiki_url}} 
-	filter="""[type[Post Comment]post[$(currentTiddler)$]]""" 
+	filter="""[role[twDiscussionPost]parent[$(currentTiddler)$]]""" 
 	bundleName=<<CommentBundleName>> 
 	separator='
