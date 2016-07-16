@@ -3,7 +3,7 @@ tags: Templates $:/tags/ViewTemplate
 title: $:/plugins/inmysocks/TWederation/Templates/BlogPostTiddlerHeaderTemplate
 
 <$list
-	filter='[is[current]type[Blog Post]author{$:/SitetwCard}]'
+	filter='[is[current]role[twDiscussionPost]author{$:/SitetwCard}]'
 >
 	<$list
 		filter='[is[current]author{$:/SitetwCard}]'
