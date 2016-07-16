@@ -1,0 +1,87 @@
+tags: Templates
+title: $:/plugins/inmysocks/TWederation/Templates/BlogPostWriteCommentInnerTemplate
+
+<div
+	class='tc-post-comment-card'
+>
+
+
+<$list
+            filter='[[$:/state/ShowComments]addsuffix{!!title}]'
+            variable=StateName
+        >
+            <$reveal
+                type='nomatch'
+                state=<<StateName>>
+                text=show
+            >
+                <$button>
+                    Open Comments
+                    <$action-setfield
+                        $tiddler=<<StateName>>
+                        text=show
+                    />
+                </$button>
+                (
+                    <$count
+                        filter='[role[twDiscussionPost]parent<currentTiddler>sort[created]]'
+                    />
+                    comment(s)
+                )
+            </$reveal>
+
+            <$reveal
+                type='match'
+                state=<<StateName>>
+                text=show
+            >
+
+                <$button>
+                    Hide Comments
+                    <$action-setfield
+                        $tiddler=<<StateName>>
+                        text=hide
+                    />
+                </$button>
+
+<$list filter='[{$:/SitetwCard}get[author]]' variable=SiteAuthor>
+Username: ''<<SiteAuthor>>''
+
+Comment Title:
+<$edit-text
+	tiddler='$:/state/Post Comment'
+	field=comment_title
+	class='tc-post-comment-input'
+/>
+Comment Text:
+<$edit-text
+	tiddler='$:/state/Post Comment'
+	class='tc-edit-texteditor'
+/>
+<$button>
+	Save Comment
+	<$list
+		filter='[is[current]addprefix[Comment - ]addsuffix[ - ]addsuffix<SiteAuthor>addsuffix[ - ]addsuffix{$:/state/Post Comment!!comment_title}]'
+		variable=CommentTitle
+	>
+		<$action-setfield
+			$tiddler=<<CommentTitle>>
+			text={{$:/state/Post Comment}}
+			comment_title={{$:/state/Post Comment!!comment_title}}
+			author=<<SiteAuthor>>
+			parent={{!!title}}
+			role='twDiscussionPost'
+			post_author={{!!author}}
+		/>
+		<$action-setfield
+			$tiddler='$:/state/Post Comment'
+			comment_title=''
+			text=''
+		/>
+	</$list>
+</$button>
+</$list>
+
+            </$reveal>
+        </$list>
+</div>
