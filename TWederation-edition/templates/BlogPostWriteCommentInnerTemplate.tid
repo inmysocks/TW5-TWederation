@@ -15,8 +15,8 @@ title: $:/plugins/inmysocks/TWederation/Templates/BlogPostWriteCommentInnerTempl
                 state=<<StateName>>
                 text=show
             >
-                <$button>
-                    Open Comments
+                <$button class="comment-button tc-btn-invisible">
+                   {{$:/core/images/chevron-right}}
                     <$action-setfield
                         $tiddler=<<StateName>>
                         text=show
@@ -36,8 +36,8 @@ title: $:/plugins/inmysocks/TWederation/Templates/BlogPostWriteCommentInnerTempl
                 text=show
             >
 
-                <$button>
-                    Hide Comments
+                <$button class="comment-button tc-btn-invisible">
+                    {{$:/core/images/chevron-left}}
                     <$action-setfield
                         $tiddler=<<StateName>>
                         text=hide
@@ -47,16 +47,16 @@ title: $:/plugins/inmysocks/TWederation/Templates/BlogPostWriteCommentInnerTempl
 <$list filter='[{$:/SitetwCard}get[author]]' variable=SiteAuthor>
 Username: ''<<SiteAuthor>>''
 
-Comment Title:
 <$edit-text
 	tiddler='$:/state/Post Comment'
 	field=comment_title
 	class='tc-post-comment-input'
+	placeholder="Comment title (optional)"
 />
-Comment Text:
 <$edit-text
 	tiddler='$:/state/Post Comment'
 	class='tc-edit-texteditor'
+	placeholder="Comment"
 />
 <$button>
 	Save Comment
