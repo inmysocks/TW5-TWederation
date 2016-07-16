@@ -1,6 +1,6 @@
+caption: Wall
 tags: Communication
 title: $:/plugins/inmysocks/TWederation/Wall
-caption: Wall
 
 <$button>
     Fetch New Wall Posts & Comments
@@ -11,7 +11,7 @@ caption: Wall
             $message='tm-send-request'
             request_type='request_bundle'
             url=<<currentTiddler>>
-            filter='[type[Blog Post]][type[Post Comment]]'
+            filter='[role[twDiscussionPost]]'
             bundleName="Wall Posts and Comments"
             separator='SOMESTRINGIDONOTKNOWWHAT'
             packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
@@ -70,7 +70,7 @@ posts.
     emptyValue=50
 >
     <$list
-        filter='[type[Blog Post]]+[!sort[created]]+[limit<PostLimit>]'
+        filter='[role[twDiscussionPost]!has[parent]]+[!sort[created]]+[limit<PostLimit>]'
     >
 
         <h1>
@@ -84,7 +84,7 @@ posts.
         </h1>
         <h2>
             <$list
-                filter='[type[Wiki twCard]url{!!wiki_url}sort[created]limit[1]]'
+                filter='[role[twDiscussionPost]url{!!wiki_url}sort[created]limit[1]]'
             >
                 by
                 <$link
@@ -121,7 +121,7 @@ posts.
                 </$button>
                 (
                     <$count
-                        filter='[type[Post Comment]post<currentTiddler>sort[created]]'
+                        filter='[role[twDiscussionPost]parent<currentTiddler>sort[created]]'
                     />
                     comment(s)
                 )
@@ -132,6 +132,7 @@ posts.
                 state=<<StateName>>
                 text=show
             >
+<!--
                 <$button>
                     Hide Comments
                     <$action-setfield
@@ -139,6 +140,7 @@ posts.
                         text=hide
                     />
                 </$button>
+-->
                 <br>
 
                 {{ ||$:/plugins/inmysocks/TWederation/Templates/BlogPostCommentTemplate}}
