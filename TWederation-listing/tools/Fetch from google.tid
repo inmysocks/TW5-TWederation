@@ -1,4 +1,4 @@
-tags:
+tags: 
 title: $:/plugins/inmysocks/TWederation/Fetch from google
 
 \define BundleName()
@@ -55,6 +55,7 @@ New cards to fetch:
     >
         A twCard for this site already exists.
     </$list>
+<$button class='tc-btn-invisible'>{{$:/core/images/delete-button}}<$action-deletetiddler $tiddler=<<currentTiddler>>/></$button>
     <br>
 </$list>
 
