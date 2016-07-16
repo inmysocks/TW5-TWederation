@@ -3,10 +3,20 @@ title: $:/plugins/inmysocks/TWederation/stylesheets
 
 .tc-post-comment-card {
 background-color: #eee;
-border: solid 1px;
+border: solid 1px; 
 }
 
 .tc-post-comment-input {
 width: 100%;
-border: solid 1px;
+border: solid 1px; 
+}
+
+.tc-discussion-thread li {
+margin-left:0em;
+list-style:none;
+}
+
+.tc-discussion-thread ul {
+padding-left:1em; margin-top:0; margin-bottom:0;
+list-style:none;
 }
