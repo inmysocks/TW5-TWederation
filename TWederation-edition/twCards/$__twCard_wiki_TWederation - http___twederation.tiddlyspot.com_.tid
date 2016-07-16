@@ -1,7 +1,9 @@
 author: inmysocks
 description: The central wiki of the new TWederation
 name: TWederation
+role: twServer
 title: $:/twCard/TWederation - http://twederation.tiddlyspot.com/
 topic: TWederation
-type: Wiki twCard
+type: 
 url: http://twederation.tiddlyspot.com/
+
