@@ -134,7 +134,7 @@ posts.
             >
 <!--
                 <$button>
-                    Hide Comments
+                    Hide CommentsXXX
                     <$action-setfield
                         $tiddler=<<StateName>>
                         text=hide
