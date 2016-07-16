@@ -64,7 +64,7 @@ You have the following twCards:
     </tr>
 
 <$list
-    filter='[all[shadows+tiddlers]type[Wiki twCard]]'
+    filter='[all[shadows+tiddlers]role[twServer]]'
 >
     <tr>
         <td>
