@@ -57,7 +57,7 @@ caption: Fetch Communication
 
 \define thisGetCommentsOption()
 <option
-	value="""[type[Post Comment]post_author[$(SiteAuthorUserName)$]]"""
+	value="""[role[twDiscussionPost]post_author[$(SiteAuthorUserName)$]]"""
 >
 	Comments on my posts
 </option>
@@ -71,7 +71,7 @@ caption: Fetch Communication
 				$message='tm-send-request'
 				request_type='request_bundle'
 				url={{!!url}}
-				filter='[type[Blog Post]]'
+				filter='[role[twDiscussionPost]]'
 				bundleName='New Blog Posts'
 				separator='SOMESTRINGIDONOTKNOWWHAT'
 				packingFunction='tiddlerSummary'
@@ -112,12 +112,12 @@ What to fetch:
 		Enter Filter
 	</option>
 	<option
-		value='[type[Blog Post]]'
+		value='[role[twDiscussionPost]]'
 	>
 		All Blog Posts
 	</option>
 	<option
-		value='[type[Wiki twCard]]'
+		value='[role[twServer]]'
 	>
 		All Wiki twCards
 	</option>
@@ -160,7 +160,7 @@ Select Wiki:
 		Followed Wikis
 	</option>
 	<$list
-		filter='[all[tiddlers+shadows]type[Wiki twCard]]'
+		filter='[all[tiddlers+shadows]role[twServer]]'
 	>
 		<option
 			value={{!!url}}
@@ -248,7 +248,7 @@ Fetch Type:
 		<$button>
 			Request Bundle
 			<$list
-				filter='[all[tiddlers+shadows]type[Wiki twCard]]'
+				filter='[all[tiddlers+shadows]role[twServer]]'
 			>
 				<$list
 					filter='[[$:/state/Fetch Tiddler Bundle]!what_to_fetch[Enter Filter]get[what_to_fetch]]'
