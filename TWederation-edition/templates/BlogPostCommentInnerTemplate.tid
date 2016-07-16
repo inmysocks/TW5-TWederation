@@ -1,6 +1,7 @@
 tags: Templates
 title: $:/plugins/inmysocks/TWederation/Templates/BlogPostCommentInnerTemplate
 
+<div class="tc-discussion-thread">
 <$list
 	filter='[role[twDiscussionPost]parent<currentTiddler>sort[created]]'
 >
@@ -25,3 +26,4 @@ title: $:/plugins/inmysocks/TWederation/Templates/BlogPostCommentInnerTemplate
 </ul>
 </li>
 </$list>
+</div>
