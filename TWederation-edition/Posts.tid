@@ -8,7 +8,7 @@ Author:
 		--
 	</option>
 	<$list
-		filter='[all[tiddlers+shadows]type[Wiki twCard]]'
+		filter='[all[tiddlers+shadows]role[twServer]]'
 	>
 		<option>
 			<$view field='author'/>
@@ -25,7 +25,7 @@ Post Title:
 		--
 	</option>
 	<$list
-		filter='[type[Blog Post]author{$:/state/Post!!selected_author}]'
+		filter='[role[twDiscussionPost]author{$:/state/Post!!selected_author}]'
 	>
 		<option value=<<currentTiddler>>>
 			<$view field='post_title'/>
@@ -37,7 +37,7 @@ Post Title:
 		text=''
 	>
 		<$list
-			filter='[type[Blog Post]]'
+			filter='[role[twDiscussionPost]]'
 		>
 			<option value=<<currentTiddler>>>
 				<$view field='post_title'/>
