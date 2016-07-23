@@ -1,22 +1,166 @@
+created: 20160716114425230
+modified: 20160723110852672
 tags: $:/tags/Stylesheet
 title: $:/plugins/inmysocks/TWederation/stylesheets
 
-.tc-post-comment-card {
-background-color: #eee;
-border: solid 1px; 
+/* The main button ICONS */
+.dis-btn-main {
+    position:absolute;
+    left:1.2em;
+    margin:0em;
+    padding:0;
+    border:0px solid;
+    background:transparent;
+    fill:silver;
 }
 
-.tc-post-comment-input {
-width: 100%;
-border: solid 1px; 
+/* The "edit field" is really a disguised reveal button */
+.dis-btn-main-comment-closed {
+    border:.5em solid #f8f8f8;
+    width:100%;
+    text-align:left;
+    color:silver;
+    background-color:transparent;
 }
 
-.tc-discussion-thread li {
-margin-left:0em;
-list-style:none;
+/* The "author field" is really a disguised reveal button */
+.dis-btn-main-comment-opened {
+    width:100%;
+    float:left;
+    text-align:left;
+    border:0px solid;
+    color:silver;
+    background-color:#f8f8f8;
 }
 
-.tc-discussion-thread ul {
-padding-left:1em; margin-top:0; margin-bottom:0;
-list-style:none;
+.dis-main-comment-card {
+    margin:0;
+    margin-top:-.7em;
+    border:.5em solid #f8f8f8;
+}
+
+.dis-comment-author {
+    color:silver;
+    font-style:italic;
+}
+
+.dis-comment-new-title {
+    width: 100%;
+    border:0px solid;
+    padding-left:3px;
+}
+
+.dis-comment-new-title:focus {
+    outline:0;
+}
+
+.dis-comment-new-body {
+    width:100%;
+    border:0;
+    border-top:1px solid #f4f4f4;
+}
+
+.dis-comment-new-body:focus {
+    outline:0;
+}
+
+/* The "Open discussion (x)" is really a disguised reveal button */
+.dis-btn-main-thread-closed {
+    margin-left:1em;
+    width:calc(100% - 1em);
+    text-align:left;
+    border:0px solid;
+    border-top: 5px solid #f8f8f8;
+    padding-bottom:5px;
+    background:#f8f8f8;
+    color:silver;
+    fill:silver;
+}
+
+.dis-discussion {
+    margin-left:-1em;
+}
+
+/*  */
+.dis-btn-subthread-closed {
+    width:100%;
+    text-align:left;
+    padding-left:0;
+    border:0;
+    background:#f8f8f8;
+    color:silver;
+    fill:silver;
+}
+
+/* Subthread icon */
+.dis-btn-subthread-opened {
+    position:absolute;
+    margin-left:-.4em;
+    background:transparent;
+    border:0;
+    fill:silver;
+}
+
+.dis-comment-coloration {
+    width:100%;
+    display:inline-block;
+    background:#f8f8f8;
+    border-top:1px solid silver;
+}
+
+.dis-comment-title {
+    font-weight:bold;
+    display:block;
+}
+
+.dis-comment-text p {
+    display:inline-block;
+    margin:0;
+    padding-bottom:.5em;
+}
+
+.dis-thread {
+    xbackground-color: #f8f8f8;
+    xborder-left:1px solid cyan;
+    padding:0 3px;
+    margin-left:1.0em;
+}
+
+.dis-btn-comment-closed {
+    border:0;
+    color:silver;
+    background:white;
+    width:100%;
+    text-align: left;
+    margin-top:.2em;
+    fill:silver;
+    font-style:italic;
+    padding-left:0;
+}
+
+.dis-btn-comment-inthread-opened {
+    width:100%;
+    float:left;
+    text-align:left;
+    background:#f8f8f8;
+    color:silver;
+    fill:silver;
+    border:0;
+}
+
+.dis-comment-card {
+    border:.5em solid #f8f8f8;
+    border-bottom:0;
+    border-top:0;
+}
+
+.dis-comment-inthread-opened {
+}
+
+.dis-comment-tool {
+    position:absolute;
+    right:52px;
+    margin:0;
+    border:0;
+    background:transparent;
 }

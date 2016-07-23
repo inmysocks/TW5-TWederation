@@ -1,0 +1,58 @@
+created: 20160720132748533
+modified: 20160722225517820
+tags: Templates
+title: $:/plugins/inmysocks/TWederation/Templates/CommentThreadReveal
+
+<div
+    class="comment-thread"
+    style="margin-left:-1em;"
+>
+    <$list
+        filter='[[$:/state/ShowComments]addsuffix{!!title}]'
+        variable=StateName
+    >
+
+        <$reveal
+            type='nomatch'
+            state=<<StateName>>
+            text=show
+        >
+            <$button
+                class="dis-btn-main-thread-closed"
+            >
+                <span
+                    class="dis-btn-margin"
+                >
+                    {{$:/core/images/unfold-button}}
+                </span>
+                Open
+                ''<$count
+                    filter='[role[twDiscussionPost]parent<currentTiddler>sort[created]]'
+                />''
+                comments or threads
+
+                <$action-setfield
+                    $tiddler=<<StateName>>
+                    text=show
+                />
+            </$button>
+        </$reveal>
+
+        <$reveal
+            type='match'
+            state=<<StateName>>
+            text=show
+        >
+            <$button
+                class="dis-btn-margin"
+            >
+                {{$:/core/images/fold-button}}
+                <$action-setfield
+                    $tiddler=<<StateName>>
+                    text=hide
+                />
+            </$button>
+            {{||$:/plugins/inmysocks/TWederation/Templates/BlogPostCommentInnerTemplate}}
+        </$reveal>
+    </$list>
+</div>

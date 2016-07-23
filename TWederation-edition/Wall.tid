@@ -44,25 +44,26 @@ title: $:/plugins/inmysocks/TWederation/Wall
 	<br>
 </$list>
 
-Show the most recent
-<$select
-    tiddler='$:/state/TWederation/Wall'
-    field='post_limit'
->
-    <option
-        value=''
+<span style="float:right;color:gray;">Show the most recent
+    <$select
+        tiddler='$:/state/TWederation/Wall'
+        field='post_limit'
     >
-        --
-    </option>
-    <$list
-        filter='5 10 15 20 30 40 50'
-    >
-        <option>
-            <<currentTiddler>>
+        <option
+            value=''
+        >
+            --
         </option>
-    </$list>
-</$select>
-posts.
+        <$list
+            filter='5 10 15 20 30 40 50'
+        >
+            <option>
+                <<currentTiddler>>
+            </option>
+        </$list>
+    </$select>
+    posts.
+</span>
 
 <$set
     name=PostLimit
@@ -97,56 +98,15 @@ posts.
             </$list>
         </h2>
 
-        <$transclude
+       <$transclude
             mode=block
         />
 
-        <$list
-            filter='[[$:/state/ShowComments]addsuffix{!!title}]'
-            variable=StateName
+        {{ ||$:/plugins/inmysocks/TWederation/Templates/WriteNewComment}}
+        <div
+            style="margin-top:-1em;"
         >
-            <$reveal
-                type='nomatch'
-                state=<<StateName>>
-                text=show
-            >
-                <$button>
-                    Open Comments
-                    <$action-setfield
-                        $tiddler=<<StateName>>
-                        text=show
-                    />
-                </$button>
-                (
-                    <$count
-                        filter='[role[twDiscussionPost]parent<currentTiddler>sort[created]]'
-                    />
-                    comment(s)
-                )
-            </$reveal>
-
-            <$reveal
-                type='match'
-                state=<<StateName>>
-                text=show
-            >
-<!--
-                <$button>
-                    Hide CommentsXXX
-                    <$action-setfield
-                        $tiddler=<<StateName>>
-                        text=hide
-                    />
-                </$button>
--->
-                <br>
-
-                {{ ||$:/plugins/inmysocks/TWederation/Templates/BlogPostCommentTemplate}}
-
-            </$reveal>
-        </$list>
-
-        ---
-
+            {{||$:/plugins/inmysocks/TWederation/Templates/CommentThreadReveal}}
+        </div>
     </$list>
 </$set>

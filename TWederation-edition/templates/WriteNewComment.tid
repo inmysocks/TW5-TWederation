@@ -1,8 +1,10 @@
+created: 20160720120526895
+modified: 20160722204715694
 tags: Templates
-title: $:/plugins/inmysocks/TWederation/Templates/BlogPostWriteCommentInnerTemplate
+title: $:/plugins/inmysocks/TWederation/Templates/WriteNewComment
 
 <$list
-	filter='[[$:/state/ShowComments]addsuffix{!!title}]'
+	filter='[[$:/state/NewComment]addsuffix{!!title}]'
 	variable=StateName
 >
 	<$reveal
@@ -11,9 +13,14 @@ title: $:/plugins/inmysocks/TWederation/Templates/BlogPostWriteCommentInnerTempl
 		text=show
 	>
 		<$button
-			class="dis-btn-comment-closed"
+			class="dis-btn-main-comment-closed"
 		>
-			{{$:/core/images/edit-button}} Add comment...
+			<span
+				class="dis-btn-margin"
+			>
+				{{$:/core/images/edit-button}}
+			</span>
+			Add comment...
 			<$action-setfield
 				$tiddler=<<StateName>>
 				text=show
@@ -26,24 +33,32 @@ title: $:/plugins/inmysocks/TWederation/Templates/BlogPostWriteCommentInnerTempl
 		state=<<StateName>>
 		text=show
 	>
-		<$list
-			filter='[{$:/SitetwCard}get[author]]'
-			variable=SiteAuthor
+
+		<div
+			class='dis-comment-new-card'
 		>
-			<div
-				class="dis-comment-inthread-opened"
+			<$list
+				filter='[{$:/SitetwCard}get[author]]'
+				variable=SiteAuthor
 			>
 				<$button
-				    class="dis-btn-comment-inthread-opened"
+					class="dis-btn-main-comment-opened"
 				>
-	                {{$:/core/images/fold-button}}
-	                {{$:/core/images/edit-button}}
-	                //<<SiteAuthor>>//
-	                <$action-setfield
-	              		$tiddler=<<StateName>>
-	                    text=hide
-	                />
-	            </$button>
+					<span
+						class="dis-btn-margin"
+					>
+						{{$:/core/images/fold-button}}
+					</span>
+					<$action-setfield
+						$tiddler=<<StateName>>
+						text=hide
+					/>
+					<span
+						class="dis-comment-author"
+					>
+						<<SiteAuthor>>
+					</span>
+				</$button>
 
 				<$button
 					class="dis-comment-tool"
@@ -69,7 +84,6 @@ title: $:/plugins/inmysocks/TWederation/Templates/BlogPostWriteCommentInnerTempl
 						/>
 					</$list>
 				</$button>
-
 				<$edit-text
 					tiddler='$:/state/Post Comment'
 					field=comment_title
@@ -81,7 +95,7 @@ title: $:/plugins/inmysocks/TWederation/Templates/BlogPostWriteCommentInnerTempl
 					class='dis-comment-new-body'
 					placeholder="Comment"
 				/>
-			</div>
-		</$list>
+			</$list>
+		</div>
 	</$reveal>
 </$list>

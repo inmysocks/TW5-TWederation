@@ -1,65 +1,35 @@
 tags: Templates
 title: $:/plugins/inmysocks/TWederation/Templates/BlogPostCommentTemplate
 
+<!-- flag333 I believe this whole tiddler is unused. It is called in the viewtemplate $:/plugins/inmysocks/TWederation/Templates/BlogPostCommentViewTemplate ...which appears (invisibly) under the full thread (unused) -->
 <$list
             filter='[[$:/state/ShowComments]addsuffix{!!title}]'
             variable=StateName
         >
             <$reveal
-                type='nomatch'
-                state=<<StateName>>
-                text=show
-            >
-                <$button>
-                    Open Comments
-                    <$action-setfield
-                        $tiddler=<<StateName>>
-                        text=show
-                    />
-                </$button>
-                (
-                    <$count
-                        filter='[role[twDiscussionPost]parent<currentTiddler>sort[created]]'
-                    />
-                    comment(s)
-                )
-            </$reveal>
-
-            <$reveal
                 type='match'
                 state=<<StateName>>
                 text=show
             >
-
-                <$button>
-                    Hide Comments
+                <$button class="tc-btn-commentsection">
+                    {{$:/core/images/fold-button}} Comments Section
                     <$action-setfield
                         $tiddler=<<StateName>>
                         text=hide
                     />
                 </$button>
 
-
-<div
-	class='tc-post-comment-card'
->
+<div	class='tc-post-comment-card'>
 
 <$list filter='[{$:/SitetwCard}get[author]]' variable=SiteAuthor>
-Username: ''<<SiteAuthor>>''
+<div class="comment-signature">
+   ''<<SiteAuthor>>'' writes:
+</div>
 
-<$edit-text
-	tiddler='$:/state/Post Comment'
-	field=comment_title
-	class='tc-post-comment-input'
-	placeholder="Comment title (optional)"
-/>
-<$edit-text
-	tiddler='$:/state/Post Comment'
-	class='tc-edit-texteditor'
-	placeholder="Comment text"
-/>
-<$button>
-	Save Comment
+<!-- Comment Toolbar -->
+<div class="comment-toolbar">
+<$button class="tc-btn-invisible">
+	{{$:/core/images/save-button}} [flag888]
 	<$list
 		filter='[is[current]addprefix[Comment - ]addsuffix[ - ]addsuffix<SiteAuthor>addsuffix[ - ]addsuffix{$:/state/Post Comment!!comment_title}]'
 		variable=CommentTitle
@@ -80,6 +50,21 @@ Username: ''<<SiteAuthor>>''
 		/>
 	</$list>
 </$button>
+</div>
+
+<!-- New Comment fields -->
+<$edit-text
+	tiddler='$:/state/Post Comment'
+	field=comment_title
+	class='dis-comment-new-title'
+	placeholder="Comment title (optional)"
+/>
+<$edit-text
+	tiddler='$:/state/Post Comment'
+	class='dis-comment-new-body'
+	placeholder="Comment text"
+/>
+
 </$list>
 
 </div>
@@ -87,14 +72,6 @@ Username: ''<<SiteAuthor>>''
             </$reveal>
         </$list>
 
-<br>
-
 <h2>
 	''Comments:''
 </h2>
-
-<!--
-{{||$:/plugins/inmysocks/TWederation/Templates/BlogPostWriteCommentInnerTemplate}}
--->
-
-{{||$:/plugins/inmysocks/TWederation/Templates/BlogPostCommentInnerTemplate}}

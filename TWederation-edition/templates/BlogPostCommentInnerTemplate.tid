@@ -1,29 +1,95 @@
 tags: Templates
 title: $:/plugins/inmysocks/TWederation/Templates/BlogPostCommentInnerTemplate
 
-<div class="tc-discussion-thread">
-<$list
-	filter='[role[twDiscussionPost]parent<currentTiddler>sort[created]]'
+\define subthread() $:/state/$(currtitle)$
+
+<div
+	class="dis-thread"
 >
-<li>
-	<div
-		class='tc-post-comment-card'
+	<$list
+		filter='[role[twDiscussionPost]parent<currentTiddler>sort[created]]'
 	>
+		<div
+			class='dis-comment-card'
+		>
+			<span
+				class="dis-comment-coloration"
+			>
+				<span
+					class="dis-comment-author"
+				>
+					<$view
+						field='author'
+					/>, <$view
+							field="modified"
+							format="relativedate"
+						/>:
+				</span>
+				<span
+					class="dis-comment-title"
+				>
+					<$transclude
+						field="comment_title"
+						mode="inline"
+					/>
+				</span>
+				<span
+					class="dis-comment-text"
+				>
+					<$transclude
+						mode="block"
+					/>
+				</span>
+			</span>
+			{{||$:/plugins/inmysocks/TWederation/Templates/BlogPostWriteCommentInnerTemplate}}
+		</div>
+		<$set
+			name="currtitle"
+			value={{!!title}}
+		>
+			<$list
+				filter="[role[twDiscussionPost]parent<currtitle>first[]]"
+				variable="xx"
+			>
+				<$reveal
+					type="nomatch"
+					state=<<subthread>>
+					text="show"
+				>
+					<$button
+						set=<<subthread>>
+						setTo="show"
+						class="dis-btn-subthread-closed"
+						style="border:.5em solid #f8f8f8; border-top:0;"
+					>
+						{{$:/core/images/unfold-button}}
+						Open <$count
+						filter='[role[twDiscussionPost]parent<currentTiddler>sort[created]]'
+						/>
+						comments
+					</$button>
+				</$reveal>
 
-		__''<$view field='author'/>'' says__:
+				<$reveal
+					type="match"
+					state=<<subthread>>
+					text="show"
+				>
+					<$button
+						set=<<subthread>>
+						setTo="hide"
+						class="dis-btn-subthread-opened"
+					>
+						<span
+							class="btn-abspos"
+						>
+							{{$:/core/images/fold-button}}
+						</span>
+					</$button>
+					{{ ||$:/plugins/inmysocks/TWederation/Templates/BlogPostCommentInnerTemplate}}
 
-		__<$view field='comment_title'/>__
-
-		<$transclude
-			mode=block
-		/>
-
-{{||$:/plugins/inmysocks/TWederation/Templates/BlogPostWriteCommentInnerTemplate}}
-	</div>
-
-<ul>
-{{ ||$:/plugins/inmysocks/TWederation/Templates/BlogPostCommentInnerTemplate}}
-</ul>
-</li>
-</$list>
+				</$reveal>
+			</$list>
+		</$set>
+	</$list>
 </div>

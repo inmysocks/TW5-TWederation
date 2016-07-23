@@ -1,8 +1,12 @@
 tags: Templates $:/tags/ViewTemplate
 title: $:/plugins/inmysocks/TWederation/Templates/BlogPostCommentViewTemplate
 
-<$list filter='[is[current]type[Blog Post]]'>
+<$list
+    filter='[is[current]role[twDiscussionPost]]'
+>
 
-{{||$:/plugins/inmysocks/TWederation/Templates/BlogPostCommentTemplate}}
+    {{||$:/plugins/inmysocks/TWederation/Templates/WriteNewComment}}
+
+    {{||$:/plugins/inmysocks/TWederation/Templates/BlogPostCommentTemplate}}
 
 </$list>

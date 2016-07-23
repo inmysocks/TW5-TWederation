@@ -62,40 +62,40 @@ You have the following twCards:
             Delete Card
         </th>
     </tr>
-
-<$list
-    filter='[all[shadows+tiddlers]role[twServer]]'
->
-    <tr>
-        <td>
-            <<FollowWikiCheckbox>>
-        </td>
-        <td>
-            <$link
-                to=<<currentTiddler>>
-            >
+    <$list
+        filter='[all[shadows+tiddlers]role[twServer]]'
+    >
+        <tr>
+            <td>
+                <<FollowWikiCheckbox>>
+            </td>
+            <td>
+                <$link
+                    to=<<currentTiddler>>
+                >
+                    <$view
+                        field='name'
+                    />
+                </$link>
+            </td>
+            <td>
                 <$view
-                    field='name'
+                    field='author'
                 />
-            </$link>
-        </td>
-        <td>
-            <$view
-                field='author'
-            />
-        </td>
-        <td>
-            <a
-                href={{!!url}}
-                target=_blank
-            >
-                <$view
-                    field='url'
-                />
-            </a>
-        </td>
-        <td>
-            <<DeletetwCardButton>>
-        </td>
-    </tr>
-</$list>
+            </td>
+            <td>
+                <a
+                    href={{!!url}}
+                    target=_blank
+                >
+                    <$view
+                        field='url'
+                    />
+                </a>
+            </td>
+            <td>
+                <<DeletetwCardButton>>
+            </td>
+        </tr>
+    </$list>
+</table>
