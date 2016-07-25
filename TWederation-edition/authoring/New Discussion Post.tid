@@ -53,9 +53,9 @@ caption: New Discussion Post
 
 <$edit-text tiddler='$:/temp/NewBlogPost' placeholder='Post Content' class='tc-edit-texteditor'/>
 
-<$set
-	name='AuthorName'
+<$list
 	filter='[{$:/SitetwCard}get[author]]'
+	variable='AuthorName'
 >
 	<$vars
 		PostTitle={{$:/temp/NewBlogPost!!new_post_title}}
@@ -75,4 +75,4 @@ caption: New Discussion Post
 			</$set>
 		</$set>
 	</$vars>
-</$set>
+</$list>
