@@ -1,7 +1,7 @@
 tags: Templates
 title: $:/plugins/inmysocks/TWederation/Templates/BlogPostCommentInnerTemplate
 
-\define subthread() $:/state/$(currtitle)$
+\define subthread() $:/state/$(currentTiddler)$
 
 <div
 	class="dis-thread"
@@ -19,10 +19,10 @@ title: $:/plugins/inmysocks/TWederation/Templates/BlogPostCommentInnerTemplate
 					class="dis-comment-author"
 				>
 					<$list
-						filter='[{$:/SitetwCard}get[icon]]'
-						variable=SiteAuthorAvatar
+						filter='[role[twServer]author{!!author}get[icon]limit[1]]'
+						variable=CommentAuthorAvatar
 					>
-						<$image source=<<SiteAuthorAvatar>> height=15px/>
+						<$image source=<<CommentAuthorAvatar>> height=15px/>
 					</$list>
 					<$view
 						field='author'
@@ -49,53 +49,49 @@ title: $:/plugins/inmysocks/TWederation/Templates/BlogPostCommentInnerTemplate
 			</span>
 			{{||$:/plugins/inmysocks/TWederation/Templates/BlogPostWriteCommentInnerTemplate}}
 		</div>
-		<$set
-			name="currtitle"
-			value={{!!title}}
+		<$list
+			filter="[role[twDiscussionPost]parent<currentTiddler>first[]]"
+			variable=dummy
 		>
-			<$list
-				filter="[role[twDiscussionPost]parent<currtitle>first[]]"
-				variable="xx"
+			<$reveal
+				type="match"
+				state=<<subthread>>
+				text="hide"
 			>
-				<$reveal
-					type="match"
-					state=<<subthread>>
-					text="hide"
+				<$button
+					set=<<subthread>>
+					setTo="show"
+					class="dis-btn-subthread-closed"
+					style="border:.5em solid #f8f8f8; border-top:0;"
 				>
-					<$button
-						set=<<subthread>>
-						setTo="show"
-						class="dis-btn-subthread-closed"
-						style="border:.5em solid #f8f8f8; border-top:0;"
-					>
-						{{$:/core/images/unfold-button}}
-						Open <$count
-						filter='[role[twDiscussionPost]parent<currentTiddler>sort[created]]'
-						/>
-						comments
-					</$button>
-				</$reveal>
+					{{$:/core/images/unfold-button}}
+					Open <$count
+					filter='[role[twDiscussionPost]parent<currentTiddler>sort[created]]'
+					/>
+					comments
+				</$button>
+			</$reveal>
 
-				<$reveal
-					type="nomatch"
-					state=<<subthread>>
-					text="hide"
+			<$reveal
+				type="nomatch"
+				state=<<subthread>>
+				text="hide"
+			>
+				<$button
+					set=<<subthread>>
+					setTo="hide"
+					class="dis-btn-subthread-opened"
 				>
-					<$button
-						set=<<subthread>>
-						setTo="hide"
-						class="dis-btn-subthread-opened"
+					<span
+						class="btn-abspos"
 					>
-						<span
-							class="btn-abspos"
-						>
-							{{$:/core/images/fold-button}}
-						</span>
-					</$button>
-					{{ ||$:/plugins/inmysocks/TWederation/Templates/BlogPostCommentInnerTemplate}}
+						{{$:/core/images/fold-button}}
+					</span>
+				</$button>
 
-				</$reveal>
-			</$list>
-		</$set>
+				{{ ||$:/plugins/inmysocks/TWederation/Templates/BlogPostCommentInnerTemplate}}
+
+			</$reveal>
+		</$list>
 	</$list>
 </div>

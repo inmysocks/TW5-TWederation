@@ -70,7 +70,7 @@ title: $:/plugins/inmysocks/TWederation/Templates/WriteNewComment
 				>
 					{{$:/core/images/save-button}}
 					<$list
-						filter='[is[current]addprefix[Comment - ]addsuffix<SiteAuthor>addsuffix[ - ]addsuffix{$:/state/Post Comment!!comment_title}]'
+						filter='[<currentTiddler>addprefix[Comment - ]addsuffix<SiteAuthor>addsuffix[ - ]addsuffix{$:/state/Post Comment!!comment_title}]'
 						variable=CommentTitle
 					>
 						<$action-setfield

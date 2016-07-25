@@ -24,7 +24,7 @@ title: $:/plugins/inmysocks/TWederation/Templates/CommentThreadReveal
                 </span>
                 Open discussion
                 (''<$count
-                    filter='[role[twDiscussionPost]parent<currentTiddler>sort[created]]'
+                    filter='[parent<currentTiddler>role[twDiscussionPost]sort[created]]'
                 />'')
                 <$action-setfield
                     $tiddler=<<StateName>>

@@ -103,7 +103,7 @@ $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
 	var mostRecent = new Date(0);
 	var separator = event.data.separator ? event.data.separator:'thisisthetiddlerdivisionstringwhywouldyouevenhavethisinyourtiddlerseriouslywhythisisjustridiculuous';
 	var bundleFilter = event.data.filter ? event.data.filter : '[is[system]!is[system]]';
-	var previousTime = event.data.previousTime ? event.data.previousTime : '0';
+	var previousTime = event.data.previousTime ? event.data.previousTime : new Date(0);
 	var currentTimeStamp = new Date();
 	var messagePrefix =
 	currentTimeStamp.getFullYear() +
@@ -123,7 +123,12 @@ $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
 	for (var i = 0; i < bundleTiddlers.length; i++) {
 		var currentBundleTiddler = $tw.wiki.getTiddler(decodeURI(bundleTiddlers[i]));
 	    if (currentBundleTiddler) {
-	    	var isNewTiddler = $tw.utils.stringifyDate(currentBundleTiddler.fields.created) > previousTime || previousTime.trim() === '';
+			if (currentBundleTiddler.fields.created) {
+	    		var isNewTiddler = $tw.utils.stringifyDate(currentBundleTiddler.fields.created) > previousTime || previousTime.trim() === '';
+			} else {
+				//Assume tiddler is new if it has no creation fields
+				var isNewTiddler = true;
+			}
 	    	if (isNewTiddler) {
 	    		bundleList.push(currentBundleTiddler.fields.title);
 				bundleText += 'title:' + currentBundleTiddler.fields.title + '\n';

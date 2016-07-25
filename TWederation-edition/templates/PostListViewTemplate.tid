@@ -1,9 +1,0 @@
-tags: 
-title: $:/plugins/inmysocks/TWederation/Templates/PostListViewTemplate
-
-
-{{||$:/plugins/inmysocks/TWederation/Templates/PostTitleTemplate}}
-{{||$:/plugins/inmysocks/TWederation/Templates/BlogPostTiddlerHeaderTemplate}}
-{{||$:/core/ui/ViewTemplate/subtitle}}
-{{||$:/core/ui/ViewTemplate/body}}
-{{||$:/plugins/inmysocks/TWederation/Templates/BlogPostCommentTemplate}}

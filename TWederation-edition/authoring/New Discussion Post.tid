@@ -53,27 +53,26 @@ caption: New Discussion Post
 
 <$edit-text tiddler='$:/temp/NewBlogPost' placeholder='Post Content' class='tc-edit-texteditor'/>
 
-<$list
+<$set
+	name='AuthorName'
 	filter='[{$:/SitetwCard}get[author]]'
-	variable='AuthorName'
-	emptyMessage="""<$vars PostTitle={{$:/temp/NewBlogPost!!new_post_title}}><$macrocall $name=thisMakePostButton TIME=<<now 0hhh0mm-0DD/MM/YYYY>>/></$vars>"""
 >
 	<$vars
 		PostTitle={{$:/temp/NewBlogPost!!new_post_title}}
 	>
-		<$list
+		<$set
+			name=AuthorName
 			filter='[[$:/SitetwCard]get[text]get[author]]'
-			variable=AuthorName
 		>
-			<$list
+			<$set
+				name=WikiUrl
 				filter='[[$:/SitetwCard]get[text]get[url]]'
-				variable=WikiUrl
 			>
 				<$macrocall
 					$name=thisMakePostButton
 					TIME=<<now YYYY0MM0DD0hhh0mm0ss>>
 				/>
-			</$list>
-		</$list>
+			</$set>
+		</$set>
 	</$vars>
-</$list>
+</$set>

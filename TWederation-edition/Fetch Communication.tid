@@ -63,41 +63,6 @@ caption: Fetch Communication
 </option>
 \end
 
-<!--
-<$button>Get all new blog posts
-	<$list filter='[[$:/Settings/Follow Wiki List]indexes[]has[url]]'>
-		<$list filter='[[$:/Settings/Follow Wiki List]getindex<currentTiddler>prefix[True]]' variable='dummy'>
-			<$action-sendmessage
-				$message='tm-send-request'
-				request_type='request_bundle'
-				url={{!!url}}
-				filter='[role[twDiscussionPost]!has[draft.of]]'
-				bundleName='New Blog Posts'
-				separator='SOMESTRINGIDONOTKNOWWHAT'
-				packingFunction='tiddlerSummary'
-				previousTime={{$:/state/Fetch Tiddler Bundle!!only_new}}
-			/>
-		</$list>
-	</$list>
-</$button>
-<$button>Get all new messages
-	<$list filter='[[$:/Settings/Follow Wiki List]indexes[]has[url]]'>
-		<$list filter='[[$:/Settings/Follow Wiki List]getindex<currentTiddler>prefix[True]]' variable='dummy'>
-			<$action-sendmessage
-				$message='tm-send-request'
-				request_type='request_bundle'
-				url={{!!url}}
-				filter=<<BundleFilter>>
-				bundleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}}
-				separator='SOMESTRINGIDONOTKNOWWHAT'
-				packingFunction='fetchShortMessages'
-				previousTime={{$:/state/Fetch Tiddler Bundle!!only_new}}
-			/>
-		</$list>
-	</$list>
-</$button>
--->
-
 What to fetch:
 <$select
 	tiddler='$:/state/Fetch Tiddler Bundle'
@@ -117,12 +82,12 @@ What to fetch:
 		All Blog Posts
 	</option>
 	<option
-		value='[role[twServer]!has[draft.of]]'
+		value='[role[twServer]!has[draft.of]][role[twServer]!has[draft.of]get[icon]]'
 	>
 		All Wiki twCards
 	</option>
 	<option
-		value='[[$:/SitetwCard]get[text]]'
+		value='[[$:/SitetwCard]get[text]][[$:/SitetwCard]get[text]get[icon]]'
 	>
 		The wiki's twCard
 	</option>
