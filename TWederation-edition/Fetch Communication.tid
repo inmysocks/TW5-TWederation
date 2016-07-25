@@ -71,7 +71,7 @@ caption: Fetch Communication
 				$message='tm-send-request'
 				request_type='request_bundle'
 				url={{!!url}}
-				filter='[role[twDiscussionPost]]'
+				filter='[role[twDiscussionPost]!has[draft.of]]'
 				bundleName='New Blog Posts'
 				separator='SOMESTRINGIDONOTKNOWWHAT'
 				packingFunction='tiddlerSummary'
@@ -112,12 +112,12 @@ What to fetch:
 		Enter Filter
 	</option>
 	<option
-		value='[role[twDiscussionPost]]'
+		value='[role[twDiscussionPost]!has[draft.of]]'
 	>
 		All Blog Posts
 	</option>
 	<option
-		value='[role[twServer]]'
+		value='[role[twServer]!has[draft.of]]'
 	>
 		All Wiki twCards
 	</option>
@@ -136,11 +136,13 @@ What to fetch:
 			<<thisGetCommentsOption>>
 		</$list>
 	</$vars>
+	<!--
 	<option
 		value='[prefix[Message - ]]'
 	>
 		Messages
 	</option>
+	-->
 </$select>
 
 Select Wiki:
@@ -250,31 +252,38 @@ Fetch Type:
 			<$list
 				filter='[all[tiddlers+shadows]role[twServer]]'
 			>
-				<$list
-					filter='[[$:/state/Fetch Tiddler Bundle]!what_to_fetch[Enter Filter]get[what_to_fetch]]'
-					variable='BundleFilter'
-					emptyMessage="""<$action-sendmessage
-								$message='tm-send-request'
-								request_type='request_bundle'
-								url={{!!url}}
-								filter={{$:/state/Fetch Tiddler Bundle!!filter}}
-								undleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}}
-								separator='SOMESTRINGIDONOTKNOWWHAT'
-								packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
-								previousTime={{$:/state/Fetch Tiddler Bundle!!only_new}}
-							/>"""
+
+				<$set
+					name=PreviousTime
+					filter='[[$:/FetchHistory/]addsuffix{!!url}getindex{$:/state/Fetch Tiddler Bundle!!filter}]'
+					emptyValue=0
 				>
-					<$action-sendmessage
-						$message='tm-send-request'
-						request_type='request_bundle'
-						url={{!!url}}
-						filter=<<BundleFilter>>
-						bundleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}}
-						separator='SOMESTRINGIDONOTKNOWWHAT'
-						packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
-						previousTime={{$:/state/Fetch Tiddler Bundle!!only_new}}
-					/>
-				</$list>
+					<$list
+						filter='[[$:/state/Fetch Tiddler Bundle]!what_to_fetch[Enter Filter]get[what_to_fetch]]'
+						variable='BundleFilter'
+						emptyMessage="""<$action-sendmessage
+									$message='tm-send-request'
+									request_type='request_bundle'
+									url={{!!url}}
+									filter={{$:/state/Fetch Tiddler Bundle!!filter}}
+									undleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}}
+									separator='SOMESTRINGIDONOTKNOWWHAT'
+									packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
+									previousTime=<<PreviousTime>>
+								/>"""
+					>
+						<$action-sendmessage
+							$message='tm-send-request'
+							request_type='request_bundle'
+							url={{!!url}}
+							filter=<<BundleFilter>>
+							bundleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}}
+							separator='SOMESTRINGIDONOTKNOWWHAT'
+							packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
+							previousTime=<<PreviousTime>>
+						/>
+					</$list>
+				</$set>
 			</$list>
 		</$button>
 	</$reveal>
@@ -288,31 +297,37 @@ Fetch Type:
 			<$list
 				filter='[[$:/settings/TWederation/Follow Wiki List]indexes[]]'
 			>
-				<$list
-					filter='[[$:/state/Fetch Tiddler Bundle]!what_to_fetch[Enter Filter]get[what_to_fetch]]'
-					variable='BundleFilter'
-					emptyMessage="""<$action-sendmessage
-								$message='tm-send-request'
-								request_type='request_bundle'
-								url=<<currentTiddler>>
-								filter={{$:/state/Fetch Tiddler Bundle!!filter}}
-								undleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}}
-								separator='SOMESTRINGIDONOTKNOWWHAT'
-								packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
-								previousTime={{$:/state/Fetch Tiddler Bundle!!only_new}}
-							/>"""
+				<$set
+					name=PreviousTime
+					filter='[[$:/FetchHistory/]addsuffix{!!url}getindex{$:/state/Fetch Tiddler Bundle!!filter}]'
+					emptyValue=0
 				>
-					<$action-sendmessage
-						$message='tm-send-request'
-						request_type='request_bundle'
-						url=<<currentTiddler>>
-						filter=<<BundleFilter>>
-						bundleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}}
-						separator='SOMESTRINGIDONOTKNOWWHAT'
-						packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
-						previousTime={{$:/state/Fetch Tiddler Bundle!!only_new}}
-					/>
-				</$list>
+					<$list
+						filter='[[$:/state/Fetch Tiddler Bundle]!what_to_fetch[Enter Filter]get[what_to_fetch]]'
+						variable='BundleFilter'
+						emptyMessage="""<$action-sendmessage
+									$message='tm-send-request'
+									request_type='request_bundle'
+									url=<<currentTiddler>>
+									filter={{$:/state/Fetch Tiddler Bundle!!filter}}
+									undleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}}
+									separator='SOMESTRINGIDONOTKNOWWHAT'
+									packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
+									previousTime=<<PreviousTime>>
+								/>"""
+					>
+						<$action-sendmessage
+							$message='tm-send-request'
+							request_type='request_bundle'
+							url=<<currentTiddler>>
+							filter=<<BundleFilter>>
+							bundleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}}
+							separator='SOMESTRINGIDONOTKNOWWHAT'
+							packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
+							previousTime=<<PreviousTime>>
+						/>
+					</$list>
+				</$set>
 			</$list>
 		</$button>
 	</$reveal>

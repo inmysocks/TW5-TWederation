@@ -5,8 +5,6 @@ title: $:/plugins/inmysocks/TWederation/Templates/BlogPostCommentViewTemplate
     filter='[is[current]role[twDiscussionPost]]'
 >
 
-    {{||$:/plugins/inmysocks/TWederation/Templates/WriteNewComment}}
-
     {{||$:/plugins/inmysocks/TWederation/Templates/BlogPostCommentTemplate}}
 
 </$list>

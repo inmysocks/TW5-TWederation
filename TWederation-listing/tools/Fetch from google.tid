@@ -1,27 +1,34 @@
-tags: 
+tags:
 title: $:/plugins/inmysocks/TWederation/Fetch from google
 
 \define BundleName()
 twCard - twCard for $(currentTiddler)$
 \end
 
+\define FilterUsed()
+[[$:/SitetwCard]get[text]]
+\end
+
 Clicking on this button will import new wiki twCards from the google sheet
 
-<$button>Fetch New twCards from google
-<$action-requestdata $url='https://spreadsheets.google.com/feeds/list/1T6dOAVQRkXCeh4zItkok9OSX8CA9UDB6ExC9WFKLGgs/o3ohv50/public/full?alt=json'/>
+<$button>
+    Fetch New twCards from google
+    <$action-requestdata
+        $url='https://spreadsheets.google.com/feeds/list/1T6dOAVQRkXCeh4zItkok9OSX8CA9UDB6ExC9WFKLGgs/o3ohv50/public/full?alt=json'
+    />
 </$button>
 
 New cards to fetch:
 
 <$list
-    filter='[prefix[New Card - ]has[url]]'
+    filter='[prefix[New Card - ]has[wiki_url]]'
 >
     <$button>
         Fetch Card
         <$action-sendmessage
             $message='tm-send-request'
             request_type='request_bundle'
-            url={{!!url}}
+            url={{!!wiki_url}}
             filter='[[$:/SitetwCard]get[text]]'
             bundleName=<<BundleName>>
             separator='SOMESTRINGIDONOTKNOWWHAT'
@@ -34,7 +41,7 @@ New cards to fetch:
             field='wikiname'
         >
             <$view
-                field='url'
+                field='wiki_url'
             />
         </$view>
         by
@@ -45,24 +52,31 @@ New cards to fetch:
                 field='wikiname'
             >
                 <$view
-                    field='url'
+                    field='wiki_url'
                 />
             </$view>
         </$view>
     </$link>
     <$list
-        filter='[!is[current]type[Wiki twCard]url{!!url}]'
+        filter='[!is[current]role[twServer]get[url]prefix{!!wiki_url}]'
     >
         A twCard for this site already exists.
     </$list>
-<$button class='tc-btn-invisible'>{{$:/core/images/delete-button}}<$action-deletetiddler $tiddler=<<currentTiddler>>/></$button>
+    <$button
+        class='tc-btn-invisible'
+    >
+        {{$:/core/images/delete-button}}
+        <$action-deletetiddler
+            $tiddler=<<currentTiddler>>
+        />
+    </$button>
     <br>
 </$list>
 
 Cards to unpack:
 
 <$list
-    filter='[prefix[twCard - twCard for ]]'
+    filter='[filter<FilterUsed>]'
 >
 
 </$list>

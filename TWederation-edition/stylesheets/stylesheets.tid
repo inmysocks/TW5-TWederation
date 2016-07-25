@@ -1,7 +1,21 @@
-created: 20160716114425230
-modified: 20160723110852672
 tags: $:/tags/Stylesheet
 title: $:/plugins/inmysocks/TWederation/stylesheets
+
+.dis-discussion-post {
+
+}
+
+.dis-discussion-post-title {
+
+}
+
+.dis-discussion-post-by-line {
+
+}
+
+.dis-discussion-post-author-name {
+
+}
 
 /* The main button ICONS */
 .dis-btn-main {
@@ -78,7 +92,8 @@ title: $:/plugins/inmysocks/TWederation/stylesheets
 }
 
 .dis-discussion {
-    margin-left:-1em;
+    xmargin-left:-1em;
+    background-color:#f0f0f0;
 }
 
 /*  */
@@ -121,9 +136,10 @@ title: $:/plugins/inmysocks/TWederation/stylesheets
 
 .dis-thread {
     xbackground-color: #f8f8f8;
-    xborder-left:1px solid cyan;
+    xborder-left:1px solid lightgrey;
     padding:0 3px;
     margin-left:1.0em;
+    border-left:
 }
 
 .dis-btn-comment-closed {

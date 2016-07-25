@@ -1,77 +1,9 @@
 tags: Templates
 title: $:/plugins/inmysocks/TWederation/Templates/BlogPostCommentTemplate
 
-<!-- flag333 I believe this whole tiddler is unused. It is called in the viewtemplate $:/plugins/inmysocks/TWederation/Templates/BlogPostCommentViewTemplate ...which appears (invisibly) under the full thread (unused) -->
-<$list
-            filter='[[$:/state/ShowComments]addsuffix{!!title}]'
-            variable=StateName
-        >
-            <$reveal
-                type='match'
-                state=<<StateName>>
-                text=show
-            >
-                <$button class="tc-btn-commentsection">
-                    {{$:/core/images/fold-button}} Comments Section
-                    <$action-setfield
-                        $tiddler=<<StateName>>
-                        text=hide
-                    />
-                </$button>
-
-<div	class='tc-post-comment-card'>
-
-<$list filter='[{$:/SitetwCard}get[author]]' variable=SiteAuthor>
-<div class="comment-signature">
-   ''<<SiteAuthor>>'' writes:
+{{ ||$:/plugins/inmysocks/TWederation/Templates/WriteNewComment}}
+<div
+    style="margin-top:-1em;"
+>
+    {{||$:/plugins/inmysocks/TWederation/Templates/CommentThreadReveal}}
 </div>
-
-<!-- Comment Toolbar -->
-<div class="comment-toolbar">
-<$button class="tc-btn-invisible">
-	{{$:/core/images/save-button}} [flag888]
-	<$list
-		filter='[is[current]addprefix[Comment - ]addsuffix[ - ]addsuffix<SiteAuthor>addsuffix[ - ]addsuffix{$:/state/Post Comment!!comment_title}]'
-		variable=CommentTitle
-	>
-		<$action-setfield
-			$tiddler=<<CommentTitle>>
-			text={{$:/state/Post Comment}}
-			comment_title={{$:/state/Post Comment!!comment_title}}
-			author=<<SiteAuthor>>
-			parent={{!!title}}
-			role='twDiscussionPost'
-			post_author={{!!author}}
-		/>
-		<$action-setfield
-			$tiddler='$:/state/Post Comment'
-			comment_title=''
-			text=''
-		/>
-	</$list>
-</$button>
-</div>
-
-<!-- New Comment fields -->
-<$edit-text
-	tiddler='$:/state/Post Comment'
-	field=comment_title
-	class='dis-comment-new-title'
-	placeholder="Comment title (optional)"
-/>
-<$edit-text
-	tiddler='$:/state/Post Comment'
-	class='dis-comment-new-body'
-	placeholder="Comment text"
-/>
-
-</$list>
-
-</div>
-
-            </$reveal>
-        </$list>
-
-<h2>
-	''Comments:''
-</h2>

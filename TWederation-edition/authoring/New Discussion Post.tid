@@ -1,0 +1,79 @@
+tags:
+title: $:/plugins/inmysocks/TWederation/New Discussion Post
+caption: New Discussion Post
+
+\define thisMakePostButton(TIME)
+<div
+	style='width:100%;text-align:right;fill:gray;'
+>
+	<$button
+		class='tc-btn-invisible'
+		tooltip='Save Post'
+	>
+		{{$:/core/images/save-button}}
+		<$action-setfield
+			$tiddler="""$(PostTitle)$ - $(AuthorName)$ ($TIME$)"""
+			author=<<AuthorName>>
+			wiki_url=<<WikiUrl>>
+			post_title={{$:/temp/NewBlogPost!!new_post_title}}
+			role='twDiscussionPost'
+			text={{$:/temp/NewBlogPost!!text}}
+			day=<<now 0DD>>
+			month=<<now 0MM>>
+			year=<<now YYYY>>
+			hour=<<now 0hh>>
+			minute=<<now 0mm>>
+			second=<<now 0ss>>
+			hour=<<now 0hh>>
+			minute=<<now 0mm>>
+			second=<<now 0ss>>
+			sort=<<now YYYY0MM0DD0hh0mm0ss>>
+		/>
+		<$action-setfield
+			$tiddler="$:/temp/NewBlogPost"
+			new_post_title=''
+			text=''
+		/>
+	</$button>
+	<$button
+		class='tc-btn-invisible'
+		tooltip='Cancel'
+	>
+		{{$:/core/images/close-button}}
+		<$action-setfield
+			$tiddler='$:/state/Discussions'
+			show_new_post=false
+		/>
+	</$button>
+</div>
+\end
+
+<$edit-text class='tc-edit-texteditor' tiddler='$:/temp/NewBlogPost' field='new_post_title' placeholder='Post Title'/>
+
+
+<$edit-text tiddler='$:/temp/NewBlogPost' placeholder='Post Content' class='tc-edit-texteditor'/>
+
+<$list
+	filter='[{$:/SitetwCard}get[author]]'
+	variable='AuthorName'
+	emptyMessage="""<$vars PostTitle={{$:/temp/NewBlogPost!!new_post_title}}><$macrocall $name=thisMakePostButton TIME=<<now 0hhh0mm-0DD/MM/YYYY>>/></$vars>"""
+>
+	<$vars
+		PostTitle={{$:/temp/NewBlogPost!!new_post_title}}
+	>
+		<$list
+			filter='[[$:/SitetwCard]get[text]get[author]]'
+			variable=AuthorName
+		>
+			<$list
+				filter='[[$:/SitetwCard]get[text]get[url]]'
+				variable=WikiUrl
+			>
+				<$macrocall
+					$name=thisMakePostButton
+					TIME=<<now YYYY0MM0DD0hhh0mm0ss>>
+				/>
+			</$list>
+		</$list>
+	</$vars>
+</$list>

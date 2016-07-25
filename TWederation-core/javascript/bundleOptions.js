@@ -38,10 +38,10 @@ $tw.wiki.bundleHandler.full = function(event) {
 	var historyTiddler = $tw.wiki.getTiddler('$:/FetchHistory/' + event.data.origin);
 	if (historyTiddler) {
 		var newText = JSON.parse(historyTiddler.fields.text);
-		newText[event.data.filter] = $tw.utils.stringifyDate(creationFields.created);
+		newText[event.data.filter] = event.data.bundle.most_recent ? event.data.bundle.most_recent:'0';
 	} else {
 		var newText = {};
-		newText[event.data.filter] = $tw.utils.stringifyDate(creationFields.created);
+		newText[event.data.filter] = event.data.bundle.most_recent ? event.data.bundle.most_recent:'0';
 		historyTiddler = {
 			title: '$:/FetchHistory/' + event.data.origin,
 			type: 'application/json',
@@ -100,6 +100,7 @@ $tw.wiki.bundleFunction.fetchShortMessages = function(event, status_message) {
 
 $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
 	var status = status_message || '';
+	var mostRecent = new Date(0);
 	var separator = event.data.separator ? event.data.separator:'thisisthetiddlerdivisionstringwhywouldyouevenhavethisinyourtiddlerseriouslywhythisisjustridiculuous';
 	var bundleFilter = event.data.filter ? event.data.filter : '[is[system]!is[system]]';
 	var previousTime = event.data.previousTime ? event.data.previousTime : '0';
@@ -122,7 +123,7 @@ $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
 	for (var i = 0; i < bundleTiddlers.length; i++) {
 		var currentBundleTiddler = $tw.wiki.getTiddler(decodeURI(bundleTiddlers[i]));
 	    if (currentBundleTiddler) {
-	    	var isNewTiddler = currentBundleTiddler.fields.created > previousTime || previousTime.trim() === '';
+	    	var isNewTiddler = $tw.utils.stringifyDate(currentBundleTiddler.fields.created) > previousTime || previousTime.trim() === '';
 	    	if (isNewTiddler) {
 	    		bundleList.push(currentBundleTiddler.fields.title);
 				bundleText += 'title:' + currentBundleTiddler.fields.title + '\n';
@@ -131,6 +132,9 @@ $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
 				}
 				if (currentBundleTiddler.fields.created) {
 					bundleText += 'created:' + $tw.utils.stringifyDate(currentBundleTiddler.fields.created) + '\n';
+					if (currentBundleTiddler.fields.created > mostRecent) {
+						mostRecent = currentBundleTiddler.fields.created;
+					}
 				}
 				if (currentBundleTiddler.fields.modified) {
 					bundleText += 'modified:' + $tw.utils.stringifyDate(currentBundleTiddler.fields.modified) + '\n';
@@ -157,7 +161,8 @@ $tw.wiki.bundleFunction.bundleTiddlers = function(event, status_message) {
 		unbundle_function: 'full',
 		filter: bundleFilter,
 		bundle_size: bundleTiddlers.length,
-		bundle_name: bundleBaseName
+		bundle_name: bundleBaseName,
+		most_recent: $tw.utils.stringifyDate(mostRecent)
 	};
 	var messageObject = {
 		verb:"DELIVER_BUNDLE",

@@ -1,11 +1,8 @@
-created: 20160720132748533
-modified: 20160722225517820
 tags: Templates
 title: $:/plugins/inmysocks/TWederation/Templates/CommentThreadReveal
 
 <div
-    class="comment-thread"
-    style="margin-left:-1em;"
+    class="dis-discussion"
 >
     <$list
         filter='[[$:/state/ShowComments]addsuffix{!!title}]'
@@ -13,24 +10,22 @@ title: $:/plugins/inmysocks/TWederation/Templates/CommentThreadReveal
     >
 
         <$reveal
-            type='nomatch'
+            type='match'
             state=<<StateName>>
-            text=show
+            text=hide
         >
             <$button
                 class="dis-btn-main-thread-closed"
             >
                 <span
-                    class="dis-btn-margin"
+                    class="dis-btn-main"
                 >
                     {{$:/core/images/unfold-button}}
                 </span>
-                Open
-                ''<$count
+                Open discussion
+                (''<$count
                     filter='[role[twDiscussionPost]parent<currentTiddler>sort[created]]'
-                />''
-                comments or threads
-
+                />'')
                 <$action-setfield
                     $tiddler=<<StateName>>
                     text=show
@@ -39,15 +34,15 @@ title: $:/plugins/inmysocks/TWederation/Templates/CommentThreadReveal
         </$reveal>
 
         <$reveal
-            type='match'
+            type='nomatch'
             state=<<StateName>>
-            text=show
+            text=hide
         >
             <$button
-                class="dis-btn-margin"
+                class="dis-btn-main"
             >
-                {{$:/core/images/fold-button}}
-                <$action-setfield
+                 {{$:/core/images/fold-button}}
+                 <$action-setfield
                     $tiddler=<<StateName>>
                     text=hide
                 />

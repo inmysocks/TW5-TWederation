@@ -241,6 +241,22 @@ This is the background process that is in charge of xmlhttprequests and handling
 								event.data.bundle.type = 'text/plain';
 								console.log('unrecognized source')
 								$tw.wiki.addTiddler(new $tw.Tiddler(event.data.bundle));
+								//We need to create the history tiddler even if we don't have a function.
+								var creationFields = $tw.wiki.getCreationFields();
+								var historyTiddler = $tw.wiki.getTiddler('$:/FetchHistory/' + event.data.origin);
+								if (historyTiddler) {
+									var newText = JSON.parse(historyTiddler.fields.text);
+									newText[event.data.filter] = event.data.bundle.most_recent ? event.data.bundle.most_recent:'0';
+								} else {
+									var newText = {};
+									newText[event.data.filter] = event.data.bundle.most_recent ? event.data.bundle.most_recent:'0';
+									historyTiddler = {
+										title: '$:/FetchHistory/' + event.data.origin,
+										type: 'application/json',
+										text: ''
+									};
+								}
+								$tw.wiki.addTiddler(new $tw.Tiddler(historyTiddler, {text: JSON.stringify(newText)}));
 							}
 						} else {
 							//If the source isn't recognized than set the tiddler as plain text and marke it as having an unrecognized source.
@@ -248,6 +264,22 @@ This is the background process that is in charge of xmlhttprequests and handling
 							event.data.bundle.source = 'unrecognized';
 							event.data.bundle.title = event.data.bundle.title + ' - ' + event.data.origin;
 							$tw.wiki.addTiddler(new $tw.Tiddler(event.data.bundle));
+							//We need to create the history tiddler even if we don't have a recognized source.
+							var creationFields = $tw.wiki.getCreationFields();
+							var historyTiddler = $tw.wiki.getTiddler('$:/FetchHistory/' + event.data.origin);
+							if (historyTiddler) {
+								var newText = JSON.parse(historyTiddler.fields.text);
+								newText[event.data.filter] = event.data.bundle.most_recent ? event.data.bundle.most_recent:'0';
+							} else {
+								var newText = {};
+								newText[event.data.filter] = event.data.bundle.most_recent ? event.data.bundle.most_recent:'0';
+								historyTiddler = {
+									title: '$:/FetchHistory/' + event.data.origin,
+									type: 'application/json',
+									text: ''
+								};
+							}
+							$tw.wiki.addTiddler(new $tw.Tiddler(historyTiddler, {text: JSON.stringify(newText)}));
 						}
 					}
 					$tw.wiki.addTiddler(new $tw.Tiddler($tw.wiki.getCreationFields(),{title: '$:/TiddlerBundleData/' + event.data.bundle.title, list: event.data.bundle.list, text: "Source: {{!!source}}<br>Tiddlers: <$list filter='[list[]]'><$link to=<<currentTiddler>>><$view field='title'/></$link>, </$list>", tags: '$:/tags/TiddlerBundle', source: event.origin}));

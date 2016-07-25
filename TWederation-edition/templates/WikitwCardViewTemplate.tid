@@ -1,7 +1,9 @@
 tags: Templates $:/tags/ViewTemplate
 title: $:/plugins/inmysocks/TWederation/Templates/WikitwCardViewTemplate
 
-<$list filter='[is[current]type[Wiki twCard]]'>
+<$list
+    filter='[is[current]type[Wiki twCard]]'
+>
 
 {{||$:/plugins/inmysocks/TWederation/Basic twCard Template}}
 

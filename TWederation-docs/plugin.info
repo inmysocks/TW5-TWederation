@@ -1,6 +1,6 @@
 {
 	"title": "$:/plugins/inmysocks/TWederation-docs",
-	"description": "Documentation for the TWederation-core and TWederation-edition plugins",
+	"description": "TWederation: Documentation for the TWederation-core and TWederation-edition plugins",
 	"author": "inmysocks",
 	"version": "0.0.17",
 	"core-version": ">=5.1.10",
