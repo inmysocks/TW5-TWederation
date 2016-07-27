@@ -2,8 +2,10 @@ tags: Templates
 title: $:/plugins/inmysocks/TWederation/Templates/BlogPostCommentTemplate
 
 {{ ||$:/plugins/inmysocks/TWederation/Templates/WriteNewComment}}
-<div
-    style="margin-top:-1em;"
+
+<$list
+    filter="[parent<currentTiddler>role[twDiscussionPost]first[]]"
+    variable=dummy
 >
     {{||$:/plugins/inmysocks/TWederation/Templates/CommentThreadReveal}}
-</div>
+</$list>

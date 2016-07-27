@@ -60,9 +60,9 @@ caption: New Discussion Post
 	<$vars
 		PostTitle={{$:/temp/NewBlogPost!!new_post_title}}
 	>
-		<$set
-			name=AuthorName
-			filter='[[$:/SitetwCard]get[text]get[author]]'
+		<$list
+			filter='[[$:/SitetwCard]get[text]get[author]][[$:/SitetwCard]get[text]get[name]][[$:/SitetwCard]get[text]get[url]]+[first[]]'
+			variable=AuthorName
 		>
 			<$set
 				name=WikiUrl
@@ -73,6 +73,6 @@ caption: New Discussion Post
 					TIME=<<now YYYY0MM0DD0hhh0mm0ss>>
 				/>
 			</$set>
-		</$set>
+		</$list>
 	</$vars>
 </$list>

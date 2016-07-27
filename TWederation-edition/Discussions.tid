@@ -2,7 +2,76 @@ caption: Discussions
 tags: Communication
 title: $:/plugins/inmysocks/TWederation/Discussions
 
-\define NewPostsFilter() [role[twDiscussionPost]]
+\define NewPostsFilter() [role[twDiscussionPost]!has[draft.of]]
+
+\define DiscussionPostListFilter() [role[twDiscussionPost]!has[parent]]$(PostAuthorSelect)$+[!sort[created]]+[limit<PostLimit>]
+
+\define AuthorPrefix() +[author[
+
+\define MainPostsListing()
+<$list
+    filter=<<DiscussionPostListFilter>>
+    emptyMessage="""<div><br><br></div>There is nothing to show! Fetch posts or write them to see them here. If pressing `Fetch New Discussion Posts and Comments` doesn't make anything happen got to the $:/ControlPanel and under the tab `twCards` select some wikis to follow then try again."""
+>
+    <h1
+        class='dis-discussion-post-title'
+    >
+        <$list
+            filter='[all[tiddlers+shadows]role[twServer]author{!!author}has[icon]!sort[created]limit[1]]'
+        >
+            <$image source={{!!icon}} height=50px/>
+        </$list>
+        <$link
+            to=<<currentTiddler>>
+        >
+            <$view
+                field='post_title'
+            />
+        </$link>
+    </h1>
+    <h3
+        class='dis-discussion-post-by-line'
+    >
+        <$list
+            filter='[all[tiddlers+shadows]role[twServer]author{!!author}!sort[created]limit[1]]'
+        >
+            by
+            <$link
+                to=<<currentTiddler>>
+            >
+                <span
+                    class='dis-discussion-post-author-name'
+                >
+                    <$view
+                        field='author'
+                    >
+                        <$view
+                            field='name'
+                        >
+                            <$view
+                                field='url'
+                            />
+                        </$view>
+                    </$view>
+                </span>
+            </$link>
+        </$list>
+        <span class="dis-comment-author">
+            <$view
+                field="modified"
+                format="relativedate"
+            />:
+        </span>
+    </h3>
+
+   <$transclude
+        mode=block
+    />
+
+    {{ ||$:/plugins/inmysocks/TWederation/Templates/BlogPostCommentTemplate}}
+
+</$list>
+\end
 
 <$button>
     Fetch New Discussion Posts & Comments
@@ -115,65 +184,69 @@ title: $:/plugins/inmysocks/TWederation/Discussions
     posts.
 </span>
 
+Show Posts From:
+<$select
+    tiddler='$:/state/TWederation/Discussions'
+    field=selected_author
+>
+    <option
+        value=''
+    >
+        All Followed Wikis
+    </option>
+    <$list
+        filter='[{$:/SitetwCard}get[author]][{$:/SitetwCard}get[name]][{$:/SitetwCard}get[url]]+[limit[1]]'
+        variable=CurrentSiteAuthor
+    >
+        <option
+            value=<<CurrentSiteAuthor>>
+        >
+            This Wiki's Author
+        </option>
+    </$list>
+    <$list
+        filter='[all[tiddlers+shadows]role[twServer]]'
+        variable=CurrentCard
+    >
+        <$list
+            filter='[<CurrentCard>get[url]]'
+            variable=WikiURL
+        >
+            <$list
+                filter='[[$:/settings/TWederation/Follow Wiki List]indexes[]prefix<WikiURL>]'
+                variable=dummy
+            >
+                <option>
+                    <$view
+                        tiddler=<<CurrentCard>>
+                        field='author'
+                    >
+                        <$view
+                            tiddler=<<CurrentCard>>
+                            field='name'
+                        >
+                            <$view
+                                tiddler=<<CurrentCard>>
+                                field='url'
+                            />
+                        </$view>
+                    </$view>
+                </option>
+            </$list>
+        </$list>
+    </$list>
+</$select>
+
 <$set
     name=PostLimit
     filter='[[$:/state/TWederation/Discussions]get[post_limit]]'
     emptyValue=50
 >
     <$list
-        filter='[role[twDiscussionPost]!has[parent]]+[!sort[created]]+[limit<PostLimit>]'
-        emptyMessage="""<div><br><br></div>There is nothing to show! Fetch posts or write them to see them here. If pressing `Fetch New Discussion Posts and Comments` doesn't make anything happen got to the $:/ControlPanel and under the tab `twCards` select some wikis to follow then try again."""
+        variable=PostAuthorSelect
+        filter='[[$:/state/TWederation/Discussions]has[selected_author]get[selected_author]addprefix<AuthorPrefix>addsuffix<CLOSE>addsuffix<CLOSE>]'
+        emptyMessage="""<$set name=PostAuthorSelect value=''><<MainPostsListing>></$set>"""
     >
-        <h1
-            class='dis-discussion-post-title'
-        >
-            <$list
-                filter='[all[tiddlers+shadows]role[twServer]author{!!author}has[icon]!sort[created]limit[1]]'
-            >
-                <$image source={{!!icon}} height=50px/>
-            </$list>
-            <$link
-                to=<<currentTiddler>>
-            >
-                <$view
-                    field='post_title'
-                />
-            </$link>
-        </h1>
-        <h3
-            class='dis-discussion-post-by-line'
-        >
-            <$list
-                filter='[all[tiddlers+shadows]role[twServer]author{!!author}!sort[created]limit[1]]'
-            >
-                by
-                <$link
-                    to=<<currentTiddler>>
-                >
-                    <span
-                        class='dis-discussion-post-author-name'
-                    >
-                        <$view
-                            field='author'
-                        >
-                            <$view
-                                field='name'
-                            >
-                                <$view
-                                    field='url'
-                                />
-                            </$view>
-                        </$view>
-                    </span>
-                </$link>
-            </$list>
-        </h3>
-
-       <$transclude
-            mode=block
-        />
-
-        {{ ||$:/plugins/inmysocks/TWederation/Templates/BlogPostCommentTemplate}}
-
+        <<MainPostsListing>>
     </$list>
 </$set>

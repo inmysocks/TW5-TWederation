@@ -1,3 +1,7 @@
+created: 20160727141630215
+creator: Mat von TWaddle
+modified: 20160727141631737
+modifier: Mat von TWaddle
 tags: $:/tags/Stylesheet
 title: $:/plugins/inmysocks/TWederation/stylesheets
 
@@ -10,7 +14,7 @@ title: $:/plugins/inmysocks/TWederation/stylesheets
 }
 
 .dis-discussion-post-by-line {
-
+   margin-top:-1em;
 }
 
 .dis-discussion-post-author-name {
