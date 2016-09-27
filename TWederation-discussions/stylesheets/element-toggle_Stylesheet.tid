@@ -1,0 +1,39 @@
+tags: $:/tags/Stylesheet
+title: element-toggle/Stylesheet
+
+.element-toggle  {
+  border-collapse: collapse;
+  border-spacing: 0;
+  max-height: 30px;
+}
+
+.element-toggle,
+.element-toggle td {
+  padding: 0px;
+  border:0;
+}
+
+.element-toggle-msg {
+  text-align:right;
+  color:silver;
+}
+.element-toggle-svg {
+  height:100%;
+  padding:0;
+  margin: 0;
+  width: 3em;
+  background: transparent;
+  border: 0;
+  opacity: .5;
+}
+ .element-toggle-svg:focus {
+  outline:0;
+}
+
+.element-toggle-up {
+  transform: rotate(90deg);
+}
+
+.element-toggle-down {
+  transform: rotate(-90deg);
+}

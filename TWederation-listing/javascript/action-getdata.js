@@ -1,5 +1,5 @@
 /*\
-title: $:/plugins/inmysocks/TWederation/action-requestdata.js
+title: $:/plugins/Federation/TWederation/action-requestdata.js
 type: application/javascript
 module-type: widget
 
@@ -69,7 +69,7 @@ RequestData.prototype.invokeAction = function(triggeringWidget,event) {
 	//This is the other way to make it. Possibly a better way. Put the code
 	//in another tiddler and put that tiddlers name here.
 	//One problem is that this is a way to run arbitrary javascript on your wiki. I need to figure out if I can restrict things like how javascript macros are done.
-	var tiddler = this.wiki.getTiddler('$:/plugins/inmysocks/TWederation/XMLHttpRequestWorker');
+	var tiddler = this.wiki.getTiddler('$:/plugins/Federation/TWederation/XMLHttpRequestWorker');
 	var workerBlob = new Blob([tiddler.getFieldString('text')],{type: "text/javascript"});
 
 	var myWorker = new Worker(URL.createObjectURL(workerBlob));

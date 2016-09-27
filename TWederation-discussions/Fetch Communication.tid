@@ -1,0 +1,405 @@
+caption: Fetch Communication
+tags: Communication
+title: $:/plugins/Federation/TWederation/Fetch Communication
+
+\define RequestBundleEmptyMessageButton()
+<$list
+	filter='[[$:/state/Fetch Tiddler Bundle]!what_to_fetch[Enter Filter]get[what_to_fetch]]'
+	variable='BundleFilter'
+	emptyMessage="""
+		<$button>
+			Request Bundle
+			<$action-sendmessage
+				$message='tm-send-request'
+				request_type='request_bundle'
+				url={{$:/state/Fetch Tiddler Bundle!!wiki_url}}
+				filter={{$:/state/Fetch Tiddler Bundle!!filter}}
+				undleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}}
+				separator='SOMESTRINGIDONOTKNOWWHAT'
+				packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
+				previousTime={{$:/state/Fetch Tiddler Bundle!!only_new}}
+			/>
+		</$button>"""
+>
+	<$button>
+		Request Bundle
+		<$action-sendmessage
+			$message='tm-send-request'
+			request_type='request_bundle'
+			url={{$:/state/Fetch Tiddler Bundle!!wiki_url}}
+			filter=<<BundleFilter>>
+			bundleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}}
+			separator='SOMESTRINGIDONOTKNOWWHAT'
+			packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
+			previousTime={{$:/state/Fetch Tiddler Bundle!!only_new}}
+		/>
+	</$button>
+</$list>
+\end
+
+\define thisMakeCheckboxThing()
+<$macrocall
+	$name=thisInnerMakeCheckboxThing
+	PreviousTime={{$:/FetchHistory/$(URL)$##$(FILTER)$}}
+/>
+\end
+
+\define thisInnerMakeCheckboxThing(PreviousTime)
+<$checkbox
+	tiddler='$:/state/Fetch Tiddler Bundle'
+	field='only_new'
+	checked="""$PreviousTime$"""
+	unchecked='0'
+>
+	Only fetch new tiddlers created after last import
+</$checkbox>
+\end
+
+\define thisGetCommentsOption()
+<option
+	value="""[role[twDiscussionPost]post_author[$(SiteAuthorUserName)$]]"""
+>
+	Comments on my posts
+</option>
+\end
+
+<div style="float:right;">
+<<element-toggle "simple" "advanced" "FetchTableView">>
+</div>
+
+<table class="fetch-table">
+<tr>
+<td>Fetch from<br>
+<$select
+	tiddler='$:/state/Fetch Tiddler Bundle'
+	field='wiki_url'
+	class="fetch-select"
+>
+	<option
+		value=''
+	>
+		--
+	</option>
+	<option>
+		All
+	</option>
+	<option>
+		Followed Wikis
+	</option>
+	<$list
+		filter='[all[tiddlers+shadows]role[twServer]]'
+	>
+		<option
+			value={{!!url}}
+		>
+			<$view
+				field='name'
+			/>
+		</option>
+	</$list>
+</$select>
+</td>
+<td class="fetch-table-advanced" style="min-width:100%; right:0;">or enter wiki url<br>
+<$edit-text
+	tiddler='$:/state/Fetch Tiddler Bundle'
+	field='wiki_url'
+	class='tc-edit-texteditor'
+	placeholder="http..."
+/>
+</td>
+</tr>
+
+<tr>
+<td>
+Fetch this<br>
+<$select
+	tiddler='$:/state/Fetch Tiddler Bundle'
+	field='what_to_fetch'
+	default="All Blog Posts + Comments"
+	class="fetch-select"
+>
+	<option
+		value=''
+	>
+		--
+	</option>
+	<option
+		value='[role[twDiscussionPost]!has[draft.of]]'
+	>
+		All Blog Posts + Comments
+	</option>
+	<option
+		value='[role[twServer]!has[draft.of]][role[twServer]!has[draft.of]get[icon]]'
+	>
+		All Wiki twCards
+	</option>
+	<option
+		value='[[$:/SitetwCard]get[text]][[$:/SitetwCard]get[text]get[icon]]'
+	>
+		The wiki's twCard
+	</option>
+	<$vars
+		SitetwCard={{$:/SitetwCard}}
+	>
+		<$list
+			filter='[{$:/SitetwCard}get[author]]'
+			variable=SiteAuthorUserName
+		>
+			<<thisGetCommentsOption>>
+		</$list>
+	</$vars>
+<!--
+	<option
+		value='[[$:/plugins/Federation/TWederation-edition]][[$:/plugins/Federation/TWederation-core]]'
+	>
+		Newest Plugin Version
+	</option>
+-->
+	<!--
+	<option
+		value='[prefix[Message - ]]'
+	>
+		Messages
+	</option>
+	-->
+</$select>
+</td>
+<td class="fetch-table-advanced">
+...or filter for specific tiddlers<br>
+	<$edit-text
+		tiddler='$:/state/Fetch Tiddler Bundle'
+		field='filter'
+		class='tc-edit-texteditor'
+		placeholder="ex [role[twDiscussionPost]search[@myname]]"
+	/>
+</td>
+</tr>
+
+<tr class="fetch-table-advanced">
+<td colspan="2">
+Bundle Name<br>
+<$edit-text
+	tiddler='$:/state/Fetch Tiddler Bundle'
+	field='bundle_name'
+	class='tc-edit-texteditor'
+/>
+</td>
+</tr>
+
+<tr class="fetch-table-advanced">
+<td colspan="2">
+Fetch Type
+<br>^^optional, defaults to Bundle Tiddlers^^<br>
+<$select
+	tiddler='$:/state/Fetch Tiddler Bundle'
+	field='bundle_function'
+>
+	<option
+		value=''
+	>
+		--
+	</option>
+	<option
+		value='bundleTiddlers'
+	>
+		Bundle Tiddlers
+	</option>
+	<option
+		value='tiddlerSummary'
+	>
+		Tiddler Summaries
+	</option>
+	<option
+		value='fetchShortMessages'
+	>
+		Short Messages
+	</option>
+</$select>
+</td>
+</tr>
+</table>
+
+<$vars
+	URL={{$:/state/Fetch Tiddler Bundle!!wiki_url}}
+	FILTER={{$:/state/Fetch Tiddler Bundle!!what_to_fetch}}
+>
+<<thisMakeCheckboxThing>>
+</$vars>
+
+<$reveal
+	type='match'
+	state='$:/state/Fetch Tiddler Bundle!!what_to_fetch'
+	text='[[$:/plugins/Federation/TWederation-edition]][[$:/plugins/Federation/TWederation-core]]'
+>
+	<$button>
+		Fetch from TWederation.tiddlyspot.com
+		<$action-sendmessage
+			$message='tm-send-request'
+			request_type='request_bundle'
+			url="""http://twederation.tiddlyspot.com/"""
+			filter='[[$:/plugins/Federation/TWederation-edition]][[$:/plugins/Federation/TWederation-core]]'
+			bundleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}}
+			separator='SOMESTRINGIDONOTKNOWWHAT'
+			packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
+			previousTime=0
+		/>
+	</$button>
+</$reveal>
+
+<$reveal
+	type='nomatch'
+	state='$:/state/Fetch Tiddler Bundle!!what_to_fetch'
+	text='[[$:/plugins/Federation/TWederation-edition]][[$:/plugins/Federation/TWederation-core]]'
+>
+	<$list
+		filter='[[$:/state/Fetch Tiddler Bundle]get[wiki_url]prefix[All]][[$:/state/Fetch Tiddler Bundle]get[wiki_url]prefix[Followed Wikis]]'
+		variable=dummy
+		emptyMessage=<<RequestBundleEmptyMessageButton>>
+	>
+		<$reveal
+			type='match'
+			state='$:/state/Fetch Tiddler Bundle!!wiki_url'
+			text=All
+		>
+			<$button class="twed-btn">
+				Request Bundle
+				<$list
+					filter='[all[tiddlers+shadows]role[twServer]]'
+				>
+
+					<$set
+						name=PreviousTime
+						filter='[[$:/FetchHistory/]addsuffix{!!url}getindex{$:/state/Fetch Tiddler Bundle!!filter}]'
+						emptyValue=0
+					>
+						<$list
+							filter='[[$:/state/Fetch Tiddler Bundle]!what_to_fetch[Enter Filter]get[what_to_fetch]]'
+							variable='BundleFilter'
+							emptyMessage="""<$action-sendmessage
+										$message='tm-send-request'
+										request_type='request_bundle'
+										url={{!!url}}
+										filter={{$:/state/Fetch Tiddler Bundle!!filter}}
+										undleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}}
+										separator='SOMESTRINGIDONOTKNOWWHAT'
+										packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
+										previousTime=<<PreviousTime>>
+									/>"""
+						>
+							<$action-sendmessage
+								$message='tm-send-request'
+								request_type='request_bundle'
+								url={{!!url}}
+								filter=<<BundleFilter>>
+								bundleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}}
+								separator='SOMESTRINGIDONOTKNOWWHAT'
+								packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
+								previousTime=<<PreviousTime>>
+							/>
+						</$list>
+					</$set>
+				</$list>
+			</$button>
+		</$reveal>
+		<$reveal
+			type='match'
+			state='$:/state/Fetch Tiddler Bundle!!wiki_url'
+			text='Followed Wikis'
+		>
+			<$button>
+				Request Bundle
+				<$list
+					filter='[[$:/settings/TWederation/Follow Wiki List]indexes[]]'
+				>
+					<$set
+						name=PreviousTime
+						filter='[[$:/FetchHistory/]addsuffix{!!url}getindex{$:/state/Fetch Tiddler Bundle!!filter}]'
+						emptyValue=0
+					>
+						<$list
+							filter='[[$:/state/Fetch Tiddler Bundle]!what_to_fetch[Enter Filter]get[what_to_fetch]]'
+							variable='BundleFilter'
+							emptyMessage="""<$action-sendmessage
+										$message='tm-send-request'
+										request_type='request_bundle'
+										url=<<currentTiddler>>
+										filter={{$:/state/Fetch Tiddler Bundle!!filter}}
+										undleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}}
+										separator='SOMESTRINGIDONOTKNOWWHAT'
+										packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
+										previousTime=<<PreviousTime>>
+									/>"""
+						>
+							<$action-sendmessage
+								$message='tm-send-request'
+								request_type='request_bundle'
+								url=<<currentTiddler>>
+								filter=<<BundleFilter>>
+								bundleName={{$:/state/Fetch Tiddler Bundle!!bundle_name}}
+								separator='SOMESTRINGIDONOTKNOWWHAT'
+								packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
+								previousTime=<<PreviousTime>>
+							/>
+						</$list>
+					</$set>
+				</$list>
+			</$button>
+		</$reveal>
+	</$list>
+</$reveal>
+
+<$list
+	filter='[[$:/state/Fetch Tiddler Bundle]has[bundle_name]first[]]'
+>
+Bundles with that name:
+</$list>
+<$list
+	filter='[[$:/state/Fetch Tiddler Bundle]has[bundle_name]]'
+	variable='dummy'
+>
+	<$list
+		filter='[tag[Tiddler Bundle]bundle_name{$:/state/Fetch Tiddler Bundle!!bundle_name}]+[!sort[created]]'
+		emptyMessage="""There aren't any bundles with that name"""
+	>
+		<$count
+			filter='[list[]]-[list[]has[title]]'
+		/> new tiddler(s) in
+		<$link
+			to=<<currentTiddler>>
+		>
+			<$view
+				field='title'
+			/>
+		</$link>
+		<br>
+	</$list>
+</$list>
+
+<$list
+	filter='[tag[Tiddler Bundle]]-[tag[Tiddler Bundle]has[bundle_name]get[bundle_name]prefix{$:/state/Fetch Tiddler Bundle!!bundle_name}first[]]'
+>
+Other bundles:
+</$list>
+<$list
+	filter='[tag[Tiddler Bundle]]-[tag[Tiddler Bundle]has[bundle_name]get[bundle_name]prefix{$:/state/Fetch Tiddler Bundle!!bundle_name}]+[!sort[created]]'
+>
+	<$count
+		filter='[list[]]-[list[]has[title]]'
+	/> new tiddler(s) in
+	<$link
+		to=<<currentTiddler>>
+	>
+		<$view
+			field='title'
+		/>
+	</$link>
+	<$button
+		class='tc-btn-invisible'
+	>
+		{{$:/core/images/delete-button}}
+		<$action-deletetiddler
+			$tiddler=<<currentTiddler>>
+		/>
+	</$button>
+	<br>
+</$list>

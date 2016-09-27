@@ -1,0 +1,311 @@
+caption: Discussions
+tags: Communication
+title: $:/plugins/Federation/TWederation/Discussions
+
+\define rootState() $:/PostsStates##$(currentTiddler)$
+
+\define NewPostsFilter() [role[twDiscussionPost]!has[draft.of]author[$(WikiAuthor)$]]
+
+<$reveal
+    type='nomatch'
+    state='$:/state/Discussions!!show_new_post'
+    text=true
+>
+    <$button
+        class='dis-btn-main-comment-closed'
+        style="outline:1px solid;"
+    >
+        <span
+            class="dis-btn-main"
+        >
+            {{$:/core/images/edit-button}}
+        </span>
+        New Discussion Post
+        <$action-setfield
+            $tiddler='$:/state/Discussions'
+            show_new_post=true
+        />
+    </$button>
+</$reveal>
+<$reveal
+    type='match'
+    state='$:/state/Discussions!!show_new_post'
+    text=true
+>
+    <$button
+        class='dis-btn-comment-inthread-opened'
+    >
+        {{$:/core/images/fold-button}} New Discussion Post
+        <$action-setfield
+            $tiddler='$:/state/Discussions'
+            show_new_post=false
+        />
+    </$button>
+
+    <$transclude
+        tiddler='$:/plugins/Federation/TWederation/New Discussion Post'
+    />
+</$reveal>
+
+<$list
+    filter='[[$:/settings/TWederation/Follow Wiki List]indexes[]limit[1]]'
+    emptyMessage="You aren't following any wikis yet. Go to the $:/ControlPanel and set which wikis you want to follow under the `twCard` tab."
+>
+    <$button>
+        Fetch New Discussion Posts & Comments
+        <$list
+            filter='[[$:/settings/TWederation/Follow Wiki List]indexes[]]'
+        >
+            <$list
+                filter='[all[tiddlers+shadows]role[twServer]url<currentTiddler>get[author]][role[twServer]url<currentTiddler>get[name]][role[twServer]url<currentTiddler>get[url]]+[limit[1]]'
+                variable=WikiAuthor
+            >
+                <$set
+                    name=PreviousTime
+                    filter='[all[tiddlers+shadows]role[twServer]url<currentTiddler>get[url]addprefix[$:/FetchHistory/]getindex<NewPostsFilter>]'
+                    emptyValue=0
+                >
+                    <$action-sendmessage
+                        $message='tm-send-request'
+                        request_type='request_bundle'
+                        url=<<currentTiddler>>
+                        filter=<<NewPostsFilter>>
+                        bundleName="Discussion Posts and Comments"
+                        separator='SOMESTRINGIDONOTKNOWWHAT'
+                        packingFunction={{$:/state/Fetch Tiddler Bundle!!bundle_function}}
+                        previousTime=<<PreviousTime>>
+                    />
+                </$set>
+            </$list>
+        </$list>
+    </$button>
+</$list>
+ from your
+<$reveal
+    type="nomatch"
+    state="$:/state/FollowedWikis"
+    text="show"
+>
+    <$button
+        set="$:/state/FollowedWikis"
+        setTo="show"
+        class="tc-btn-invisible tc-tiddlylink dis-btn-followedwikis"
+        popup="$:/state/FollowedWikis"
+    >
+        followed wikis.
+    </$button>
+</$reveal>
+<$reveal
+    type="match"
+    state="$:/state/FollowedWikis"
+    text="show"
+>
+    <$button
+        set="$:/state/FollowedWikis"
+        setTo="hide"
+        popup="$:/state/FollowedWikis"
+        style="display:inline;"
+        class="tc-btn-invisible tc-tiddlylink dis-btn-followedwikis"
+    >
+        followed wikis.
+    </$button>
+
+    <div
+        style="margin:1em; border:1px solid silver; padding:1em;"
+    >
+        {{FollowedTiddlyWikis}}
+    </div>
+</$reveal>
+
+<$list
+    filter='[tag[Tiddler Bundle]bundle_name[Discussion Posts and Comments]first[]]'
+>
+    <br>
+    <br>
+    <$button
+        style="float:right;"
+        tooltip="Batch delete all Discussion Posts and Comments bundles"
+    >
+        <$action-deletetiddler
+            $filter="[tag[Tiddler Bundle]bundle_name[Discussion Posts and Comments]]"
+        />
+    	{{$:/core/images/delete-button}}^^all^^
+    </$button>
+</$list>
+
+<$list
+	filter='[tag[Tiddler Bundle]bundle_name[Discussion Posts and Comments]!sort[created]]'
+>
+	<$count
+		filter='[list[]]-[list[]has[title]]'
+	/> new tiddler(s) in
+	<$link
+		to=<<currentTiddler>>
+	>
+		<$view
+			field='title'
+		/>
+	</$link>
+	<$button
+		class='tc-btn-invisible'
+	>
+		{{$:/core/images/delete-button}}
+		<$action-deletetiddler
+			$tiddler=<<currentTiddler>>
+		/>
+	</$button>
+	<br>
+</$list>
+
+<div
+    style="background:#f4f4f4; padding:1em 0;"
+>
+<span>
+    <$select
+        tiddler='$:/state/TWederation/Discussions'
+        field='post_limit'
+    >
+        <option
+            value=''
+        >
+            --
+        </option>
+        <$list
+            filter='0 1 5 10 15 20 30 40 50'
+        >
+            <option>
+                <<currentTiddler>>
+            </option>
+        </$list>
+    </$select>
+    posts&nbsp;
+</span>
+
+<span>
+from
+<$select
+    tiddler='$:/state/TWederation/Discussions'
+    field=selected_author
+>
+    <option
+        value=''
+    >
+        All Followed Wikis
+    </option>
+    <$list
+        filter='[{$:/SitetwCard}get[author]][{$:/SitetwCard}get[name]][{$:/SitetwCard}get[url]]+[limit[1]]'
+        variable=CurrentSiteAuthor
+    >
+        <option
+            value=<<CurrentSiteAuthor>>
+        >
+            This Wiki's Author
+        </option>
+    </$list>
+    <$list
+        filter='[all[tiddlers+shadows]role[twServer]]'
+        variable=CurrentCard
+    >
+        <$list
+            filter='[<CurrentCard>get[url]]'
+            variable=WikiURL
+        >
+            <$list
+                filter='[[$:/settings/TWederation/Follow Wiki List]indexes[]prefix<WikiURL>]'
+                variable=dummy
+            >
+                <option>
+                    <$list
+                        filter='[<CurrentCard>has[icon]]'
+                    >
+                        <$image
+                            source={{!!icon}}
+                            height=20px
+                            width=20px
+                        />
+                    </$list>
+                    <$view
+                        tiddler=<<CurrentCard>>
+                        field='author'
+                    >
+                        <$view
+                            tiddler=<<CurrentCard>>
+                            field='name'
+                        >
+                            <$view
+                                tiddler=<<CurrentCard>>
+                                field='url'
+                            />
+                        </$view>
+                    </$view>
+                </option>
+            </$list>
+        </$list>
+    </$list>
+</$select>
+</span>
+
+<span>
+&nbsp;sorted by
+<$select
+    tiddler='$:/state/TWederation/Discussions'
+    field=sort_option
+>
+    <option
+        value=''
+    >
+        Posts
+    </option>
+    <option
+        value='newest_comments'
+    >
+        Newest Comments
+    </option>
+    <option
+        value='unread'
+    >
+        Unread First by Post Creation
+    </option>
+    <option
+        value='unread_comments'
+    >
+        Unread First by Newest Comments
+    </option>
+</$select>
+</span>
+</div>
+
+<$reveal
+    type='nomatch'
+    state='$:/state/Discussions!!show_new_post'
+    text=true
+>
+
+    <$button>
+        Mark all as Read
+        <$list
+            filter='[role[twDiscussionPost]]'
+        >
+            <$action-setfield
+                $tiddler="$:/state/TWederation/Discussions/ReadPosts"
+                $index=<<currentTiddler>>
+                $value=<<timestamp>>
+            />
+        </$list>
+    </$button>
+
+    <$TOC
+        template="$:/plugins/Federation/TWederation/Templates/DiscussionItemViewTemplate"
+        sort={{$:/state/TWederation/Discussions!!sort_option}}
+        limit={{$:/state/TWederation/Discussions!!post_limit}}
+        author={{$:/state/TWederation/Discussions!!selected_author}}
+    />
+</$reveal>
+
+<$reveal
+    type='match'
+    state='$:/state/Discussions!!show_new_post'
+    text=true
+>
+    Posts are hidden when you are writing a new post for performance reasons.
+</$reveal>

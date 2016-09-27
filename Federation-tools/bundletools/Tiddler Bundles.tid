@@ -1,0 +1,6 @@
+caption: Tiddler Bundles
+tags: $:/tags/ControlPanel
+tiddler: TestSchool
+title: $:/plugins/Federation/Federation-tools/Tiddler Bundles
+
+<<tabs "[[$:/plugins/Federation/Federation-tools/Create Local Bundle]][[$:/plugins/Federation/Federation-tools/Fetch Tiddler Bundle]][[$:/plugins/Federation/Federation-tools/Unbundle Tiddlers]]" default:"$:/plugins/Federation/Federation-tools/Create Local Bundle">>

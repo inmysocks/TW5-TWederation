@@ -1,0 +1,106 @@
+caption: Wiki Hosting
+order: 2
+tags: [[TWederation Setup Wizard]]
+title: $:/plugins/Federation/TWederation/TWederation Configuration Wizard/Wiki Hosting
+
+\define lingo-base() $:/language/ControlPanel/Saving/
+\define backupURL()
+http://$(userName)$.tiddlyspot.com/backup/
+\end
+\define backupLink()
+<$reveal type="nomatch" state="$:/UploadName" text="">
+<$set name="userName" value={{$:/UploadName}}>
+<$reveal type="match" state="$:/UploadURL" text="">
+<<backupURL>>
+</$reveal>
+<$reveal type="nomatch" state="$:/UploadURL" text="">
+<$macrocall $name=resolvePath source={{$:/UploadBackupDir}} root={{$:/UploadURL}}>>
+</$reveal>
+</$set>
+</$reveal>
+\end
+\define wikiURL()
+http://$(userName)$.tiddlyspot.com/
+\end
+\define wikiLink()
+<$reveal type="nomatch" state="$:/UploadName" text="">
+<$set name="userName" value={{$:/UploadName}}>
+<$reveal type="match" state="$:/UploadURL" text="">
+<<wikiURL>>
+</$reveal>
+</$set>
+</$reveal>
+\end
+
+Your ~TiddlyWiki must be accessible online. If you are not yet hosted online you can pick an option for help getting set up, if you are already hosted and you are accessing this wiki from where you are hosted just move on to the next step.
+
+<$radio tiddler=<<WizardTemp>> field='hosting' value='tiddlyspot'>Tiddlyspot - probably the easiest way</$radio><br>
+<$radio tiddler=<<WizardTemp>> field='hosting' value='own_server'>Your own webserver</$radio><br>
+<$radio tiddler=<<WizardTemp>> field='hosting' value='neocities'>~NeoCities</$radio><br>
+
+---
+
+<$list
+    filter='[<WizardTemp>get[hosting]prefix[tiddlyspot]]'
+    variable=dummy
+>
+
+Steps:
+
+#Go to tiddlyspot.com
+#On tiddlyspot.com: Enter a name and password for your new wiki
+#On tiddlyspot.com: Create the wiki by clicking `Create wiki`, the flavor you pick doesn't matter.
+#On this wiki: Put the same name and password into the fields below.
+#On this wiki: Click the save button for this wiki (here: {{$:/core/ui/Buttons/save}})
+#After the wiki has finished saving load the url for your tiddlyspot. It should be listed below the input boxes.
+
+<<lingo TiddlySpot/Description>>
+
+|<<lingo TiddlySpot/UserName>> |<$edit-text tiddler="$:/UploadName" default="" tag="input"/> |
+|<<lingo TiddlySpot/Password>> |<$password name="upload"/> |
+|<<lingo TiddlySpot/Backups>> |<<backupLink>> |
+
+After you have made your tiddlyspot site, entered the information above and saved the wiki click on the link below to load your wiki. After you load the wiki from this link you can move directly to step 3 of the wizard.
+
+<<wikiLink>>
+</$list>
+
+<$list
+    filter='[<WizardTemp>get[hosting]prefix[own_server]]'
+    variable=dummy
+>
+
+Fill out the information here the same as if you were saving a normal wiki to your own hosting thing. I will hopefully have a link to store.php and other instructions here later.
+
+! <<lingo TiddlySpot/Heading>>
+
+<<lingo TiddlySpot/Description>>
+
+|<<lingo TiddlySpot/UserName>> |<$edit-text tiddler="$:/UploadName" default="" tag="input"/> |
+|<<lingo TiddlySpot/Password>> |<$password name="upload"/> |
+|<<lingo TiddlySpot/Backups>> |<<backupLink>> |
+
+''<<lingo TiddlySpot/Advanced/Heading>>''
+
+|<<lingo TiddlySpot/ServerURL>>  |<$edit-text tiddler="$:/UploadURL" default="" tag="input"/> |
+|<<lingo TiddlySpot/Filename>> |<$edit-text tiddler="$:/UploadFilename" default="index.html" tag="input"/> |
+|<<lingo TiddlySpot/UploadDir>> |<$edit-text tiddler="$:/UploadDir" default="." tag="input"/> |
+|<<lingo TiddlySpot/BackupDir>> |<$edit-text tiddler="$:/UploadBackupDir" default="." tag="input"/> |
+
+<<lingo TiddlySpot/Hint>>
+</$list>
+
+<$list
+    filter='[<WizardTemp>get[hosting]prefix[neocities]]'
+    variable=dummy
+>
+    We are still working on this, I am not sure how any of it will work. If you know and want to help out write up some instructions we can put here.
+
+</$list>
+
+---
+
+<h3>https vs http</h3>
+A wiki loaded from a //http''s''// server can not fetch tiddlers from a wiki on an //http// server.
+Note that this is one way, a wiki on an http server has no problems fetching tiddlers from a wiki on an https server. So you can serve content from an https server (like using dropbox as a file server) without trouble, you just won't be able to pull tiddlers from wikis on http servers (like tiddlyspot).
+We are looking for a way to fix this limitation.

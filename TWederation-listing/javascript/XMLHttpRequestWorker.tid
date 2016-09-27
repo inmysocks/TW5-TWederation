@@ -1,4 +1,4 @@
-title: $:/plugins/inmysocks/TWederation/XMLHttpRequestWorker
+title: $:/plugins/Federation/TWederation/XMLHttpRequestWorker
 
 onmessage = function(e) {
     var url = e.data.url;

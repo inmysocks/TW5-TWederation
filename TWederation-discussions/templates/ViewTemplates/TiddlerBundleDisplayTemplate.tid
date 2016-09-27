@@ -1,0 +1,109 @@
+list-after: $:/core/ui/ViewTemplate/tags
+tags: Templates $:/tags/ViewTemplate
+title: $:/plugins/Federation/TWederation/Templates/ViewTemplate/TiddlerBundleDisplayTemplate
+
+\define thisSelectTagThing()
+$:/state/Tiddler Bundles/Selected Tiddlers/$(currentTiddler)$
+\end
+
+\define thisUnpackFilter()
+[[$:/state/Tiddler Bundles/Selected Tiddlers/$(currentTiddler)$]tags[]]
+\end
+
+<$list filter='[is[current]tag[Tiddler Bundle]]'>
+
+@@width:100%;
+
+|!Date |{{!!created}} |
+|!Bundle Origin |{{!!origin}} |
+|!Bundle Status Message |{{!!status}} |
+|!Separator Used |{{!!separator}} |
+|!Bundle Function |{{!!bundle_function}} |
+|!Unbundle Function |{{!!unbundle_function}} |
+
+<$checkbox
+	tiddler='$:/state/Tiddler Bundles'
+	field='overwrite'
+	checked=true
+	unchecked=false
+>
+	Overwrite Existing Tiddlers
+</$checkbox>
+
+<$button>
+	Unpack All
+	<$action-tiddlerbundle
+		$bundle=<<currentTiddler>>
+		$overwrite={{$:/state/Tiddler Bundles!!overwrite}}
+		$action='unpack'
+		$separator={{!!separator}}
+	/>
+	<$action-setfield
+		$tiddler='$:/state/Tiddler Bundles'
+		$field='overwrite'
+		$value=false
+	/>
+</$button>
+<$button>
+	Unpack Selected
+	<$action-tiddlerbundle
+		$bundle=<<currentTiddler>>
+		$overwrite={{$:/state/Tiddler Bundles!!overwrite}}
+		$action='unpack'
+		$separator={{!!separator}}
+		$unpackFilter=<<thisUnpackFilter>>
+	/>
+	<$action-setfield
+		$tiddler='$:/state/Tiddler Bundles'
+		$field='overwrite'
+		$value=false
+	/>
+</$button>
+
+!!Tiddler List
+<hr>
+
+<table>
+	<tr>
+		<th>
+			Select
+		</th>
+		<th>
+			Tiddler
+		</th>
+	</tr>
+	<$list
+		filter='[list[]]'
+		variable=BundledTiddler
+	>
+		<tr>
+			<td>
+				<$checkbox
+					tiddler=<<thisSelectTagThing>>
+					tag=<<BundledTiddler>>
+				/>
+			</td>
+			<td>
+				<$list
+					filter='[<BundledTiddler>has[title]]'
+					emptyMessage="""<$view tiddler=<<BundledTiddler>> field='title'/>"""
+				>
+					<$link
+						to=<<BundledTiddler>>
+					>
+						<$view
+							tiddler=<<BundledTiddler>>
+							field='title'
+						/>
+					</$link>
+				</$list>
+			</td>
+		</tr>
+	</$list>
+</table>
+
+<hr>
+
+@@
+
+!!Raw Bundle Contents:

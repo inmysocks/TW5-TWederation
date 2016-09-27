@@ -1,0 +1,6 @@
+title: $:/Settings/Federation/RecognizedSources
+type: application/json
+
+{
+    "http://twederation.tiddlyspot.com": "TRUE"
+}

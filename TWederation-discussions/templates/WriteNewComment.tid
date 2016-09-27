@@ -1,0 +1,108 @@
+tags: Templates
+title: $:/plugins/Federation/TWederation/Templates/WriteNewComment
+
+\define addCommentButton()
+<$button
+	class="dis-btn-main-comment-closed"
+>
+	<span
+		class="dis-btn-main"
+	>
+		{{$:/core/images/edit-button}}
+	</span>
+	Add comment...
+	<$action-setfield
+		$tiddler=<<StateName>>
+		text=show
+	/>
+</$button>
+\end
+
+<$list
+	filter='[[$:/state/NewComment/]addsuffix{!!title}]'
+	variable=StateName
+>
+	<$list
+		filter='[<StateName>get[text]prefix[show]]'
+		variable=dummy
+		emptyMessage=<<addCommentButton>>
+	>
+		<div
+			class='dis-main-comment-card'
+		>
+			<$list
+				filter='[{$:/SitetwCard}get[author]]'
+				variable=SiteAuthor
+				emptyMessage='There is no site twCard set. Re-run the [[setup wizard|$:/plugins/Federation/TWederation/TWederation Configuration Wizard]] to fix this.'
+			>
+				<$button
+					class="dis-btn-main-comment-opened"
+				>
+					<span
+						class="dis-btn-main"
+					>
+						{{$:/core/images/fold-button}}
+					</span>
+					<$action-setfield
+						$tiddler=<<StateName>>
+						text=hide
+					/>
+					<span
+						class="dis-comment-author"
+					>
+						<$list
+							filter='[{$:/SitetwCard}get[icon]]'
+							variable=SiteAuthorAvatar
+						>
+							<$image
+								source=<<SiteAuthorAvatar>>
+								height=15px
+							/>
+						</$list>
+						<<SiteAuthor>>
+					</span>
+				</$button>
+
+				<$button
+					class="dis-comment-tool"
+				>
+					{{$:/core/images/save-button}}
+					<$list
+						filter='[<currentTiddler>addprefix[Comment - ]addsuffix<SiteAuthor>addsuffix[ - ]addsuffix{$:/state/Post Comment!!comment_title}]'
+						variable=CommentTitle
+					>
+						<$action-setfield
+							$tiddler=<<CommentTitle>>
+							text={{$:/state/Post Comment}}
+							comment_title={{$:/state/Post Comment!!comment_title}}
+							author=<<SiteAuthor>>
+							parent={{!!title}}
+							role='twDiscussionPost'
+							post_author={{!!author}}
+						/>
+						<$action-setfield
+							$tiddler='$:/state/Post Comment'
+							comment_title=''
+							text=''
+						/>
+						<$action-setfield
+							$tiddler=<<StateName>>
+							text=hide
+						/>
+					</$list>
+				</$button>
+				<$edit-text
+					tiddler='$:/state/Post Comment'
+					field=comment_title
+					class='dis-comment-new-title'
+					placeholder="Comment title (optional)"
+				/>
+				<$edit-text
+					tiddler='$:/state/Post Comment'
+					class='dis-comment-new-body'
+					placeholder="Comment"
+				/>
+			</$list>
+		</div>
+	</$list>
+</$list>

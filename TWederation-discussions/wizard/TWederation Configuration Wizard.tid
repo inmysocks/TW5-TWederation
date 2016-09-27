@@ -1,0 +1,3 @@
+title: $:/plugins/Federation/TWederation/TWederation Configuration Wizard
+
+<<ConfigurationWizard "TWederation Setup Wizard" UseAlias:True>>

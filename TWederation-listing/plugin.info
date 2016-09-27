@@ -1,7 +1,7 @@
 {
-	"title": "$:/plugins/inmysocks/TWederation-listing",
+	"title": "$:/plugins/Federation/TWederation-listing",
 	"description": "TWederation: The tiddlers required to maintain a twederation central listing wiki. If you aren't Jed than you almost certainly don't need this.",
-	"author": "inmysocks",
+	"author": "TWederation",
 	"version": "0.0.6",
 	"core-version": ">=5.1.10",
 	"source": "",

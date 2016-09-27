@@ -1,0 +1,62 @@
+caption: Set Wiki URL
+order: 3
+tags: [[TWederation Setup Wizard]]
+title: $:/plugins/Federation/TWederation/TWederation Configuration Wizard/Set Wiki URL
+
+<$set
+    name=HREF
+    value=<<location href>>
+>
+    <$set
+        name=HASH
+        value=<<location hash>>
+    >
+        <$set
+            name=WikiURL
+            filter='[<HREF>removesuffix<HASH>]'
+            emptyValue=<<HREF>>
+        >
+
+            The URL is used to to identify a wiki in TWederation. It <<stretch "must" "be a valid URL." """Because each wiki necessarily has a different URL different wikis can still have the same name without causing too many problems.
+
+            It is possible to have wikis on a local network that isn't connected to the internet but they won't be accessible to anyone who isn't on that local network.
+
+            File uris also work, but once again are only accessible to people who can access the files. File uris also have the http-vs-https problems if you are on an https server.""">>
+
+            <$set
+                name="host"
+                value=<<location host>>
+            >
+                <$list
+                    filter="[<host>!prefix[twederation.tiddlyspot.com]]"
+                    variable="item"
+                >
+                    <$list
+                        filter="[<host>!prefix[ooktech.com/jed/ExampleWikis/TWederation]]"
+                        variable="item"
+                    >
+                    Your URL is detected as: ''<$text text=<<WikiURL>>/>''
+                    <br><br>
+                    Click <$button>here<$action-setfield $tiddler=<<WizardTemp>> url=<<WikiURL>>/></$button> to confirm this value, or enter the
+                    </$list>
+                </$list>
+            </$set>
+            URL where your wiki is to be located:
+
+            <$edit-text
+                tiddler=<<WizardTemp>>
+                field='url'
+                class='tc-edit-texteditor'
+            />
+
+            <$list
+                filter="[<WizardTemp>get[url]prefix[http://twederation.tiddlyspot.com]]
+                    [<WizardTemp>get[url]prefix[http://ooktech.com/jed/ExampleWikis/TWederation]]
+                    [<WizardTemp>get[url]!prefix[http]]"
+                >
+                @@color:crimson; We're afraid that is not a valid URL for your wiki.@@
+            </$list>
+
+        </$set>
+    </$set>
+</$set>

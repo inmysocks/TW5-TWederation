@@ -1,0 +1,12 @@
+title: $:/plugins/Federation/TWederation/TWederation Configuration Wizard/BelowWizard
+caption: Below Wizard
+tags: [[TWederation Setup Wizard]]
+below_wizard: True
+
+Your current twCard:
+
+<$tiddler
+    tiddler=<<WizardTemp>>
+>
+    {{||$:/plugins/Federation/TWederation/Basic twCard Template}}
+</$tiddler>

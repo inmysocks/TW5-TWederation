@@ -1,0 +1,32 @@
+creator: twMat
+tags: $:/tags/Macro
+title: ShowAlias Macro
+type: text/vnd.tiddlywiki
+
+\define showalias(tid, alias)
+<$set
+    name="alias"
+    value="""content: '$alias$'"""
+>
+    <$set
+        name="uri"
+        value=<<makedatauri """$tid$""" "text/plain">>
+    >
+        <$list
+            variable="urititle"
+            filter="[<uri>removeprefix[data:text/plain,]]"
+        >
+            <style>
+            body .tc-tiddler-frame a[href="#<<urititle>>"] {
+              visibility: hidden;
+              position: relative;
+            }
+            body .tc-tiddler-frame a[href="#<<urititle>>"]:before {
+              visibility: visible;
+              <<alias>>;
+            }
+            </style>
+        </$list>
+    </$set>
+</$set>
+\end

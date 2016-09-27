@@ -1,0 +1,15 @@
+caption: Tiddler Bundles
+tags: Contents
+title: $:/plugins/Federation/Federation-tools/Tiddler Bundles
+
+These are the current tiddler bundles on this wiki:
+
+<$list filter='[type[Tiddler Bundle]]'>
+
+</$list>
+
+This is a bundle import history:
+
+<$list filter='[tag[$:/tags/TiddlerBundle]]'>
+
+</$list>

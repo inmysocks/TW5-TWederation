@@ -1,0 +1,87 @@
+tags: Templates
+title: $:/plugins/Federation/TWederation/Templates/BlogPostWriteCommentInnerTemplate
+
+\define addCommentButton()
+<$button
+	class="dis-btn-comment-closed"
+>
+	{{$:/core/images/edit-button}} Add comment...
+	<$action-setfield
+		$tiddler=<<StateName>>
+		text=show
+	/>
+</$button>
+\end
+
+<$list
+	filter='[[$:/state/ShowComments]addsuffix{!!title}]'
+	variable=StateName
+>
+	<$list
+		filter='[<StateName>get[text]prefix[show]]'
+		variable=dummy
+		emptyMessage=<<addCommentButton>>
+	>
+		<$list
+			filter='[{$:/SitetwCard}get[author]]'
+			variable=SiteAuthor
+		>
+			<div
+				class="dis-comment-inthread-opened"
+			>
+				<$button
+				    class="dis-btn-comment-inthread-opened"
+				>
+	                {{$:/core/images/fold-button}}
+	                {{$:/core/images/edit-button}}
+	                //<<SiteAuthor>>//
+	                <$action-setfield
+	              		$tiddler=<<StateName>>
+	                    text=hide
+	                />
+	            </$button>
+
+				<$button
+					class="dis-comment-tool"
+				>
+					{{$:/core/images/save-button}}
+					<$list
+						filter='[is[current]addprefix[Comment - ]addsuffix[ - ]addsuffix<SiteAuthor>addsuffix[ - ]addsuffix{$:/state/Post Comment!!comment_title}]'
+						variable=CommentTitle
+					>
+						<$action-setfield
+							$tiddler=<<CommentTitle>>
+							text={{$:/state/Post Comment}}
+							comment_title={{$:/state/Post Comment!!comment_title}}
+							author=<<SiteAuthor>>
+							parent={{!!title}}
+							role='twDiscussionPost'
+							post_author={{!!author}}
+						/>
+						<$action-setfield
+							$tiddler='$:/state/Post Comment'
+							comment_title=''
+							text=''
+						/>
+						<$action-setfield
+							$tiddler=<<StateName>>
+							text=hide
+						/>
+					</$list>
+				</$button>
+
+				<$edit-text
+					tiddler='$:/state/Post Comment'
+					field=comment_title
+					class='dis-comment-new-title'
+					placeholder="Comment title (optional)"
+				/>
+				<$edit-text
+					tiddler='$:/state/Post Comment'
+					class='dis-comment-new-body'
+					placeholder="Comment"
+				/>
+			</div>
+		</$list>
+	</$list>
+</$list>

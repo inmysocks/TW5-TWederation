@@ -1,0 +1,51 @@
+tags: element $:/tags/Macro
+title: element-toggle
+
+\define element-toggle(up down stateTid)
+<table class="element-toggle">
+    <tr>
+        <td
+            class="element-toggle-msg"
+        >
+            $up$
+        </td>
+        <td
+            rowspan="2"
+        >
+            <$reveal
+                type="nomatch"
+                state="$:/state/$stateTid$"
+                text="none"
+            >
+                <$button
+                    set="$:/state/$stateTid$"
+                    setTo="none"
+                    class="element-toggle-svg element-toggle-down"
+                >
+                    {{img/toggle}}
+                </$button>
+            </$reveal>
+            <$reveal
+                type="match"
+                state="$:/state/$stateTid$"
+                text="none"
+            >
+                <$button
+                    set="$:/state/$stateTid$"
+                    setTo="block"
+                    class="element-toggle-svg element-toggle-up"
+                >
+                    {{img/toggle}}
+                </$button>
+            </$reveal>
+        </td>
+    </tr>
+    <tr>
+        <td
+            class="element-toggle-msg"
+        >
+            $down$
+        </td>
+    </tr>
+</table>
+\end

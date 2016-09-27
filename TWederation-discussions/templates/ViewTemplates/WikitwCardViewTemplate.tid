@@ -1,0 +1,10 @@
+tags: Templates $:/tags/ViewTemplate
+title: $:/plugins/Federation/TWederation/Templates/ViewTemplate/WikitwCardViewTemplate
+
+<$list
+    filter='[is[current]type[twServer]]'
+>
+
+{{||$:/plugins/Federation/TWederation/Basic twCard Template}}
+
+</$list>

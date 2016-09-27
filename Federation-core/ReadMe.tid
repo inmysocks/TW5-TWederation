@@ -1,0 +1,9 @@
+title: $:/plugins/Federation/Federation-core/ReadMe.tid
+
+This is the basic core for adding federation to tiddlywiki. This plugin has nothing but the back-end tools so you will have to either get one of the other federation plugins or create your own tools to make this do anything.
+
+Uses for this plugin are:
+
+*Add this plugin to a wiki that you want to be able to pull content from (the source wiki)
+*Add this plugin to a wiki that will use one of the other federation plugins (because it is required by all other federation plugins)
+*Use this plugin to create your own tool that uses federation

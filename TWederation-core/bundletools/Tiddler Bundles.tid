@@ -1,6 +1,0 @@
-caption: Tiddler Bundles
-tags: $:/tags/ControlPanel
-tiddler: TestSchool
-title: $:/plugins/inmysocks/TWederation/Tiddler Bundles
-
-<<tabs "[[$:/plugins/inmysocks/TWederation/Create Local Bundle]][[$:/plugins/inmysocks/TWederation/Fetch Tiddler Bundle]][[$:/plugins/inmysocks/TWederation/Unbundle Tiddlers]]" default:"$:/plugins/inmysocks/TWederation/Create Local Bundle">>

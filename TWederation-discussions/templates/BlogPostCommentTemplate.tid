@@ -1,0 +1,11 @@
+tags: Templates
+title: $:/plugins/Federation/TWederation/Templates/BlogPostCommentTemplate
+
+{{ ||$:/plugins/Federation/TWederation/Templates/WriteNewComment}}
+
+<$list
+    filter="[parent<currentTiddler>role[twDiscussionPost]first[]]"
+    variable=dummy
+>
+    {{||$:/plugins/Federation/TWederation/Templates/CommentThreadReveal}}
+</$list>

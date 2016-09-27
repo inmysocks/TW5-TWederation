@@ -1,0 +1,92 @@
+caption: {{TWederation/Images/Publish_bw}} TWederation
+description: Tiddler confined to current wiki (gray) or accessible via TWederation (coloured)
+tags: $:/tags/ViewToolbar
+title: TWederation/Buttons/publish
+
+\define journalButtonTags()
+[[$(currentTiddlerTag)$]] $(journalTags)$
+\end
+
+\define journalButton()
+<$button
+    tooltip={{$:/language/Buttons/NewJournalHere/Hint}}
+    aria-label={{$:/language/Buttons/NewJournalHere/Caption}}
+    class=<<tv-config-toolbar-class>>
+>
+    <$list
+        filter="[<tv-config-toolbar-icons>prefix[yes]]"
+    >
+        {{$:/core/images/new-journal-button}}
+    </$list>
+    <$list
+        filter="[<tv-config-toolbar-text>prefix[yes]]"
+    >
+        <span
+            class="tc-btn-text"
+        >
+            <$text
+                text={{$:/language/Buttons/NewJournalHere/Caption}}
+            />
+        </span>
+    </$list>
+</$button>
+\end
+
+\define publishButton()
+<$button
+    message="tm-close-tiddler"
+    tooltip="Make this tiddler fetchable in TWederation"
+    class=<<tv-config-toolbar-class>>
+>
+    <$list
+        filter="[<currentTiddler>role[twDiscussionPost]]"
+        emptyMessage="{{TWederation/Images/Publish_bw}}"
+    >
+        {{TWederation/Images/Publish_clr}}
+    </$list>
+    <$list
+        filter='[is[current]addsuffix[ - ]addsuffix{$:/status/UserName}addsuffix[ (]addsuffix{!!created}addsuffix[)]]'
+        variable=PublicTitle
+    >
+        <$action-setfield
+            $tiddler=<<PublicTitle>>
+            text=<<currtext>>
+            author={{$:/status/UserName}}
+            post_title= {{!!title}}
+            role= twDiscussionPost
+            wiki_url=<<WikiURL>>
+            tags={{!!tags}}
+            type={{!!type}}
+        />
+        <$action-deletetiddler
+            $tiddler=<<currentTiddler>>
+        />
+        <$action-navigate
+            $to=<<PublicTitle>>
+        />
+    </$list>
+</$button>
+\end
+
+<$set
+    name=HREF
+    value=<<location href>>
+>
+    <$set
+        name=HASH
+        value=<<location hash>>
+    >
+        <$set
+            name=WikiURL
+            filter='[<HREF>removesuffix<HASH>]'
+            emptyValue=<<HREF>>
+        >
+            <$set
+                name="currtext"
+                value={{!!text}}
+            >
+                <<publishButton>>
+            </$set>
+        </$set>
+    </$set>
+</$set>

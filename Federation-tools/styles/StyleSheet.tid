@@ -1,0 +1,33 @@
+title: $:/plugins/Federation/Federation-tools/Stylesheet.tid
+tags: $:/tags/Stylesheet
+
+.bundleFilter {
+    display:block;
+    width:100%;padding-left:5px; margin-bottom:10px;
+    border:1px solid lightgray;
+    resize:both; overflow-y:auto;
+    min-height:150px;
+}
+
+.bundleFilter:hover {
+    border:1px solid blue;
+}
+
+.bundleName {
+    display:block;
+    width:100%;padding-left:5px; margin-bottom:10px;
+    border:1px solid lightgray;
+    resize:both; overflow-y:auto;
+ }
+
+.no-border, .no-border th, .no-border tr, .no-border td{
+    border:0;
+}
+
+.img svg {
+    fill: gray;
+    height: 16px;
+    width:16px;
+    margin-top:-1.3em;
+    float:right;
+}

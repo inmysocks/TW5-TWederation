@@ -1,0 +1,16 @@
+tags:
+title: $:/plugins/Federation/TWederation/TWederation Configuration/Above story
+
+<div style="position:absolute">
+^^<$checkbox tag="$:/tags/AboveStory"> Show<br>&nbsp;[[welcome|$:/plugins/Federation/TWederation/TWederation Configuration/Above story]]<br>on startup<br>
+</$checkbox>^^
+</div>
+
+<center>
+
+Welcome to the
+
+! TWederation!
+
+Let's [[get started|TWederation]] !
+</center>

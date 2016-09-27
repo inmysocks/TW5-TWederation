@@ -1,0 +1,13 @@
+title: TWederation
+icon: TWederation.svg
+
+<$list
+    filter='[[$:/SitetwCard]!has[text]]'
+    variable=dummy
+    emptyMessage="<$transclude tiddler='$:/plugins/Federation/TWederation/Communication' mode=block/>"
+>
+    <$transclude
+        tiddler='$:/plugins/Federation/TWederation/TWederation Configuration Wizard'
+        mode=block
+    />
+</$list>

@@ -1,0 +1,109 @@
+caption: New Discussion Post
+tags:
+title: $:/plugins/Federation/TWederation/New Discussion Post
+
+\define thisMakePostButton(TIME)
+<div
+	style='width:100%;text-align:right;fill:gray;'
+>
+	<$button
+		class='tc-btn-invisible'
+		tooltip='Save Post'
+	>
+		{{$:/core/images/save-button}}
+		<$action-setfield
+			$tiddler="""$(PostTitle)$ - $(AuthorName)$ ($TIME$)"""
+			author=<<AuthorName>>
+			wiki_url=<<WikiUrl>>
+			post_title={{$:/temp/NewBlogPost!!new_post_title}}
+			role='twDiscussionPost'
+			tags={{$:/temp/NewBlogPost!!tags}}
+			text={{$:/temp/NewBlogPost!!text}}
+			day=<<now 0DD>>
+			month=<<now 0MM>>
+			year=<<now YYYY>>
+			hour=<<now 0hh>>
+			minute=<<now 0mm>>
+			second=<<now 0ss>>
+			hour=<<now 0hh>>
+			minute=<<now 0mm>>
+			second=<<now 0ss>>
+			sort=<<now YYYY0MM0DD0hh0mm0ss>>
+		/>
+		<$action-setfield
+			$tiddler="$:/temp/NewBlogPost"
+			new_post_title=''
+			text=''
+			tags=''
+		/>
+		<$action-setfield
+			$tiddler='$:/state/Discussions'
+			show_new_post=false
+		/>
+	</$button>
+	<$button
+		class='tc-btn-invisible'
+		tooltip='Cancel'
+	>
+		{{$:/core/images/close-button}}
+		<$action-setfield
+			$tiddler='$:/state/Discussions'
+			show_new_post=false
+		/>
+	</$button>
+</div>
+\end
+
+<$list
+	filter='[{$:/SitetwCard}has[title]]'
+	variable='dummy'
+	emptyMessage="""<br><br>You haven't set up the site twCard yet. Try re-running the setup wizard."""
+>
+
+	<$edit-text
+		class='tc-edit-texteditor'
+		tiddler='$:/temp/NewBlogPost'
+		field='new_post_title'
+		placeholder='Post Title'
+	/>
+
+	<div
+		class="dis-template-newpost-tags"
+	>
+		<$edit-text
+			class='tc-edit-texteditor dis-template-tags-'
+			tiddler='$:/temp/NewBlogPost'
+			field='tags'
+			placeholder='tag [[spaced tag]] [[⁂ prefix for standardized TWederation tags]]'
+		/>
+		<span
+			class="dis-tag-prefix"
+		>
+			⁂
+		</span>
+	</div>
+
+	<$edit-text
+		tiddler='$:/temp/NewBlogPost'
+		placeholder='Post Content'
+		class='tc-edit-texteditor'
+	/>
+	<$vars
+		PostTitle={{$:/temp/NewBlogPost!!new_post_title}}
+	>
+		<$list
+			filter='[[$:/SitetwCard]get[text]get[author]][[$:/SitetwCard]get[text]get[name]][[$:/SitetwCard]get[text]get[url]]+[first[]]'
+			variable=AuthorName
+		>
+			<$set
+				name=WikiUrl
+				filter='[[$:/SitetwCard]get[text]get[url]]'
+			>
+				<$macrocall
+					$name=thisMakePostButton
+					TIME=<<now YYYY0MM0DD0hhh0mm0ss>>
+				/>
+			</$set>
+		</$list>
+	</$vars>
+</$list>

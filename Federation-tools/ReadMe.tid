@@ -1,0 +1,20 @@
+tags:
+title: $:/plugins/Federation/Federation-tools/ReadMe
+
+''NOTE:'' Both the wiki you are currently looking at and the wiki you wish to fetch from have to have the [[$:/plugins/Federation/Federation-core]] plugin installed for this to work.
+
+This is a demo of a plugin that combines two things:
+
+1) Bundling tiddlers for easy movement between wikis
+
+2) Remotely fetching bundles of tiddlers from another wiki
+
+Part 2 may be more important here.
+
+Go to the `Fetch Tiddler Bundle` tab under the `Tiddler Bundles` tab in the [[$:/ControlPanel]]
+
+If you set the Wiki URL to point to a wiki that has the plugin installed than you can enter a filter and a bundle name then click `Request Bundle` and under the button you should get a link to open up the imported bundle tiddler. You can then go to the `Unbundle Tiddlers` tab to unpack the imported tiddlers.
+
+You can do this locally, using a `file://` uri to point to a local wiki, or online and point to a wiki using `http://` or `https://` BUT if you are currently using a wiki hosted on a server using https you will not be able to fetch from a wiki on a server using http. This is because of how browser security works and there isn't a way around it without using external tools.
+
+This requires the plugins [[$:/plugins/Federation/Federation-core]] and [[$:/plugins/Federation/Federation-tools]]

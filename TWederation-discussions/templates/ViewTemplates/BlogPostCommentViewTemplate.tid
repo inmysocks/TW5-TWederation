@@ -1,0 +1,10 @@
+tags: Templates $:/tags/ViewTemplate
+title: $:/plugins/Federation/TWederation/Templates/ViewTemplate/BlogPostCommentViewTemplate
+
+<$list
+    filter='[is[current]role[twDiscussionPost]]'
+>
+
+    {{||$:/plugins/Federation/TWederation/Templates/BlogPostCommentTemplate}}
+
+</$list>

@@ -1,0 +1,86 @@
+title: $:/plugins/Federation/TWederation/Edit Site twCard
+caption: Edit Site twCard
+title: $:/plugins/Federation/TWederation/Initial Configuration/Create twCards
+user_identifier: This is what others in the TWederation will use for //addressing, searching and fetching// of your tiddlers. It can be your //nickname// (a common denominator for all posts you make, at least it can be) or a //name of an organization// or even a single //topic// like hashtags on //twitter// - really or anything you want.<br><br>//Tip!// Consider reusing the same nickname that you use in other contexts like the [[google boards|https://groups.google.com/forum/?fromgroups=#!forum/tiddlywiki]]
+wiki_subtitle: This is the displayed subtitle on your wiki site. It is displayed by the browser window and in the upper right by default.
+wiki_title: This is the displayed title on your wiki site. It is displayed by the browser window and in the upper right by default.
+wiki_url: This is the url used to access your wiki. If you are using tiddlyspot and this says something like `http://yourwiki.tiddlyspot.com` than you can leave it alone.
+tags: twCards
+
+Set site twCard:
+<$select
+    tiddler='$:/SitetwCard'
+    field='text'
+>
+    <option
+        value=''
+    >
+        --
+    </option>
+    <$list
+        filter='[all[tiddlers+shadows]role[twServer]]'
+    >
+        <option
+            value=<<currentTiddler>>
+        >
+            <$view
+                field='name'
+            />
+        </option>
+    </$list>
+</$select>
+
+<$tiddler
+    tiddler='$:/plugins/Federation/TWederation/Edit Site twCard'
+>
+    <table
+        class='no-border'
+        style='border:1px solid lightgray;'
+    >
+    	<tr>
+    		<td
+                style='text-align:right;width:20%;'
+            >
+    			~TiddlyWiki URL<<HelpButton wiki_url '??'>>
+    		</td>
+    		<td>
+    			<$set
+                    name="origin"
+                    value=<<location "href">>
+                >
+    				<<thisEnterSiteURL>>
+    			</$set>
+    		</td>
+    	</tr>
+    	<tr>
+    		<td
+                style='text-align:right;width:15%;vertical-align:top;'
+            >
+    			Wiki Name<<HelpButton identifier '??'>>
+    		</td>
+    		<td>
+    			<$set
+                    name="name"
+                    value={{$:/SiteTitle}}
+                >
+    				<<thisEnterName>>
+    			</$set>
+    		</td>
+    	</tr>
+    	<tr>
+    		<td
+                style='text-align:right;width:15%;vertical-align:top;'
+            >
+    			Author<<HelpButton author>>
+    		</td>
+    		<td>
+    			<$edit-text
+    				tiddler='$:/state/Create twCard'
+    				field='author'
+    				class='tc-edit-texteditor'
+    				placeholder="Optional. E.g your name or username or whatever you want."
+    			/>
+    		</td>
+    	</tr>
+    </table>
+</$tiddler>

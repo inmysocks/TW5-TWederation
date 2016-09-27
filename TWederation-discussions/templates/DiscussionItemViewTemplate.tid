@@ -1,0 +1,168 @@
+tags: Templates
+title: $:/plugins/Federation/TWederation/Templates/DiscussionItemViewTemplate
+
+<$reveal
+    type="nomatch"
+    state=<<rootState>>
+    text="show"
+>
+    <$button
+        set=<<rootState>>
+        setTo="show"
+        class="dis-btn-root-closed"
+    >
+        <$action-setfield
+            $tiddler="$:/state/TWederation/Discussions/ReadPosts"
+            $index=<<currentTiddler>>
+            $value=<<timestamp>>
+        />
+        <span
+            class="dis-btn-root-title"
+        >
+            <$list
+                filter='[[$:/state/TWederation/Discussions/ReadStatusTiddler]getindex<currentTiddler>prefix[true]]'
+                emptyMessage="""//UNREAD// - """
+            >
+                <!--
+                There has to be something here to prevent the list from displaying things when it shouldn't. I can't use !prefix[true] in the filter because then if the index doesn't exist it will give an empty list.
+                -->
+            </$list>
+            <$list
+                filter='[all[tiddlers+shadows]role[twServer]author{!!author}has[icon]!sort[created]limit[1]]'
+            >
+                <$image
+                    source={{!!icon}}
+                    height=20px
+                    width=20px
+                />
+            </$list>
+            <$view
+                field='post_title'
+            >
+                //(No Title)//
+            </$view>
+        </span>
+        <span
+            class="dis-btn-root-count"
+        >
+        </span>
+        <div
+            class="dis-btn-root-meta"
+        >
+            <span
+                class="dis-btn-root-date"
+            >
+                <$view
+                    field="modified"
+                    format="relativedate"
+                />
+            </span>
+            <span
+                class="dis-btn-root-author"
+            >
+                <$view
+                    field='author'
+                >
+                    <$view
+                        field='name'
+                    >
+                        <$view
+                            field='url'
+                        />
+                    </$view>
+                </$view>
+            </span>
+        </div>
+    </$button>
+</$reveal>
+
+<$reveal
+    type="match"
+    state=<<rootState>>
+    text="show"
+>
+    <div
+        class="dis-root-post"
+    >
+        <$button
+            set=<<rootState>>
+            setTo="hide"
+            class="dis-btn-root-opened"
+        >
+            {{$:/core/images/fold-button}}
+        </$button>
+        <h1
+            class='dis-discussion-post-title'
+        >
+            <$list
+                filter='[all[tiddlers+shadows]role[twServer]author{!!author}has[icon]!sort[created]limit[1]]'
+            >
+                <$image
+                    source={{!!icon}}
+                    height=50px
+                />
+            </$list>
+            <$link
+                to=<<currentTiddler>>
+            >
+                <$view
+                    field='post_title'
+                />
+            </$link>
+        </h1>
+
+        <div
+            class="dis-discussion-post-tags"
+        >
+               <$list
+                filter='[is[current]tags[]]'
+            >
+                <<tag>>
+            </$list>
+        </div>
+
+        <h3
+            class='dis-discussion-post-by-line'
+        >
+            <$list
+                filter='[all[tiddlers+shadows]role[twServer]author{!!author}!sort[created]limit[1]]'
+            >
+                by
+                <$link
+                    to=<<currentTiddler>>
+                >
+                    <span
+                        class='dis-discussion-post-author-name'
+                    >
+                        <$view
+                            field='author'
+                        >
+                            <$view
+                                field='name'
+                            >
+                                <$view
+                                    field='url'
+                                />
+                            </$view>
+                        </$view>
+                    </span>
+                </$link>
+            </$list>
+            <span
+                class="dis-comment-author"
+            >
+                <$view
+                    field="modified"
+                    format="relativedate"
+                />:
+            </span>
+        </h3>
+
+        <$transclude
+            mode=block
+        />
+
+        {{ ||$:/plugins/Federation/TWederation/Templates/BlogPostCommentTemplate}}
+
+    </div>
+</$reveal>
