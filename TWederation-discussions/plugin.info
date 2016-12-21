@@ -2,9 +2,10 @@
 	"title": "$:/plugins/Federation/TWederation-discussions",
 	"description": "TWederation: The tiddlers required for the TWederation discussions application",
 	"author": "TWederation",
-	"version": "0.0.80",
+	"version": "0.0.81",
 	"core-version": ">=5.1.10",
 	"source": "",
 	"plugin-type": "plugin",
+	"list": "ReadMe",
 	"depends":"$:/plugins/Federation/Federation-core"
 }

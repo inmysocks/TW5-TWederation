@@ -1,9 +1,10 @@
 {
 	"title": "$:/plugins/Federation/Federation-core",
-	"description": "Federation: The core that lets you create and unpack tiddler bundles as well as fetch tiddlers from other wikis. This is just the core without any structure or tools. Other plugins are required unless you create your own application.",
+	"description": "Federation: The core part of federation",
 	"author": "TWederation",
 	"version": "0.0.2",
 	"core-version": ">=5.1.10",
 	"source": "",
+	"list": "ReadMe",
 	"plugin-type": "plugin"
 }

@@ -8,6 +8,7 @@ title: $:/plugins/Federation/TWederation/Manage twCards
     variable=dummy
     emptyMessage="""<$button
             class='tc-btn-invisible'
+            style='width:1em;'
         >
             <input type='checkbox' unchecked=true/>
             <$action-setfield
@@ -19,6 +20,7 @@ title: $:/plugins/Federation/TWederation/Manage twCards
 >
     <$button
         class='tc-btn-invisible'
+        style='width:1em;'
     >
         <input type='checkbox' checked=true/>
         <$action-setfield
@@ -35,6 +37,7 @@ title: $:/plugins/Federation/TWederation/Manage twCards
     variable=dummy
     emptyMessage="""<$button
             class='tc-btn-invisible'
+            style='width:1em;'
         >
             <input type='checkbox' unchecked=true/>
             <$action-setfield
@@ -46,6 +49,7 @@ title: $:/plugins/Federation/TWederation/Manage twCards
 >
     <$button
         class='tc-btn-invisible'
+        style='width:1em;'
     >
         <input type='checkbox' checked=true/>
         <$action-setfield

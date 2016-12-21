@@ -1,4 +1,5 @@
-title: $:/plugins/Federation/Federation-core/ReadMe.tid
+title: $:/plugins/Federation/Federation-core/ReadMe
+caption: bob
 
 This is the basic core for adding federation to tiddlywiki. This plugin has nothing but the back-end tools so you will have to either get one of the other federation plugins or create your own tools to make this do anything.
 
