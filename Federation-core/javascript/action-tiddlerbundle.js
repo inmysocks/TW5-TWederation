@@ -3,8 +3,6 @@ title: $:/plugins/Federation/Federation-core/action-tiddlerbundle.js
 type: application/javascript
 module-type: widget
 
-Action widget that edits lists in any field similarly to how the tags field works.
-
 $filter and $unpackFilter should be combined since the widget will always either unpack of pack something, never both.
 
 Usage:
@@ -13,11 +11,10 @@ Usage:
 
 |!Parameter |!Description |
 |$bundle |The name of the bundle, either for bundle creation or to select which bundle to unpack. (No default)|
-|$filter |The filter used to select which tiddlers are put into the bundle (No default)|
+|$filter |The filter used to select which tiddlers are put into the bundle if making a bundle, or which tiddlers to unpack if unpacking a bundle (No default)|
 |$overwrite |Set this to `true` to overwrite existing tiddlers from the bundle, set to `false` to leave existing tiddlers unaffected. (Default: `false`)|
 |$separator |The separator string used between tiddlers in the bundle |
 |$action |Pack (create bundle) or unpack (unpack tiddlers) (Default: `Pack`)|
-|$unpackFilter |A filter used to select which tiddlers to unpack from a bundle (Default: `[all[]]`)|
 |$type |`Tiddler` or `JSON` (Default: `Tiddler`) |
 
 \*/
@@ -52,11 +49,10 @@ Compute the internal state of the widget
 */
 ActionTiddlerBundle.prototype.execute = function() {
 	this.actionBundle = this.getAttribute("$bundle");
-	this.bundleFilter = this.getAttribute("$filter");
+	this.filter = this.getAttribute("$filter");
 	this.actionOverwrite = this.getAttribute("$overwrite", false);
 	this.actionSeparator = this.getAttribute("$separator");
 	this.actionAction = this.getAttribute("$action");
-	this.unpackFilter = this.getAttribute("$unpackFilter");
 	this.bundleType = this.getAttribute("$type");
 };
 
@@ -95,7 +91,7 @@ ActionTiddlerBundle.prototype.invokeAction = function(triggeringWidget,event) {
 				bundleTiddlers[i] = decodeURI(bundleTiddlers[i]);
 			}
 		} else {
-			var bundleFilter = this.bundleFilter;
+			var bundleFilter = this.filter;
 			var bundleTiddlers = this.wiki.filterTiddlers(bundleFilter);
 		}
 		var bundleText = '';
@@ -129,9 +125,9 @@ ActionTiddlerBundle.prototype.invokeAction = function(triggeringWidget,event) {
 
 
 	if (this.actionAction === 'unpack') {
-		var filterOutput = this.unpackFilter ? true:false;
+		var filterOutput = this.filter ? true:false;
 		if (filterOutput) {
-			var unpackList = this.wiki.filterTiddlers(this.unpackFilter);
+			var unpackList = this.wiki.filterTiddlers(this.filter);
 		}
 		var tiddler = $tw.wiki.getTiddler(this.actionBundle);
 		if (tiddler) {

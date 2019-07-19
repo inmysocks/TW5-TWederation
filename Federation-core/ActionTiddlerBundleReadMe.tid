@@ -1,0 +1,26 @@
+title: $:/plugins/Federation/Federation-core/ActionTiddlerBundleReadMe
+caption: ActionTiddlerBundle ReadMe
+
+!! What is this?
+
+An action widget that bundles and unbundles tiddlers.
+
+Usage:
+
+<$action-tiddlerbundle $bundle=BundleName $filter= $overwrite= $separator= $action= $unpackFilter= $type=/>
+
+|!Parameter |!Description |
+|$bundle |The name of the bundle, either for bundle creation or to select which bundle to unpack. (No default)|
+|$filter |The filter used to select which tiddlers are put into the bundle if making a bundle (No default), or which tiddlers to unpack if unpacking a bundle (Default: `[all[]]`)|
+|$overwrite |Set this to `true` to overwrite existing tiddlers from the bundle, set to `false` to leave existing tiddlers unaffected. (Default: `false`)|
+|$separator |The separator string used between tiddlers in the bundle (optional)|
+|$action |Pack (create bundle) or unpack (unpack tiddlers) (Default: `Pack`)|
+|$type |`Tiddler` or `JSON` (Default: `Tiddler`) |
+
+
+!! What does `$type` mean?
+
+The bundle can have two forms.
+
+* When `$type` is set to `Tiddler` the bundle is one tiddler whose text field is the content of each tiddler in the bundle in the same format as a `.tid` file. The content of each tiddler is separated by the string given by `$separator`. The default `$separator` value should work in every case.
+* When `$type` is set to `JSON` the bundel is one tiddler whoes text field is a json object where each key is a tiddler name and the value for that key is the tiddler is json format.
